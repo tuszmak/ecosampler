@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +19,6 @@ public class Form {
             name = "form_id_sequens",
             sequenceName = "form_id_sequens",
             allocationSize = 1
-
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "form_id_sequens")
     private Long id;
@@ -25,6 +26,6 @@ public class Form {
             nullable = false)
     private String name;
 
-    @OneToOne(targetEntity = Project.class)
-    private Project project;
+    @OneToMany
+    private List<Question> questions;
 }
