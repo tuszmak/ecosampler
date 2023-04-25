@@ -21,7 +21,6 @@ public class User {
             name = "user_id_sequens",
             sequenceName = "user_id_sequens",
              allocationSize = 1
-
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_id_sequens")
     private Long id;

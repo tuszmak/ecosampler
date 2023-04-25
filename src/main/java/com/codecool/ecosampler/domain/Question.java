@@ -29,7 +29,4 @@ public class Question {
     @Column(name = "field_style")
     @Enumerated
     private FieldStyle fieldStyle;
-
-    @OneToOne(targetEntity = Form.class)
-    private Form form;
 }
