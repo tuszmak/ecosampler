@@ -2,8 +2,8 @@ package com.codecool.ecosampler.service;
 
 import com.codecool.ecosampler.controller.dto.NewUser;
 import com.codecool.ecosampler.controller.dto.UserDTO;
-import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.repository.UserRepository;
+import com.codecool.ecosampler.utilities.Mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,24 +15,23 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserDTO getUserByID(Long id) {
-        User user = userRepository
+        return Mapper.mapToDTO(userRepository
                 .findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No user by ID:" + id));
-        return new UserDTO(user.getName()); // TODO: convert User to UserDTO
+                .orElseThrow(() -> new NoSuchElementException("No user by ID:" + id)));
     }
 
     public Long registerUser(NewUser newUser) {
         if (userRepository.existsUserByEmail(newUser.email()))
             throw new RuntimeException("User already exists with email: " + newUser.email());
         return userRepository
-                .save(new User(newUser.email(), newUser.name(), newUser.password()))
+                .save(Mapper.mapToUser(newUser))
                 .getId();
     }
 
     public void deleteUserByID(Long id) {
-        if (userRepository.existsById(id)) {
+        if (userRepository.existsById(id))
             userRepository.deleteById(id);
-        } else
+         else
             throw new NoSuchElementException("No User with id: " + id);
     }
 }
