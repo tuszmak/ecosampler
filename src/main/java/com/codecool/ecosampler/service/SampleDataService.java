@@ -1,7 +1,6 @@
 package com.codecool.ecosampler.service;
 
 import com.codecool.ecosampler.domain.SampleData;
-import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.SampleDataRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

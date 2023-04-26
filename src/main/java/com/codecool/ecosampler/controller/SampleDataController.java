@@ -1,6 +1,5 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.domain.Question;
 import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.service.SampleDataService;
 import lombok.AllArgsConstructor;
