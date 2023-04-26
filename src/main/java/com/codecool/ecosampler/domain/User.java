@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,9 +20,9 @@ public class User {
     @SequenceGenerator(
             name = "user_id_sequens",
             sequenceName = "user_id_sequens",
-             allocationSize = 1
+            allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_id_sequens")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequens")
     private Long id;
 
     @Column(name = "email",
@@ -49,8 +48,8 @@ public class User {
 
     @ManyToMany
     @JoinTable(name = "user_to_project_map",
-                joinColumns = @JoinColumn(name = "user_id"),
-                inverseJoinColumns = @JoinColumn(name = "project_id")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
     )
     private List<Project> projects;
 
@@ -59,7 +58,8 @@ public class User {
         this.name = name;
         this.password = password;
     }
-    public void addProject(Project project){
+
+    public void addProject(Project project) {
         projects.add(project);
     }
 }
