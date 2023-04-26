@@ -19,7 +19,7 @@ public class ProjectController {
         return projectService.getAllProject();
     }
 
-    @PutMapping
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public Project addNewProject(@RequestBody Project project) {
         return projectService.addNewProject(project);
@@ -35,7 +35,7 @@ public class ProjectController {
         projectService.deleteProject(projectId);
     }
 
-    @PostMapping("{projectId}")
+    @PutMapping("{projectId}")
     public Project updateProject(@PathVariable Long projectId, @RequestBody Project project) {
         return projectService.updateProject(projectId, project);
     }
