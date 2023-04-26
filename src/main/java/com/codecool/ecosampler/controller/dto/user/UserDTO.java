@@ -1,4 +1,4 @@
-package com.codecool.ecosampler.controller.dto;
+package com.codecool.ecosampler.controller.dto.user;
 
 import com.codecool.ecosampler.domain.Role;
 

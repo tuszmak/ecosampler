@@ -1,9 +1,10 @@
 package com.codecool.ecosampler.service;
-
 import com.codecool.ecosampler.domain.Project;
+import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.ProjectRepository;
+import com.codecool.ecosampler.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Service
 public class ProjectService {
     private ProjectRepository projectRepository;
+    private UserRepository userRepository;
 
     public List<Project> getAllProject() {
         return projectRepository.findAll();
@@ -56,5 +58,15 @@ public class ProjectService {
             project.setDescription(requestProject.getDescription());
         // TODO The rest
         return project;
+    }
+
+    public void addUserToProject(Long projectID, Long userID) {
+        User user = userRepository.findById(userID)
+                .orElseThrow(() ->
+                        new NotFoundException("This user doesn't exist with this id: " + userID));
+        Project project = projectRepository.findById(projectID).orElseThrow((() ->
+                new NotFoundException("This project doesn't exist with this id: " + userID)));
+        user.addProject(project);
+        userRepository.save(user);
     }
 }

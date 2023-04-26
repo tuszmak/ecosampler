@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -46,5 +47,6 @@ public class Project {
     public Project(String name, String description) {
         this.name = name;
         this.description = description;
+        this.formList = new ArrayList<>();
     }
 }

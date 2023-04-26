@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,4 +29,9 @@ public class Form {
 
     @OneToMany
     private List<Question> questions;
+
+    public Form(String name) {
+        this.name = name;
+        this.questions = new ArrayList<>();
+    }
 }

@@ -20,7 +20,6 @@ public class Answer {
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "answer_id_sequens")
     private Long id;
-
     @Column(name = "answer",
             nullable = false)
     private String answer;
