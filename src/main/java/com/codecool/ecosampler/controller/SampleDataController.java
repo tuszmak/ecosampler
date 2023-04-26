@@ -1,5 +1,6 @@
 package com.codecool.ecosampler.controller;
 
+import com.codecool.ecosampler.controller.dto.sampledata.NewSampleData;
 import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.service.SampleDataService;
 import lombok.AllArgsConstructor;
@@ -14,14 +15,19 @@ import java.util.List;
 public class SampleDataController {
     SampleDataService sampleDataService;
 
-    @GetMapping("")
+    @GetMapping
     public List<SampleData> getAllSampleData() {
         return sampleDataService.getAllSampleData();
     }
 
+    @GetMapping("/{id}")
+    public SampleData getSpecificSampleData(@PathVariable Long id) {
+        return sampleDataService.getSpecificSampleData(id);
+    }
+
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
-    public Long createQuestion(@RequestBody SampleData sampleData) {
+    public Long createQuestion(@RequestBody NewSampleData sampleData) {
         return sampleDataService.createSampleData(sampleData);
     }
 
