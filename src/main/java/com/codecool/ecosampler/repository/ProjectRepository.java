@@ -10,5 +10,4 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p FROM project p JOIN p.users u WHERE u.id = :userId")
     List<Project> findAllByUserId(@Param("userId") Long userId);
-
 }

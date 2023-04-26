@@ -1,6 +1,5 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
 import com.codecool.ecosampler.domain.Project;
 import com.codecool.ecosampler.service.ProjectService;
 import lombok.AllArgsConstructor;
@@ -15,12 +14,12 @@ import java.util.List;
 public class ProjectController {
     private ProjectService projectService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Project> getAllProject() {
         return projectService.getAllProject();
     }
 
-    @PutMapping("/")
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public Project addNewProject(@RequestBody Project project) {
         return projectService.addNewProject(project);
@@ -42,9 +41,8 @@ public class ProjectController {
         projectService.addUserToProject(projectAndUserId.projectID(), projectAndUserId.userID());
     }
 
-    @PostMapping("{projectId}")
+    @PutMapping("{projectId}")
     public Project updateProject(@PathVariable Long projectId, @RequestBody Project project) {
         return projectService.updateProject(projectId, project);
     }
-
 }
