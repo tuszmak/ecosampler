@@ -23,4 +23,11 @@ public class Answer {
     @Column(name = "answer",
             nullable = false)
     private String answer;
+
+    @OneToOne
+    private Question question;
+
+    public Answer(String answer) {
+        this.answer = answer;
+    }
 }
