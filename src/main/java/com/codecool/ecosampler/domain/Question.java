@@ -30,4 +30,9 @@ public class Question {
     @Column(name = "field_style")
     @Enumerated
     private FieldStyle fieldStyle;
+
+    public Question(String description, FieldStyle fieldStyle) {
+        this.description = description;
+        this.fieldStyle = fieldStyle;
+    }
 }
