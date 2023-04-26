@@ -24,7 +24,7 @@ public class SampleDataService {
         return sampleDataRepository.findAll();
     }
 
-    public SampleData getSpecificSampleData(Long id) {
+    public SampleData getSampleDataById(Long id) {
         return sampleDataRepository.
                 findById(id).orElseThrow(() -> new NotFoundException("Can't find data with this id: " + id));
     }

@@ -22,7 +22,7 @@ public class SampleDataController {
 
     @GetMapping("/{id}")
     public SampleData getSampleDataById(@PathVariable Long id) {
-        return sampleDataService.getSpecificSampleData(id);
+        return sampleDataService.getSampleDataById(id);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
