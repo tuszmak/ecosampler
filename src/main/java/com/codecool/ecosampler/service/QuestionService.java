@@ -25,25 +25,21 @@ public class QuestionService {
         return questionRepository.save(question).getId();
     }
 
-    public Question modifyQuestion(Long id, Question newQuestion) {
-        if (isValidQuestion(newQuestion)) {
-            Question question = questionRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("There is no question with id: " + id));
-            setQuestionProperties(newQuestion, question);
-            return question;
-        }
-        throw new BadRequestException("No changes requested!");
+    public Question modifyQuestion(Long id, Question requestQuestion) {
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("There is no question with id: " + id));
+
+        return questionRepository.save(
+                updateQuestionByRequest(requestQuestion, question)
+        );
     }
 
-    private boolean isValidQuestion(Question newQuestion) {
-        return Objects.nonNull(newQuestion.getFieldStyle()) || Objects.nonNull(newQuestion.getDescription());
-    }
-
-    private void setQuestionProperties(Question newQuestion, Question question) {
-        if (Objects.nonNull(newQuestion.getDescription()))
-            question.setDescription(newQuestion.getDescription());
-        if (Objects.nonNull(newQuestion.getFieldStyle()))
-            question.setFieldStyle(newQuestion.getFieldStyle());
+    private Question updateQuestionByRequest(Question requestQuestion, Question question) {
+        if (!requestQuestion.getDescription().isEmpty())
+            question.setDescription(requestQuestion.getDescription());
+        if (Objects.nonNull(requestQuestion.getFieldStyle()))
+            question.setFieldStyle(requestQuestion.getFieldStyle());
+        return question;
     }
 
     public void deleteQuestion(Long id) {
