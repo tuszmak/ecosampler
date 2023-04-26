@@ -58,9 +58,4 @@ public class User {
         this.name = name;
         this.password = password;
     }
-
-    public String getRoleName() {
-        if (role == null) return "No role";
-        return role.name();
-    }
 }

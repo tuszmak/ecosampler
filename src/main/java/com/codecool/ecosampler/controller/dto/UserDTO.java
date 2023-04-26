@@ -1,4 +1,6 @@
 package com.codecool.ecosampler.controller.dto;
 
-public record UserDTO(String name, String email, String role) {
+import com.codecool.ecosampler.domain.Role;
+
+public record UserDTO(String name, String email, Role role) {
 }

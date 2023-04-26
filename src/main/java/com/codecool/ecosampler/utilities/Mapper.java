@@ -7,7 +7,7 @@ import com.codecool.ecosampler.domain.User;
 public class Mapper {
 
     public static UserDTO mapToDTO(User user) {
-        return new UserDTO(user.getName(), user.getEmail(), user.getRoleName());
+        return new UserDTO(user.getName(), user.getEmail(), user.getRole());
     }
 
     public static User mapToUser(NewUser newUser) {
