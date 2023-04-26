@@ -66,15 +66,14 @@ public class ProjectService {
             project.setFormList(requestProject.getFormList());
         return project;
     }
+    public void addUserToProject(Long projectID, Long userID) {
 
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/addUser")
-    public void addUserToProject(@RequestBody ProjectAndUserId projectAndUserId) {
-        User user = userRepository.findById(projectAndUserId.userID())
+        User user = userRepository.findById(userID)
                 .orElseThrow(() ->
-                        new NotFoundException("This user doesn't exist with this id: " + projectAndUserId.userID()));
-        Project project = projectRepository.findById(projectAndUserId.projectID()).orElseThrow();
+                        new NotFoundException("This user doesn't exist with this id: " + userID));
+        Project project = projectRepository.findById(projectID).orElseThrow((() ->
+                new NotFoundException("This project doesn't exist with this id: " + userID)));
         user.addProject(project);
-
+        userRepository.save(user);
     }
 }
