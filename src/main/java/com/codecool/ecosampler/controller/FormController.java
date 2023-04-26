@@ -1,6 +1,5 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.controller.dto.form.NewForm;
 import com.codecool.ecosampler.domain.Form;
 import com.codecool.ecosampler.service.FormService;
 import lombok.AllArgsConstructor;
