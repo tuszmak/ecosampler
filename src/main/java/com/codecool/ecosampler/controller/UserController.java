@@ -16,10 +16,12 @@ public class UserController {
     public UserDTO getUserByID(@PathVariable Long id) {
         return userService.getUserByID(id);
     }
+
     @PostMapping("")
     public Long registerUser(@RequestBody NewUser newUser){
        return userService.registerUser(newUser);
     }
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deleteUserByID(id);

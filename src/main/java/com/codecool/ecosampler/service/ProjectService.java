@@ -60,7 +60,6 @@ public class ProjectService {
     }
 
     public void addUserToProject(Long projectID, Long userID) {
-
         User user = userRepository.findById(userID)
                 .orElseThrow(() ->
                         new NotFoundException("This user doesn't exist with this id: " + userID));
