@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -48,9 +49,10 @@ public class ProjectService {
     }
 
     private Project updateProjectWithRequest(Project requestProject, Project project) {
-        if (requestProject.getName() != null)
+        if (Objects.nonNull(requestProject.getName()))
             project.setName(requestProject.getName());
-        if (requestProject.getDescription() != null)
+
+        if (Objects.nonNull(requestProject.getDescription()))
             project.setDescription(requestProject.getDescription());
         // TODO The rest
         return project;
