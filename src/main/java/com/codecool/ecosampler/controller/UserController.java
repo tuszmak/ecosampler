@@ -1,7 +1,7 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.controller.dto.NewUser;
-import com.codecool.ecosampler.controller.dto.UserDTO;
+import com.codecool.ecosampler.controller.dto.user.NewUser;
+import com.codecool.ecosampler.controller.dto.user.UserDTO;
 import com.codecool.ecosampler.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
