@@ -9,7 +9,6 @@ import com.codecool.ecosampler.utilities.Mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @AllArgsConstructor
 @Service
 public class UserService {

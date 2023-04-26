@@ -35,15 +35,16 @@ public class ProjectController {
     public void deleteProject(@PathVariable Long projectId) {
         projectService.deleteProject(projectId);
     }
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/addUser")
     public void addUserToProject(@RequestBody ProjectAndUserId projectAndUserId) {
         projectService.addUserToProject(projectAndUserId.projectID(), projectAndUserId.userID());
     }
+
     @PostMapping("{projectId}")
     public Project updateProject(@PathVariable Long projectId, @RequestBody Project project) {
         return projectService.updateProject(projectId, project);
     }
-
 
 }

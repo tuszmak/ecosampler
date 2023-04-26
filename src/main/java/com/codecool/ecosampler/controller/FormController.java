@@ -15,6 +15,5 @@ public class FormController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public Long createNewForm(@RequestBody Form form){
         return formService.createNewForm(form);
-
     }
 }

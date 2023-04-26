@@ -8,7 +8,6 @@ import com.codecool.ecosampler.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 
 @AllArgsConstructor
@@ -29,7 +28,6 @@ public class ProjectService {
         }
     }
 
-
     public List<Project> getProjectsByUserId(Long userId) {
         return projectRepository.findAllByUserId(userId);
     }
@@ -49,7 +47,6 @@ public class ProjectService {
         return projectRepository.save(
                 updateProjectWithRequest(requestProject, project)
         );
-
     }
 
     private Project updateProjectWithRequest(Project requestProject, Project project) {
@@ -61,6 +58,7 @@ public class ProjectService {
             project.setFormList(requestProject.getFormList());
         return project;
     }
+
     public void addUserToProject(Long projectID, Long userID) {
 
         User user = userRepository.findById(userID)
