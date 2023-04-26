@@ -22,11 +22,25 @@ public class Question {
     private Long id;
 
     @Column(name = "description",
-            nullable = false
+            nullable = false,
+            unique = true
     )
     private String description;
 
     @Column(name = "field_style")
     @Enumerated
     private FieldStyle fieldStyle;
+
+    public Question(String description, FieldStyle fieldStyle) {
+        this.description = description;
+        this.fieldStyle = fieldStyle;
+    }
+
+    public Question(String description) {
+        this.description = description;
+    }
+
+    public Question(FieldStyle fieldStyle) {
+        this.fieldStyle = fieldStyle;
+    }
 }
