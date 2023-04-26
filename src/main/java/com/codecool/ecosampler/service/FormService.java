@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 public class FormService {
     private FormRepository formRepository;
 
-    public Long createNewForm(String name) {
-        return formRepository.save(new Form(name))
+    public Long createNewForm(Form form) {
+        return formRepository.save(form)
                 .getId();
     }
 }
