@@ -35,7 +35,7 @@ public class QuestionService {
     }
 
     private Question updateQuestionByRequest(Question requestQuestion, Question question) {
-        if (!requestQuestion.getDescription().isEmpty())
+        if (Objects.nonNull(requestQuestion.getDescription()))
             question.setDescription(requestQuestion.getDescription());
         if (Objects.nonNull(requestQuestion.getFieldStyle()))
             question.setFieldStyle(requestQuestion.getFieldStyle());
