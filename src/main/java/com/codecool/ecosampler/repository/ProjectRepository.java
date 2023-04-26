@@ -1,4 +1,4 @@
-package com.codecool.ecosampler.reository;
+package com.codecool.ecosampler.repository;
 
 import com.codecool.ecosampler.domain.Project;
 import org.springframework.data.jpa.repository.JpaRepository;

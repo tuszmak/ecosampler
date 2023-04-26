@@ -3,7 +3,7 @@ package com.codecool.ecosampler.service;
 import com.codecool.ecosampler.domain.Project;
 import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
-import com.codecool.ecosampler.reository.ProjectRepository;
+import com.codecool.ecosampler.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
