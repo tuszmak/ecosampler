@@ -54,10 +54,9 @@ public class User {
     )
     private List<Project> projects;
 
-    public User(String email, String name, String password, Role role) {
+    public User(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
-        this.role = role;
     }
 }
