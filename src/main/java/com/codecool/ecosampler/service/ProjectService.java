@@ -6,9 +6,13 @@ import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.ProjectRepository;
 import com.codecool.ecosampler.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@AllArgsConstructor
+@Service
 public class ProjectService {
     private UserRepository userRepository;
     private ProjectRepository projectRepository;
