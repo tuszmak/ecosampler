@@ -21,7 +21,7 @@ public class SampleDataController {
     }
 
     @GetMapping("/{id}")
-    public SampleData getSpecificSampleData(@PathVariable Long id) {
+    public SampleData getSampleDataById(@PathVariable Long id) {
         return sampleDataService.getSpecificSampleData(id);
     }
 
