@@ -1,5 +1,6 @@
 package com.codecool.ecosampler.controller;
 
+import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
 import com.codecool.ecosampler.domain.Project;
 import com.codecool.ecosampler.service.ProjectService;
 import lombok.AllArgsConstructor;
