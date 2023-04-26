@@ -22,7 +22,8 @@ public class Question {
     private Long id;
 
     @Column(name = "description",
-            nullable = false
+            nullable = false,
+            unique = true
     )
     private String description;
 
