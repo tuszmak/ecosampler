@@ -25,6 +25,13 @@ public class QuestionController {
     public Long createQuestion(@RequestBody Question question) {
         return questionService.createQuestion(question);
     }
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PutMapping("/{id}")
+    public Question modifyQuestion(@PathVariable Long id, @RequestBody Question newQuestion) {
+        return questionService.modifyQuestion(id, newQuestion);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteQuestion(@PathVariable Long id) {
         questionService.deleteQuestion(id);

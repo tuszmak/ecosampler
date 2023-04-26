@@ -35,4 +35,12 @@ public class Question {
         this.description = description;
         this.fieldStyle = fieldStyle;
     }
+
+    public Question(String description) {
+        this.description = description;
+    }
+
+    public Question(FieldStyle fieldStyle) {
+        this.fieldStyle = fieldStyle;
+    }
 }
