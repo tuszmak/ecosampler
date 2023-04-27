@@ -1,17 +1,26 @@
-import {Button, Form, Input} from 'antd';
+import {Button, Form, Input, message} from 'antd';
 
 const onSubmitFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
 
-const onSubmit = (values) => {
-    fetch("/api/v1/user", {
+const onSubmit = async (values) => {
+    const response = await fetch("/api/v1/user", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(values)
     })
+    const data = await response.json()
+    const msg = await data.message
+
+    const ERROR_MSG_DURATION = 3;
+    if (response.status === 200)
+        message.success('Registration successful', ERROR_MSG_DURATION);
+     else
+        message.error(msg, ERROR_MSG_DURATION);
+
 }
 
 const Register = () => (
@@ -56,7 +65,7 @@ const Register = () => (
                 },
             ]}
         >
-            <Input type = "email"/>
+            <Input type="email"/>
         </Form.Item>
 
         <Form.Item
