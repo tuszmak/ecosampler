@@ -5,16 +5,20 @@ import Register from "./pages/register";
 
 import RootLayout from './layout/RootLayout';
 import Login from './pages/login';
+import Projects from './pages/projects';
+import Project from './pages/project';
 
 const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route path='/' element={<RootLayout/>}>
-            <Route index element={<Sample/>}/>
-            <Route path='sample' element={<Sample/>}/>
-            <Route path='login' element={<Login/>}/>
-            <Route path="register" element={<Register/>}/>
-        </Route>
-    )
+  createRoutesFromElements(
+    <Route path='/' element={<RootLayout />}>
+      <Route index element={<Sample />} />
+      <Route path='sample' element={<Sample />} />
+      <Route path="register" element={<Register/>}/>
+      <Route path='login' element={<Login />} />
+      <Route path='projects' element={<Projects />} />
+      <Route path='project/:id' element={<Project />} />
+    </Route>
+  )
 )
 
 function App() {
