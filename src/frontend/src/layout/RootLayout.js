@@ -25,7 +25,6 @@ const RootLayout = () => {
             }}
             items={[{ title: 'Home' }, { title: 'List' }, { title: 'App' }]}
           >
-
           </Breadcrumb>
           <div
             className="site-layout-content"

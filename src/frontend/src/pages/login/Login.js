@@ -45,7 +45,6 @@ const Login = () => {
                 >
                     <Input />
                 </Form.Item>
-
                 <Form.Item
                     label="Password"
                     name="password"
@@ -58,7 +57,6 @@ const Login = () => {
                 >
                     <Input.Password />
                 </Form.Item>
-
                 <Form.Item
                     name="remember"
                     valuePropName="checked"
@@ -69,7 +67,6 @@ const Login = () => {
                 >
                     <Checkbox>Remember me</Checkbox>
                 </Form.Item>
-
                 <Form.Item
                     wrapperCol={{
                         offset: 8,
@@ -82,10 +79,6 @@ const Login = () => {
                 </Form.Item>
             </Form></div>
     )
-
-
-
-
 }
 
 export default Login;
