@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,4 +32,10 @@ public class SampleData {
 
     @OneToMany
     private List<Answer> answers;
+
+    public SampleData(User user, Form form) {
+        this.user = user;
+        this.form = form;
+        this.answers = new ArrayList<>();
+    }
 }

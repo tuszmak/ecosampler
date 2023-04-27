@@ -1,10 +1,9 @@
 package com.codecool.ecosampler.repository;
 
-import com.codecool.ecosampler.domain.User;
+import com.codecool.ecosampler.domain.SampleData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    boolean existsUserByEmail(String email);}
+public interface SampleDataRepository extends JpaRepository<SampleData, Long> {
+}
