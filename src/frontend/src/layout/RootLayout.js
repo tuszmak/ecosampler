@@ -23,10 +23,9 @@ const RootLayout = () => {
             style={{
               margin: '16px 0',
             }}
+            items={[{ title: 'Home' }, { title: 'List' }, { title: 'App' }]}
           >
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+
           </Breadcrumb>
           <div
             className="site-layout-content"
