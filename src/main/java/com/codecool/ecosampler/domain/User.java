@@ -25,16 +25,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequens")
     private Long id;
 
+    @Column(name = "name",
+            nullable = false
+    )
+    private String name;
+
     @Column(name = "email",
             nullable = false,
             unique = true
     )
     private String email;
-
-    @Column(name = "name",
-            nullable = false
-    )
-    private String name;
 
     @Column(name = "password",
             nullable = false
@@ -53,7 +53,7 @@ public class User {
     )
     private List<Project> projects;
 
-    public User(String email, String name, String password) {
+    public User(String name, String email, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
