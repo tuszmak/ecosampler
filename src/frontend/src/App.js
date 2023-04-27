@@ -2,12 +2,14 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import Sample from './Sample';
 import 'antd/dist/reset.css';
 import RootLayout from './layout/RootLayout';
+import Login from './pages/login';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
       <Route index element={<Sample />} />
       <Route path='sample' element={<Sample />} />
+      <Route path='login' element={<Login />} />
     </Route>
   )
 )
