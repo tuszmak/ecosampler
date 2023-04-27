@@ -17,12 +17,13 @@ import java.util.List;
 public class Form {
     @Id
     @SequenceGenerator(
-            name = "form_id_sequens",
-            sequenceName = "form_id_sequens",
+            name = "form_id_sequence",
+            sequenceName = "form_id_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "form_id_sequens")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "form_id_sequence")
     private Long id;
+
     @Column(name = "name",
             nullable = false)
     private String name;

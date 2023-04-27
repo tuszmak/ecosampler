@@ -14,11 +14,11 @@ import lombok.Setter;
 public class Answer {
     @Id
     @SequenceGenerator(
-            name = "answer_id_sequens",
-            sequenceName = "answer_id_sequens",
+            name = "answer_id_sequence",
+            sequenceName = "answer_id_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "answer_id_sequens")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "answer_id_sequence")
     private Long id;
     @Column(name = "answer",
             nullable = false)
