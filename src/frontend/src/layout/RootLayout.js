@@ -32,7 +32,6 @@ const RootLayout = () => {
               background: colorBgContainer,
             }}
           >
-            Content
             <Outlet /> {/* router Outlet serve to render the routes */}
           </div>
         </Content>
