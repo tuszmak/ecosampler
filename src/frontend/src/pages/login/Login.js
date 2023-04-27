@@ -6,7 +6,7 @@ const Login = () => {
     const navigate = useNavigate()
     const onFinish = (values) => {
         console.log('Success:', values);
-        // postFetch("{{base-path}}/user",)
+        //TODO check if user is in database
         navigate("/")
     };
     const onFinishFailed = (errorInfo) => {
