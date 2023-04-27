@@ -24,6 +24,7 @@ const onSubmit = async (values) => {
 }
 
 const Register = () => (
+    <div className='loginForm'>
     <Form
         name="basic"
         labelCol={{
@@ -91,7 +92,7 @@ const Register = () => (
                 Submit
             </Button>
         </Form.Item>
-    </Form>
+    </Form></div>
 )
 
 export default Register;
