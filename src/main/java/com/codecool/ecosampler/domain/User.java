@@ -18,11 +18,11 @@ public class User {
 
     @Id
     @SequenceGenerator(
-            name = "user_id_sequens",
-            sequenceName = "user_id_sequens",
+            name = "user_id_sequence",
+            sequenceName = "user_id_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequens")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
     private Long id;
 
     @Column(name = "name",

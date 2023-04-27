@@ -18,11 +18,11 @@ import java.util.List;
 public class Project {
     @Id
     @SequenceGenerator(
-            name = "project_id_sequens",
-            sequenceName = "project_id_sequens",
+            name = "project_id_sequence",
+            sequenceName = "project_id_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_id_sequens")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_id_sequence")
     private Long id;
 
     @Column(name = "name",
