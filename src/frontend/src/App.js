@@ -1,6 +1,8 @@
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
+import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom'
 import Sample from './Sample';
 import 'antd/dist/reset.css';
+import Register from "./pages/register";
+
 import RootLayout from './layout/RootLayout';
 import Login from './pages/login';
 import Projects from './pages/projects';
@@ -11,6 +13,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<RootLayout />}>
       <Route index element={<Sample />} />
       <Route path='sample' element={<Sample />} />
+      <Route path="register" element={<Register/>}/>
       <Route path='login' element={<Login />} />
       <Route path='projects' element={<Projects />} />
       <Route path='project/:id' element={<Project />} />
@@ -19,9 +22,9 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-  );
+    return (
+        <RouterProvider router={router}/>
+    );
 }
 
 export default App;
