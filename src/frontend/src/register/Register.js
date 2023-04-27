@@ -5,7 +5,7 @@ const onSubmitFailed = (errorInfo) => {
 };
 
 const onSubmit = (values) => {
-    fetch("http://localhost:8080/api/v1/user", {
+    fetch("/api/v1/user", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -34,8 +34,8 @@ const Register = () => (
         autoComplete="off"
     >
         <Form.Item
-            label="Username"
-            name="username"
+            label="name"
+            name="name"
             rules={[
                 {
                     required: true,
@@ -47,7 +47,20 @@ const Register = () => (
         </Form.Item>
 
         <Form.Item
-            label="Password"
+            label="email"
+            name="email"
+            rules={[
+                {
+                    required: true,
+                    message: 'Please input your email!',
+                },
+            ]}
+        >
+            <Input type = "email"/>
+        </Form.Item>
+
+        <Form.Item
+            label="password"
             name="password"
             rules={[
                 {
