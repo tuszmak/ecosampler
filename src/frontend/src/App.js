@@ -1,17 +1,20 @@
-import { Routes, Route } from 'react-router-dom'
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import Sample from './Sample';
-import { Button } from 'antd';
 import 'antd/dist/reset.css';
+import RootLayout from './layout/RootLayout';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<RootLayout />}>
+      <Route index element={<Sample />} />
+      <Route path='sample' element={<Sample />} />
+    </Route>
+  )
+)
 
 function App() {
   return (
-    <div className="App">
-      <h1>Project Here</h1>
-      <Button type="primary">Button</Button>
-      <Routes>
-        <Route path='/' element={<Sample />} />
-      </Routes>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 
