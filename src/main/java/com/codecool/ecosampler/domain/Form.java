@@ -28,7 +28,7 @@ public class Form {
             nullable = false)
     private String name;
 
-    @OneToMany
+    @ManyToMany
     private List<Question> questions;
 
     public Form(String name) {
