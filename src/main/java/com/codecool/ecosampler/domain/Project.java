@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,6 +25,12 @@ public class Project {
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_id_sequence")
     private Long id;
+
+    @Column(name = "public_id",
+            nullable = false,
+            unique = true
+    )
+    private UUID publicId;
 
     @Column(name = "name",
             nullable = false,
@@ -44,9 +51,15 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "project_id")
     )
     private List<User> users;
-    public Project(String name, String description) {
+
+    public Project(UUID publicId, String name, String description) {
+        this.publicId = publicId;
         this.name = name;
         this.description = description;
         this.formList = new ArrayList<>();
+    }
+
+    public boolean addUserToProject(User user) {
+       return this.users.add(user);
     }
 }
