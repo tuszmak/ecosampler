@@ -1,13 +1,11 @@
 package com.codecool.ecosampler.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "answer")
@@ -24,10 +22,16 @@ public class Answer {
             nullable = false)
     private String answer;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
 
     public Answer(String answer) {
         this.answer = answer;
+    }
+
+    public Answer(String answer, Question question) {
+        this.answer = answer;
+        this.question = question;
     }
 }

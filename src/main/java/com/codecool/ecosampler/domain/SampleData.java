@@ -30,7 +30,7 @@ public class SampleData {
     @OneToOne(targetEntity = Form.class)
     private Form form;
 
-    @OneToMany
+    @OneToMany(mappedBy = "answer")
     private List<Answer> answers;
 
     public SampleData(User user, Form form) {
