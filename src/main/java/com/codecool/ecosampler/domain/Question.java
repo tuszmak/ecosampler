@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,6 +23,12 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "question_id_sequence")
     private Long id;
 
+    @Column(name = "public_id",
+            nullable = false,
+            unique = true
+    )
+    private UUID publicId;
+
     @Column(name = "description",
             nullable = false,
             unique = true
@@ -31,16 +39,9 @@ public class Question {
     @Enumerated
     private FieldStyle fieldStyle;
 
-    public Question(String description, FieldStyle fieldStyle) {
+    public Question(UUID publicId, String description, FieldStyle fieldStyle) {
+        this.publicId = publicId;
         this.description = description;
-        this.fieldStyle = fieldStyle;
-    }
-
-    public Question(String description) {
-        this.description = description;
-    }
-
-    public Question(FieldStyle fieldStyle) {
         this.fieldStyle = fieldStyle;
     }
 }
