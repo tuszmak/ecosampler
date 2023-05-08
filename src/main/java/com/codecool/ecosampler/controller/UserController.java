@@ -6,25 +6,27 @@ import com.codecool.ecosampler.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
     private UserService userService;
 
-    @GetMapping("/{id}")
-    public UserDTO getUserByID(@PathVariable Long id) {
-        return userService.getUserByID(id);
+    @GetMapping("/{publicId}")
+    public UserDTO getUserByID(@PathVariable UUID publicId) {
+        return userService.getUserByPublicId(publicId);
     }
 
     @PostMapping("")
-    public Long registerUser(@RequestBody NewUser newUser){
+    public UUID registerUser(@RequestBody NewUser newUser){
        return userService.registerUser(newUser);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id){
-        userService.deleteUserByID(id);
+    @DeleteMapping("/{publicId}")
+    public void deleteUser(@PathVariable UUID publicId){
+        userService.deleteUserByPublicId(publicId);
     }
 
 }

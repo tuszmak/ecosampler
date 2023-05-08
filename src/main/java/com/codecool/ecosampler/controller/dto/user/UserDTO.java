@@ -2,5 +2,7 @@ package com.codecool.ecosampler.controller.dto.user;
 
 import com.codecool.ecosampler.domain.Role;
 
-public record UserDTO(String name, String email, Role role) {
+import java.util.UUID;
+
+public record UserDTO(UUID id, String name, String email, Role role) {
 }

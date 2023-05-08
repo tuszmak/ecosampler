@@ -9,29 +9,34 @@ import com.codecool.ecosampler.utilities.Mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @Service
 public class UserService {
     private UserRepository userRepository;
 
-    public UserDTO getUserByID(Long id) {
+    public UserDTO getUserByPublicId(UUID publicId) {
         return Mapper.mapToDTO(userRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("No user by ID:" + id)));
+                .findByPublicId(publicId)
+                .orElseThrow(() -> new NotFoundException("No user by ID:" + publicId)));
     }
 
-    public Long registerUser(NewUser newUser) {
+    public UUID registerUser(NewUser newUser) {
         if (userRepository.existsUserByEmail(newUser.email()))
             throw new BadRequestException("User already exists with email: " + newUser.email());
         return userRepository
                 .save(Mapper.mapToUser(newUser))
-                .getId();
+                .getPublicId();
     }
 
-    public void deleteUserByID(Long id) {
-        if (userRepository.existsById(id))
-            userRepository.deleteById(id);
-        else
-            throw new NotFoundException("No User with id: " + id);
+    public void deleteUserByPublicId(UUID publicId) {
+        userRepository.findByPublicId(publicId)
+                .ifPresentOrElse(
+                        user -> userRepository.deleteById(user.getId()),
+                        () -> {
+                            throw new NotFoundException("No User with id: " + publicId);
+                        }
+                );
     }
 }
