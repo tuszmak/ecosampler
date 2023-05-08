@@ -46,7 +46,7 @@ public class ProjectService {
     public List<ProjectDTO> getProjectsDTOByUserPublicId(UUID userPublicId) {
         User user = userService.getUserByPublicId(userPublicId);
         return projectRepository.findAllProjectByUserId(user.getId()).stream()
-                .map(project -> projectMapper.toDTO(project))
+                .map(projectMapper::toDTO)
                 .collect(Collectors.toList());
     }
 

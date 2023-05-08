@@ -34,10 +34,6 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    public Answer(String answer) {
-        this.answer = answer;
-    }
-
     public Answer(UUID publicId, String answer, Question question) {
         this.publicId = publicId;
         this.answer = answer;

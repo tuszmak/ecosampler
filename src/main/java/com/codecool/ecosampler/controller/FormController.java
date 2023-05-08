@@ -1,8 +1,6 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.controller.dto.form.FormDTO;
 import com.codecool.ecosampler.controller.dto.form.NewForm;
-import com.codecool.ecosampler.domain.Form;
 import com.codecool.ecosampler.service.FormService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +16,7 @@ public class FormController {
 
     @PostMapping("/")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public UUID createNewForm(@RequestBody NewForm form){
+    public UUID createNewForm(@RequestBody NewForm form) {
         return formService.createNewForm(form);
     }
 }
