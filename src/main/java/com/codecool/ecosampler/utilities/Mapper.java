@@ -12,7 +12,7 @@ public class Mapper {
         return new UserDTO(user.getPublicId(), user.getName(), user.getEmail(), user.getRole());
     }
 
-    public static User mapToUser(NewUser newUser) {
+    public static User mapToNewUser(NewUser newUser) {
         return new User(UUID.randomUUID(), newUser.name(), newUser.email(), newUser.password());
     }
 }
