@@ -1,6 +1,6 @@
 package com.codecool.ecosampler.utilities;
 
-import com.codecool.ecosampler.controller.dto.ProjectDTO;
+import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.domain.Project;
 import org.springframework.stereotype.Service;
 

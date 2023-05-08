@@ -1,6 +1,6 @@
 package com.codecool.ecosampler.service;
 
-import com.codecool.ecosampler.controller.dto.ProjectDTO;
+import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.controller.dto.project.NewProject;
 import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
 import com.codecool.ecosampler.domain.Project;

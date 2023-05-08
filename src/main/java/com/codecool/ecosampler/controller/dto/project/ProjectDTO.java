@@ -1,4 +1,4 @@
-package com.codecool.ecosampler.controller.dto;
+package com.codecool.ecosampler.controller.dto.project;
 
 import java.util.UUID;
 
