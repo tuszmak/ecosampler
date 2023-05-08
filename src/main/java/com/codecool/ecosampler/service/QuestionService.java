@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Service
 public class QuestionService {
-    private QuestionRepository questionRepository;
-    private QuestionMapper questionMapper;
+    private final QuestionRepository questionRepository;
+    private final QuestionMapper questionMapper;
 
     public List<QuestionDTO> getAllQuestionsDTO() {
         return questionRepository.findAll().stream()
-                .map(question -> questionMapper.toDTO(question))
+                .map(questionMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -38,8 +38,7 @@ public class QuestionService {
     }
 
     public UUID modifyQuestion(UUID publicId, QuestionDTO requestQuestion) {
-        Question question = getQuestionPublicId(publicId);
-
+        Question question = getQuestionByPublicId(publicId);
         return questionRepository.save(
                         updateQuestionByRequest(requestQuestion, question)
                 )
@@ -47,11 +46,11 @@ public class QuestionService {
     }
 
     public void deleteQuestion(UUID publicId) {
-        final Question question = getQuestionPublicId(publicId);
+        final Question question = getQuestionByPublicId(publicId);
         questionRepository.deleteById(question.getId());
     }
 
-    protected Question getQuestionPublicId(UUID publicId) {
+    protected Question getQuestionByPublicId(UUID publicId) {
         return questionRepository.findQuestionByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("There is no question with id: " + publicId));
     }

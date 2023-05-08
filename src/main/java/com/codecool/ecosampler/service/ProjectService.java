@@ -1,8 +1,8 @@
 package com.codecool.ecosampler.service;
 
-import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.controller.dto.project.NewProject;
 import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
+import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.domain.Project;
 import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.BadRequestException;
@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Service
 public class ProjectService {
-    private ProjectRepository projectRepository;
-    public UserService userService;
-    private ProjectMapper projectMapper;
+    private final ProjectRepository projectRepository;
+    private final UserService userService;
+    private final ProjectMapper projectMapper;
 
     public List<ProjectDTO> getAllProjectDTO() {
         return projectRepository.findAll().stream()
-                .map(project -> projectMapper.toDTO(project))
+                .map(projectMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
