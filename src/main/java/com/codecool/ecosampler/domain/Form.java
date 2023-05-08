@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -28,10 +29,17 @@ public class Form {
             nullable = false)
     private String name;
 
+    @Column(name = "public_id",
+            nullable = false,
+            unique = true
+    )
+    private UUID publicId;
+
     @ManyToMany
     private List<Question> questions;
 
-    public Form(String name) {
+    public Form(UUID publicId, String name) {
+        this.publicId = publicId;
         this.name = name;
         this.questions = new ArrayList<>();
     }
