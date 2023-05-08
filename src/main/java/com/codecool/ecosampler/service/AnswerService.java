@@ -46,10 +46,9 @@ public class AnswerService {
                 .getPublicId();
     }
 
-    public void deleteAnswer(Long id) {
-        if (answerRepository.existsById(id))
-            answerRepository.deleteById(id);
-        throw new NotFoundException("There is no answer with id: " + id);
+    public void deleteAnswer(UUID publicId) {
+        final Answer answer = getAnswerByPublicId(publicId);
+        answerRepository.deleteById(answer.getId());
     }
 
     protected Answer getAnswerByPublicId(UUID publicId) {
