@@ -2,6 +2,7 @@ package com.codecool.ecosampler.service;
 
 import com.codecool.ecosampler.controller.dto.user.NewUser;
 import com.codecool.ecosampler.controller.dto.user.UserDTO;
+import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.UserRepository;
@@ -16,27 +17,26 @@ import java.util.UUID;
 public class UserService {
     private UserRepository userRepository;
 
-    public UserDTO getUserByPublicId(UUID publicId) {
-        return Mapper.mapToDTO(userRepository
-                .findByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("No user by ID:" + publicId)));
+    public UserDTO getUserDTOByPublicId(UUID publicId) {
+        return Mapper.mapToDTO(getUserByPublicId(publicId));
     }
 
     public UUID registerUser(NewUser newUser) {
         if (userRepository.existsUserByEmail(newUser.email()))
             throw new BadRequestException("User already exists with email: " + newUser.email());
         return userRepository
-                .save(Mapper.mapToUser(newUser))
+                .save(Mapper.mapToNewUser(newUser))
                 .getPublicId();
     }
 
     public void deleteUserByPublicId(UUID publicId) {
-        userRepository.findByPublicId(publicId)
-                .ifPresentOrElse(
-                        user -> userRepository.deleteById(user.getId()),
-                        () -> {
-                            throw new NotFoundException("No User with id: " + publicId);
-                        }
-                );
+        User user = getUserByPublicId(publicId);
+        userRepository.deleteById(user.getId());
+    }
+
+    protected User getUserByPublicId(UUID publicId) {
+        return userRepository
+                .findByPublicId(publicId)
+                .orElseThrow(() -> new NotFoundException("No user by ID:" + publicId));
     }
 }

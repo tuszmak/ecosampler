@@ -16,7 +16,7 @@ public class UserController {
 
     @GetMapping("/{publicId}")
     public UserDTO getUserByID(@PathVariable UUID publicId) {
-        return userService.getUserByPublicId(publicId);
+        return userService.getUserDTOByPublicId(publicId);
     }
 
     @PostMapping("")
