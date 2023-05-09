@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom'
 import useAuth from '../../hook/useAuth';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 const LOGIN_URL = "/api/v1/login";
 const HOME_URL = "/";
@@ -20,31 +20,32 @@ const Login = () => {
         const name = values.name;
         const password = values.password;
 
-        try {
-            const response = await fetch(
-                LOGIN_URL,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, password })
-                }
-            );
 
-            const role = response.data.role;
+        const response = await fetch(
+            LOGIN_URL,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, password })
+            }
+        );
+
+        const data = await response.json()
+        const msg = await data.message
+
+        console.log(data, " : ", msg);
+        
+        
+        if(response.ok) {
+            const role = data.role;
             setAuth({ name, password, role });
             navigate(from, { replace: true });
-
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg("No Server Response")
-            } else {
-                setErrMsg(err.response.message)
-            }
-            console.log(errMsg);
-
+        } else {
+            console.log(msg);
         }
 
     };
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
