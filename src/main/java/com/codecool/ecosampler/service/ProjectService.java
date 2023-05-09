@@ -5,7 +5,6 @@ import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
 import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.domain.Project;
 import com.codecool.ecosampler.domain.User;
-import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.ProjectRepository;
 import com.codecool.ecosampler.utilities.ProjectMapper;
@@ -30,17 +29,13 @@ public class ProjectService {
                 .collect(Collectors.toList());
     }
 
-    public UUID addNewProject(NewProject project) {
-        try {
-            return projectRepository.save(new Project(UUID.randomUUID(),
-                                    project.name(),
-                                    project.description()
-                            )
-                    )
-                    .getPublicId();
-        } catch (Exception e) {
-            throw new BadRequestException("There some problem with current data.");
-        }
+    public ProjectDTO addNewProject(NewProject newProject) {
+        final Project project = projectRepository.save(new Project(UUID.randomUUID(),
+                        newProject.name(),
+                        newProject.description()
+                )
+        );
+        return projectMapper.toDTO(project);
     }
 
     public List<ProjectDTO> getProjectsDTOByUserPublicId(UUID userPublicId) {

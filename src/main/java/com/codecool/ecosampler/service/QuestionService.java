@@ -27,14 +27,14 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    public UUID createQuestion(NewQuestion question) {
-        isQuestionExistByDescription(question.description());
-        return questionRepository.save(new Question(UUID.randomUUID(),
-                                question.description(),
-                                question.fieldStyle()
-                        )
+    public QuestionDTO createQuestion(NewQuestion newQuestion) {
+        isQuestionExistByDescription(newQuestion.description());
+        final Question question = questionRepository.save(new Question(UUID.randomUUID(),
+                        newQuestion.description(),
+                        newQuestion.fieldStyle()
                 )
-                .getPublicId();
+        );
+        return questionMapper.toDTO(question);
     }
 
     public UUID modifyQuestion(UUID publicId, QuestionDTO requestQuestion) {

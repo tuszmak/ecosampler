@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID registerUser(@RequestBody NewUser newUser){
+    public UserDTO registerUser(@RequestBody NewUser newUser){
        return userService.registerUser(newUser);
     }
 
