@@ -25,7 +25,7 @@ public class ProjectController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public UUID addNewProject(@RequestBody NewProject project) {
+    public ProjectDTO addNewProject(@RequestBody NewProject project) {
         return projectService.addNewProject(project);
     }
 
