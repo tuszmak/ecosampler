@@ -36,16 +36,16 @@ public class SampleDataService {
         return sampleDataMapper.toDTO(sampleData);
     }
 
-    public UUID createSampleData(NewSampleData sampleData) {
-        User user = userService.getUserByPublicId(sampleData.userID());
-        Form form = formService.getFormByPublicId(sampleData.formID());
-        return sampleDataRepository.save(new SampleData(UUID.randomUUID(),
-                                LocalDateTime.now(),
-                                user,
-                                form
-                        )
+    public SampleDataDTO createSampleData(NewSampleData newSampleData) {
+        User user = userService.getUserByPublicId(newSampleData.userID());
+        Form form = formService.getFormByPublicId(newSampleData.formID());
+        final SampleData sampleData = sampleDataRepository.save(new SampleData(UUID.randomUUID(),
+                        LocalDateTime.now(),
+                        user,
+                        form
                 )
-                .getPublicId();
+        );
+        return sampleDataMapper.toDTO(sampleData);
     }
 
     public void deleteSampleData(UUID publicId) {

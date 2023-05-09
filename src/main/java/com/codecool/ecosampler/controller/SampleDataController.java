@@ -28,7 +28,7 @@ public class SampleDataController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public UUID createQuestion(@RequestBody NewSampleData sampleData) {
+    public SampleDataDTO createQuestion(@RequestBody NewSampleData sampleData) {
         return sampleDataService.createSampleData(sampleData);
     }
 
