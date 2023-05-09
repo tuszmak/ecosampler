@@ -1,13 +1,49 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useNavigate } from 'react-router';
+import { useLocation } from 'react-router-dom'
+import useAuth from '../../hook/useAuth';
+import { useState, useRef } from 'react';
+
+const LOGIN_URL = "/api/v1/login";
+const HOME_URL = "/";
 
 const Login = () => {
-    const navigate = useNavigate()
-    const onFinish = (values) => {
-        console.log('Success:', values);
-        //TODO check if user is in database
-        navigate("/")
+    const { setAuth } = useAuth();
+    const [errMsg, setErrMsg] = useState('');
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || HOME_URL;
+
+    const onFinish = async (values) => {
+        const name = values.name;
+        const password = values.password;
+
+        try {
+            const response = await fetch(
+                LOGIN_URL,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, password })
+                }
+            );
+
+            const role = response.data.role;
+            setAuth({ name, password, role });
+            navigate(from, { replace: true });
+
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg("No Server Response")
+            } else {
+                setErrMsg(err.response.message)
+            }
+            console.log(errMsg);
+
+        }
+
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -15,6 +51,7 @@ const Login = () => {
 
     return (
         <div className='loginForm'>
+            <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <Form
                 name="basic"
                 labelCol={{
