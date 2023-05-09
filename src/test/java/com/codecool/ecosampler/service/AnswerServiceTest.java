@@ -1,5 +1,7 @@
 package com.codecool.ecosampler.service;
 
+import com.codecool.ecosampler.controller.dto.answer.AnswerDTO;
+import com.codecool.ecosampler.controller.dto.answer.NewAnswer;
 import com.codecool.ecosampler.domain.Answer;
 import com.codecool.ecosampler.domain.Question;
 import com.codecool.ecosampler.repository.AnswerRepository;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AnswerServiceTest {
 
@@ -30,14 +32,18 @@ class AnswerServiceTest {
 
 
     @Test
-    void getAllAnswersDTO() {
+    void should_get_one_answer() {
         Answer answer = new Answer(UUID.randomUUID(), "Waaaaa", new Question());
         when(answerRepository.findAll()).thenReturn(List.of(answer));
-        assertEquals(1, answerService.getAllAnswersDTO().size());
+        int numberOfAnswers = answerService.getAllAnswersDTO().size();
+        assertEquals(1, numberOfAnswers);
+        verify(answerRepository,times(1)).findAll();
     }
 
     @Test
-    void createAnswer() {
+    void should_save_one_answer() {
+        UUID uuid = UUID.randomUUID();
+
     }
 
     @Test
