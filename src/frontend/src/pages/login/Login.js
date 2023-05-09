@@ -1,16 +1,16 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom'
 import useAuth from '../../hook/useAuth';
-import { useState } from 'react';
+import { useRef } from 'react';
 
-const LOGIN_URL = "/api/v1/login";
+const LOGIN_API_URL = "/api/v1/login";
 const HOME_URL = "/";
+const ERROR_MSG_DURATION = 3;
 
 const Login = () => {
     const { setAuth } = useAuth();
-    const [errMsg, setErrMsg] = useState('');
+    const formRef = useRef(null);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,7 +22,7 @@ const Login = () => {
 
 
         const response = await fetch(
-            LOGIN_URL,
+            LOGIN_API_URL,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -41,7 +41,9 @@ const Login = () => {
             setAuth({ name, password, role });
             navigate(from, { replace: true });
         } else {
-            console.log(msg);
+            console.log(msg);      
+            formRef.current.resetFields();
+            message.error(msg, ERROR_MSG_DURATION)  
         }
 
     };
@@ -52,9 +54,9 @@ const Login = () => {
 
     return (
         <div className='loginForm'>
-            <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <Form
                 name="basic"
+                ref={formRef}
                 labelCol={{
                     span: 8,
                 }}
