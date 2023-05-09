@@ -54,12 +54,14 @@ public class User {
     @Enumerated
     private Role role;
 
+    //TODO We could remove it.
     @ManyToMany
     @JoinTable(name = "user_to_project_map",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id")
     )
     private List<Project> projects;
+
 
     public User(UUID publicId, String name, String email, String password) {
         this.publicId = publicId;
