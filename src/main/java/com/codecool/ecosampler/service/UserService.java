@@ -21,12 +21,12 @@ public class UserService {
         return Mapper.mapToDTO(getUserByPublicId(publicId));
     }
 
-    public UUID registerUser(NewUser newUser) {
+    public UserDTO registerUser(NewUser newUser) {
         if (userRepository.existsUserByEmail(newUser.email()))
             throw new BadRequestException("User already exists with email: " + newUser.email());
-        return userRepository
-                .save(Mapper.mapToNewUser(newUser))
-                .getPublicId();
+        final User user = userRepository
+                .save(Mapper.mapToNewUser(newUser));
+        return Mapper.mapToDTO(user);
     }
 
     public void deleteUserByPublicId(UUID publicId) {
