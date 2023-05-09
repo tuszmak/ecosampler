@@ -18,6 +18,7 @@ import java.util.UUID;
 @Entity(name = "project")
 public class Project {
     @Id
+    @JsonIgnore
     @SequenceGenerator(
             name = "project_id_sequence",
             sequenceName = "project_id_sequence",

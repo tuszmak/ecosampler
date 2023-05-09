@@ -29,7 +29,6 @@ public class AnswerController {
     }
 
     @PutMapping("/{publicId}")
-    @ResponseStatus(value = HttpStatus.CREATED)
     public UUID modifyAnswer(@PathVariable UUID publicId, @RequestBody AnswerDTO requestAnswer) {
         return answerService.modifyAnswer(publicId, requestAnswer);
     }

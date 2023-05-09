@@ -1,5 +1,6 @@
 package com.codecool.ecosampler.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Entity(name = "question")
 public class Question {
     @Id
+    @JsonIgnore
     @SequenceGenerator(
             name = "question_id_sequence",
             sequenceName = "question_id_sequence",

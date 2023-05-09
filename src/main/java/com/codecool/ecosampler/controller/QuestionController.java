@@ -28,7 +28,6 @@ public class QuestionController {
         return questionService.createQuestion(question);
     }
 
-    @ResponseStatus(value = HttpStatus.CREATED)
     @PutMapping("/{publicId}")
     public UUID modifyQuestion(@PathVariable UUID publicId, @RequestBody QuestionDTO newQuestion) {
         return questionService.modifyQuestion(publicId, newQuestion);

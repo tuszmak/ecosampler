@@ -18,6 +18,7 @@ import java.util.UUID;
 public class User {
 
     @Id
+    @JsonIgnore
     @SequenceGenerator(
             name = "user_id_sequence",
             sequenceName = "user_id_sequence",

@@ -1,27 +1,33 @@
 package com.codecool.ecosampler.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "answer")
 public class Answer {
     @Id
+    @JsonIgnore
     @SequenceGenerator(
             name = "answer_id_sequence",
             sequenceName = "answer_id_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "answer_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_id_sequence")
     private Long id;
+
     @Column(name = "answer",
-            nullable = false)
+            nullable = false
+    )
     private String answer;
 
     @Column(name = "public_id",
