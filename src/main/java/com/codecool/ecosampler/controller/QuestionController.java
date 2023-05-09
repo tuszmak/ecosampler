@@ -1,12 +1,14 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.domain.Question;
+import com.codecool.ecosampler.controller.dto.question.NewQuestion;
+import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
 import com.codecool.ecosampler.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
@@ -16,24 +18,23 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping
-    public List<Question> getAllQuestions() {
-        return questionService.getAllQuestions();
+    public List<QuestionDTO> getAllQuestionsDTO() {
+        return questionService.getAllQuestionsDTO();
     }
 
-    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
-    public Long createQuestion(@RequestBody Question question) {
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public UUID createQuestion(@RequestBody NewQuestion question) {
         return questionService.createQuestion(question);
     }
 
-    @ResponseStatus(value = HttpStatus.CREATED)
-    @PutMapping("/{id}")
-    public Question modifyQuestion(@PathVariable Long id, @RequestBody Question newQuestion) {
-        return questionService.modifyQuestion(id, newQuestion);
+    @PutMapping("/{publicId}")
+    public UUID modifyQuestion(@PathVariable UUID publicId, @RequestBody QuestionDTO newQuestion) {
+        return questionService.modifyQuestion(publicId, newQuestion);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteQuestion(@PathVariable Long id) {
-        questionService.deleteQuestion(id);
+    @DeleteMapping("/{publicId}")
+    public void deleteQuestion(@PathVariable UUID publicId) {
+        questionService.deleteQuestion(publicId);
     }
 }
