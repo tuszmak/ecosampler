@@ -17,9 +17,10 @@ public class AnswerController {
 
     private AnswerService answerService;
 
+
     @GetMapping
     public List<AnswerDTO> getAllAnswers() {
-        return answerService.getAllAnswers();
+        return answerService.getAllAnswersDTO();
     }
 
     @PostMapping

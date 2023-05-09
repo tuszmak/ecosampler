@@ -4,6 +4,7 @@ import com.codecool.ecosampler.controller.dto.user.NewUser;
 import com.codecool.ecosampler.controller.dto.user.UserDTO;
 import com.codecool.ecosampler.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,7 +20,8 @@ public class UserController {
         return userService.getUserDTOByPublicId(publicId);
     }
 
-    @PostMapping("")
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UUID registerUser(@RequestBody NewUser newUser){
        return userService.registerUser(newUser);
     }
