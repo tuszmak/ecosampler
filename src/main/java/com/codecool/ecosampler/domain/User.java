@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,6 +18,7 @@ import java.util.List;
 public class User {
 
     @Id
+    @JsonIgnore
     @SequenceGenerator(
             name = "user_id_sequence",
             sequenceName = "user_id_sequence",
@@ -24,6 +26,12 @@ public class User {
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
     private Long id;
+
+    @Column(name = "public_id",
+            nullable = false,
+            unique = true
+    )
+    private UUID publicId;
 
     @Column(name = "name",
             nullable = false
@@ -53,13 +61,10 @@ public class User {
     )
     private List<Project> projects;
 
-    public User(String name, String email, String password) {
+    public User(UUID publicId, String name, String email, String password) {
+        this.publicId = publicId;
         this.email = email;
         this.name = name;
         this.password = password;
-    }
-
-    public void addProject(Project project) {
-        projects.add(project);
     }
 }

@@ -1,5 +1,6 @@
 package com.codecool.ecosampler.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,6 +18,7 @@ import java.util.List;
 @Entity(name = "form")
 public class Form {
     @Id
+    @JsonIgnore
     @SequenceGenerator(
             name = "form_id_sequence",
             sequenceName = "form_id_sequence",
@@ -28,10 +31,17 @@ public class Form {
             nullable = false)
     private String name;
 
-    @OneToMany
+    @Column(name = "public_id",
+            nullable = false,
+            unique = true
+    )
+    private UUID publicId;
+
+    @ManyToMany
     private List<Question> questions;
 
-    public Form(String name) {
+    public Form(UUID publicId, String name) {
+        this.publicId = publicId;
         this.name = name;
         this.questions = new ArrayList<>();
     }
