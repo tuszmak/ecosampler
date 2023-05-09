@@ -1,8 +1,8 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.controller.dto.project.NewProject;
 import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
+import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.domain.Project;
 import com.codecool.ecosampler.service.ProjectService;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping
-    public List<ProjectDTO> getAllProject() {
+    public List<ProjectDTO> getAllProjectDTO() {
         return projectService.getAllProjectDTO();
     }
 
@@ -39,7 +39,6 @@ public class ProjectController {
         projectService.deleteProject(publicId);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/addUser")
     public void addUserToProject(@RequestBody ProjectAndUserId projectAndUserId) {
         projectService.addUserToProject(projectAndUserId);
