@@ -54,7 +54,6 @@ public class User {
     @Enumerated
     private Role role;
 
-    //TODO We could remove it.
     @ManyToMany(mappedBy = "users")
     private List<Project> projects;
 
