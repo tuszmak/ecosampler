@@ -1,5 +1,6 @@
 package com.codecool.ecosampler.utilities;
 
+import com.codecool.ecosampler.controller.dto.login.ResponseUser;
 import com.codecool.ecosampler.controller.dto.user.NewUser;
 import com.codecool.ecosampler.controller.dto.user.UserDTO;
 import com.codecool.ecosampler.domain.User;
@@ -14,5 +15,9 @@ public class Mapper {
 
     public static User mapToNewUser(NewUser newUser) {
         return new User(UUID.randomUUID(), newUser.name(), newUser.email(), newUser.password());
+    }
+
+    public static ResponseUser mapToResponseUser(User user) {
+        return new ResponseUser(user.getPublicId(), user.getRole());
     }
 }
