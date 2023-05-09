@@ -48,8 +48,8 @@ public class Project {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "user_to_project_map",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id")
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<User> users;
 
@@ -58,9 +58,13 @@ public class Project {
         this.name = name;
         this.description = description;
         this.formList = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
 
     public boolean addUserToProject(User user) {
        return this.users.add(user);
+    }
+    public boolean addFormToProject(Form form){
+        return this.formList.add(form);
     }
 }

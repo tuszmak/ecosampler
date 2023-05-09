@@ -45,4 +45,7 @@ public class Form {
         this.name = name;
         this.questions = new ArrayList<>();
     }
+    public boolean addQuestion(Question question){
+        return this.questions.add(question);
+    }
 }

@@ -39,6 +39,9 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
+    @ManyToOne
+    @JoinColumn(name = "sample_data_id")
+    private SampleData sampleData;
 
     public Answer(UUID publicId, String answer, Question question) {
         this.publicId = publicId;
