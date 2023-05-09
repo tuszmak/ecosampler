@@ -1,4 +1,4 @@
-package com.codecool.ecosampler.utilities;
+package com.codecool.ecosampler.dev;
 
 import com.codecool.ecosampler.domain.*;
 import com.codecool.ecosampler.repository.*;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Component
 @AllArgsConstructor
-public class LineRunner implements CommandLineRunner {
+public class DBInitializer implements CommandLineRunner {
     private AnswerRepository answerRepository;
     private UserRepository userRepository;
     private ProjectRepository projectRepository;
