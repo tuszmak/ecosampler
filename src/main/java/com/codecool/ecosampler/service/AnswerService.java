@@ -28,14 +28,14 @@ public class AnswerService {
                 .collect(Collectors.toList());
     }
 
-    public UUID createAnswer(NewAnswer newAnswer) {
+    public AnswerDTO createAnswer(NewAnswer newAnswer) {
         final Question question = questionService.getQuestionByPublicId(newAnswer.questionID());
-        return answerRepository.save(new Answer(UUID.randomUUID(),
-                                newAnswer.answer(),
-                                question
-                        )
+        final Answer answer = answerRepository.save(new Answer(UUID.randomUUID(),
+                        newAnswer.answer(),
+                        question
                 )
-                .getPublicId();
+        );
+        return answerMapper.toDto(answer);
     }
 
     public UUID modifyAnswer(UUID publicId, AnswerDTO requestAnswer) {

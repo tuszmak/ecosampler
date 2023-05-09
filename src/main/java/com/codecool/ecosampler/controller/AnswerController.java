@@ -25,7 +25,7 @@ public class AnswerController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public UUID createAnswer(@RequestBody NewAnswer answer) {
+    public AnswerDTO createAnswer(@RequestBody NewAnswer answer) {
         return answerService.createAnswer(answer);
     }
 
