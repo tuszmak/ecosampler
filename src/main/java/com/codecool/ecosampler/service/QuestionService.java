@@ -50,7 +50,7 @@ public class QuestionService {
         questionRepository.deleteById(question.getId());
     }
 
-    protected Question getQuestionByPublicId(UUID publicId) {
+    public Question getQuestionByPublicId(UUID publicId) {
         return questionRepository.findQuestionByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("There is no question with id: " + publicId));
     }

@@ -67,6 +67,18 @@ public class ProjectService {
         );
     }
 
+    public void addUserToProject(ProjectAndUserId projectAndUserId) {
+        User user = userService.getUserByPublicId(projectAndUserId.userID());
+        Project project = getProjectByPublicId(projectAndUserId.projectID());
+        project.addUserToProject(user);
+        projectRepository.save(project);
+    }
+
+    public Project getProjectByPublicId(UUID publicId) {
+        return projectRepository.findProjectByPublicId(publicId)
+                .orElseThrow(() -> new NotFoundException("Project not exist with Id: " + publicId));
+    }
+
     private Project updateProjectWithRequest(ProjectDTO requestProject, Project project) {
         if (Objects.nonNull(requestProject.name()))
             project.setName(requestProject.name());
@@ -75,17 +87,5 @@ public class ProjectService {
             project.setDescription(requestProject.description());
         // TODO The rest
         return project;
-    }
-
-    public void addUserToProject(ProjectAndUserId projectAndUserId) {
-        User user = userService.getUserByPublicId(projectAndUserId.userID());
-        Project project = getProjectByPublicId(projectAndUserId.projectID());
-        project.addUserToProject(user);
-        projectRepository.save(project);
-    }
-
-    private Project getProjectByPublicId(UUID publicId) {
-        return projectRepository.findProjectByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("Project not exist with Id: " + publicId));
     }
 }

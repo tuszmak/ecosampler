@@ -23,7 +23,7 @@ public class FormService {
                 .getPublicId();
     }
 
-    protected Form getFormByPublicId(UUID publicId) {
+    public Form getFormByPublicId(UUID publicId) {
         return formRepository.findFormByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
     }

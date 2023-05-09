@@ -22,7 +22,7 @@ public class AnswerService {
     private final AnswerMapper answerMapper;
     private final QuestionService questionService;
 
-    public List<AnswerDTO> getAllAnswers() {
+    public List<AnswerDTO> getAllAnswersDTO() {
         return answerRepository.findAll().stream()
                 .map(answerMapper::toDto)
                 .collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class AnswerService {
         answerRepository.deleteById(answer.getId());
     }
 
-    protected Answer getAnswerByPublicId(UUID publicId) {
+    public Answer getAnswerByPublicId(UUID publicId) {
         return answerRepository.findAnswerByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("There is no answer with id: " + publicId));
     }

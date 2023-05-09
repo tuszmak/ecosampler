@@ -34,7 +34,7 @@ public class UserService {
         userRepository.deleteById(user.getId());
     }
 
-    protected User getUserByPublicId(UUID publicId) {
+    public User getUserByPublicId(UUID publicId) {
         return userRepository
                 .findByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("No user by ID:" + publicId));
