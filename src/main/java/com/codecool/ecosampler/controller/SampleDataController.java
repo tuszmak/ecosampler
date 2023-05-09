@@ -17,7 +17,7 @@ public class SampleDataController {
     SampleDataService sampleDataService;
 
     @GetMapping
-    public List<SampleDataDTO> getAllSampleData() {
+    public List<SampleDataDTO> getAllSampleDataDTO() {
         return sampleDataService.getAllSampleDataDTO();
     }
 
