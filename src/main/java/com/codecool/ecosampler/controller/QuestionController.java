@@ -24,7 +24,7 @@ public class QuestionController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public UUID createQuestion(@RequestBody NewQuestion question) {
+    public QuestionDTO createQuestion(@RequestBody NewQuestion question) {
         return questionService.createQuestion(question);
     }
 
