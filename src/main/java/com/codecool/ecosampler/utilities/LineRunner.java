@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,13 +20,18 @@ public class LineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Project project1 = new Project(UUID.randomUUID(), "Researching of beavers", "We research beavers.");
-        User user1 = new User(2L, UUID.randomUUID(), "Mr. Moneybanks", "ilikemoney@dollar.us", "elonmusk69", Role.DIRECTOR, new ArrayList<>());
-        User user2 = new User(2L, UUID.randomUUID(), "Kiera Brown", "kierabrown@example.com", "Qwerty7", Role.PROJECT_LEADER, new ArrayList<>());
-        User user3 = new User(3L, UUID.randomUUID(), "Lakatos Pikachu", "alma@sajt.cx", "lovecodecool", Role.SCIENTIST, new ArrayList<>());
 
+        Project project1 = new Project(UUID.randomUUID(), "Researching of beavers", "We research beavers.");
+        User user1 = new User(UUID.randomUUID(), "Mr. Moneybanks", "ilikemoney@dollar.us", "elonmusk69");
+        user1.setRole(Role.DIRECTOR);
+        User user2 = new User(UUID.randomUUID(), "Kiera Brown", "kierabrown@example.com", "Qwerty7");
+        user2.setRole(Role.PROJECT_LEADER);
+        User user3 = new User(UUID.randomUUID(), "Lakatos Pikachu", "alma@sajt.cx", "lovecodecool");
+        user3.setRole(Role.SCIENTIST);
         userRepository.saveAll(List.of(user1, user2, user3));
-//        project1.addUserToProject(user3);
-//        projectRepository.save(project1);
+
+        project1.addUserToProject(user2);
+        projectRepository.save(project1);
+
     }
 }
