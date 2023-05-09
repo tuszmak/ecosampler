@@ -64,4 +64,7 @@ public class Project {
     public boolean addUserToProject(User user) {
        return this.users.add(user);
     }
+    public boolean addFormToProject(Form form){
+        return this.formList.add(form);
+    }
 }
