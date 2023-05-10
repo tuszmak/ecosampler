@@ -52,6 +52,6 @@ export const FormList = () => {
   const projectID = useLocation().pathname.split("project/")[1];
   return <>
     <Table columns={columns} dataSource={data} />
-    <Button href={`/create-form/${projectID}`}></Button>
+    <Button href={`/create-form/${projectID}`}>Create form</Button>
   </>;
 };
