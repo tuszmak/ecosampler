@@ -17,13 +17,15 @@ const Login = () => {
     login.resetFields();
   };
   const onFinish = async (values) => {
+    const { email, password } = values;
+
     try {
       const response = await fetch(LOGIN_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: values.email,
-          password: values.password,
+          email,
+          password,
         }),
       });
 
