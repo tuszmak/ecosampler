@@ -11,7 +11,7 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || HOME_URL;
-    const [form] = Form.useForm();
+    const [login] = Form.useForm();
 
     const onFinish = async (values) => {
 
@@ -44,11 +44,12 @@ const Login = () => {
     };
 
     const reset = () => {
-        form.resetFields();
+        login.resetFields();
     };
     return (
         <div className='loginForm'>
             <Form
+                form={login}
                 name="basic"
                 labelCol={{
                     span: 8,
