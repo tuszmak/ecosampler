@@ -22,17 +22,17 @@ const ProjectList = ({ projects }) => {
 
   const columns = [
     {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
       title: "Name",
       dataIndex: "name",
       key: "name",
       render: (text, record) => (
         <Link to={`/project/${record.id}`}>{text}</Link>
       ),
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
   ];
 
