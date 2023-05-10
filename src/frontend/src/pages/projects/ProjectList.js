@@ -29,8 +29,6 @@ const ProjectList = ({ projects }) => {
     },
   ];
 
-  console.log(auth);
-
   return (
     <div>
       <h1>Projects</h1>
