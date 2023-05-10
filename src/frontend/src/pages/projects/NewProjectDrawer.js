@@ -3,35 +3,71 @@ import TextArea from "antd/es/input/TextArea";
 
 const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const cancelLoadingMessage = () => {
+    messageApi.destroy("loading");
+  };
+  const errorMessage = (msg) => {
+    cancelLoadingMessage();
+    messageApi.open({
+      type: "error",
+      content: msg,
+    });
+  };
+  const loadingMessage = () => {
+    messageApi.open({
+      type: "loading",
+      content: "Your project is on the way...",
+      key: "loading",
+      duration: 0,
+    });
+  };
+  const successMessage = () => {
+    cancelLoadingMessage();
+    messageApi.open({
+      type: "success",
+      content: "Your project is Done",
+      duration: 3,
+    });
+  };
 
   const onFinish = async (values) => {
-    console.log(form);
+    loadingMessage();
     const option = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
+    try {
+      const result = await fetch("/api/v1/project", option);
 
-    const result = await fetch("/api/v1/project", option);
-    if (result.status === 400) {
-      const error = await result.json();
-      form.setFields([
-        {
-          name: "name",
-          errors: [error.message],
-        },
-      ]);
-      return;
+      if (!result.ok) {
+        const error = await result.json();
+        if (result.status === 400) {
+          form.setFields([
+            {
+              name: "name",
+              errors: [error.message],
+            },
+          ]);
+          return;
+        }
+        if (result.status === 404) {
+          errorMessage(error.message);
+          return;
+        }
+        errorMessage("Problem with the Server");
+        return;
+      }
+      const newProject = await result.json();
+      successMessage();
+      addNewProject(newProject);
+      onReset();
+      onClose();
+    } catch (err) {
+      errorMessage("Problem with the Server");
     }
-    if (!result.ok) {
-      const ERROR_MSG_DURATION = 3;
-      message.error("Problem with the Server", ERROR_MSG_DURATION);
-      return;
-    }
-    const newProject = await result.json();
-    addNewProject(newProject);
-    onReset();
-    onClose();
   };
 
   const onReset = () => {
@@ -45,6 +81,7 @@ const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
       onClose={onClose}
       open={open}
     >
+      {contextHolder}
       <Form layout={"vertical"} form={form} onFinish={onFinish}>
         <Form.Item
           label="Project Name"
