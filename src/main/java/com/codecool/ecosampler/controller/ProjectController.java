@@ -45,9 +45,9 @@ public class ProjectController {
         projectService.addUserToProject(projectAndUserId);
     }
 
-    @PostMapping("/addForm/{formID}")
-    public void addFormToProject(@RequestBody NewForm newForm, @PathVariable UUID formID) {
-        projectService.addFormToProject(newForm, formID);
+    @PostMapping("/addForm/{projectID}")
+    public void addFormToProject(@RequestBody NewForm newForm, @PathVariable UUID projectID) {
+        projectService.addFormToProject(newForm, projectID);
     }
 
     @PutMapping("{publicProjectId}")
