@@ -5,6 +5,7 @@ import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
 import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
 import com.codecool.ecosampler.domain.Project;
 import com.codecool.ecosampler.domain.User;
+import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.ProjectRepository;
 import com.codecool.ecosampler.utilities.ProjectMapper;
@@ -30,6 +31,7 @@ public class ProjectService {
     }
 
     public ProjectDTO addNewProject(NewProject newProject) {
+        checkIfProjectNameExists(newProject.name());
         final Project project = projectRepository.save(new Project(UUID.randomUUID(),
                         newProject.name(),
                         newProject.description()
@@ -82,5 +84,10 @@ public class ProjectService {
             project.setDescription(requestProject.description());
         // TODO The rest
         return project;
+    }
+
+    private void checkIfProjectNameExists(String name) {
+        if (projectRepository.existsByName(name))
+            throw new BadRequestException("Project is already exist with name: " + name);
     }
 }
