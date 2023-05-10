@@ -15,9 +15,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping
-    @ResponseStatus
-    public LoginCredentials verifyUser(@RequestBody LoginRequest requestUser) {
-        System.out.println("Login");
-        return loginService.verifyUser(requestUser);
+    public LoginCredentials verifyUser(@RequestBody LoginRequest loginRequest) {
+        return loginService.verifyUser(loginRequest);
     }
 }
