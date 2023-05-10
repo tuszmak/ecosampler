@@ -1,17 +1,16 @@
-import { Button, Checkbox, Form, Input, message } from 'antd';
-import { useNavigate } from 'react-router';
-import { useLocation } from 'react-router-dom'
+import {Button, Checkbox, Form, Input, message} from 'antd';
+import { useNavigate} from "react-router-dom";
+import {useLocation} from 'react-router-dom';
 import useAuth from '../../hook/useAuth';
-import { useRef } from 'react';
+import {useRef} from 'react';
 
 const LOGIN_API_URL = "/api/v1/login";
 const HOME_URL = "/";
 const ERROR_MSG_DURATION = 3;
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const {setAuth} = useAuth();
     const formRef = useRef(null);
-
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || HOME_URL;
@@ -20,36 +19,26 @@ const Login = () => {
         const name = values.name;
         const password = values.password;
 
-
         const response = await fetch(
             LOGIN_API_URL,
             {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, password })
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, password})
             }
         );
 
-        const data = await response.json()
-        const msg = await data.message
+        const data = await response.json();
+        const msg = await data.message;
 
-        console.log(data, " : ", msg);
-        
-        
-        if(response.ok) {
+        if (response.ok) {
             const role = data.role;
-            setAuth({ name, password, role });
-            navigate(from, { replace: true });
+            setAuth({name, password, role});
+            navigate(from, {replace: true});
         } else {
-            console.log(msg);      
             formRef.current.resetFields();
-            message.error(msg, ERROR_MSG_DURATION)  
+            message.error(msg, ERROR_MSG_DURATION);
         }
-
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
     };
 
     return (
@@ -70,7 +59,6 @@ const Login = () => {
                     remember: true,
                 }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
                 <Form.Item
@@ -83,7 +71,7 @@ const Login = () => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input/>
                 </Form.Item>
                 <Form.Item
                     label="Password"
@@ -95,7 +83,7 @@ const Login = () => {
                         },
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password/>
                 </Form.Item>
                 <Form.Item
                     name="remember"
