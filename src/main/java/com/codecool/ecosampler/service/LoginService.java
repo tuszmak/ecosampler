@@ -15,12 +15,12 @@ import org.springframework.web.server.ResponseStatusException;
 public class LoginService {
 
     private final UserRepository userRepository;
-    public LoginCredentials verifyUser(LoginRequest requestUser) {
-       return Mapper.mapToResponseUser(getUserByLogin(requestUser));
+    public LoginCredentials verifyUser(LoginRequest loginRequest) {
+       return Mapper.mapToResponseUser(getUserByLogin(loginRequest));
     }
 
-    private User getUserByLogin(LoginRequest requestUser) {
-        return userRepository.findByEmailAndPassword(requestUser.email(), requestUser.password())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong username or password!"));
+    private User getUserByLogin(LoginRequest loginRequest) {
+        return userRepository.findByEmailAndPassword(loginRequest.email(), loginRequest.password())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong email or password!"));
     }
 }
