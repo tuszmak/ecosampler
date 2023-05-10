@@ -3,21 +3,14 @@ import { Table, FloatButton } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import NewProjectDrawer from "./NewProjectDrawer";
+import useAuth from "../../hook/useAuth";
 
 const ProjectList = ({ projects }) => {
-  const [open, setOpen] = useState(false);
   const [projectList, setProjectList] = useState(projects);
+  const { auth } = useAuth();
 
   const addNewProject = (newProject) => {
     setProjectList([newProject, ...projectList]);
-  };
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
   };
 
   const columns = [
@@ -36,10 +29,32 @@ const ProjectList = ({ projects }) => {
     },
   ];
 
+  console.log(auth);
+
   return (
     <div>
       <h1>Projects</h1>
       <Table dataSource={projectList} columns={columns} rowKey="id" />;
+      {auth?.role === "DIRECTOR" && (
+        <AddNewProject addNewProject={addNewProject} />
+      )}
+    </div>
+  );
+};
+
+const AddNewProject = ({ addNewProject }) => {
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
       <FloatButton
         onClick={showDrawer}
         shape="circle"
@@ -54,7 +69,7 @@ const ProjectList = ({ projects }) => {
         open={open}
         addNewProject={addNewProject}
       />
-    </div>
+    </>
   );
 };
 
