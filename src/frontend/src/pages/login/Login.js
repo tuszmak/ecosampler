@@ -1,21 +1,55 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-import { useNavigate } from 'react-router';
+import { Button, Checkbox, Form, Input, message } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../../hook/useAuth';
+
+const LOGIN_API_URL = "/api/v1/login";
+const HOME_URL = "/";
+const ERROR_MSG_DURATION = 3;
 
 const Login = () => {
-    const navigate = useNavigate()
-    const onFinish = (values) => {
-        console.log('Success:', values);
-        //TODO check if user is in database
-        navigate("/")
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+    const { setAuth } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || HOME_URL;
+    const [login] = Form.useForm();
+
+    const onFinish = async (values) => {
+
+        try {
+            const response = await fetch(
+                LOGIN_API_URL,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: values.email,
+                        password: values.password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setAuth({ id: data.id, role: data.role });
+                navigate(from, { replace: true });
+            } else {
+                message.error(data.message, ERROR_MSG_DURATION);
+            }
+        } catch (err) {
+            message.error("Problem with the server", ERROR_MSG_DURATION);
+        } finally {
+            reset();
+        }
     };
 
+    const reset = () => {
+        login.resetFields();
+    };
     return (
         <div className='loginForm'>
             <Form
+                form={login}
                 name="basic"
                 labelCol={{
                     span: 8,
@@ -30,20 +64,19 @@ const Login = () => {
                     remember: true,
                 }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
                 <Form.Item
-                    label="Username"
-                    name="name"
+                    label="Email"
+                    name="email"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your username!',
+                            message: 'Please input your email!',
                         },
                     ]}
                 >
-                    <Input />
+                    <Input type='email' />
                 </Form.Item>
                 <Form.Item
                     label="Password"
