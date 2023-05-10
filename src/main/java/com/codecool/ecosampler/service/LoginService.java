@@ -1,7 +1,7 @@
 package com.codecool.ecosampler.service;
 
-import com.codecool.ecosampler.controller.dto.login.RequestUser;
-import com.codecool.ecosampler.controller.dto.login.ResponseUser;
+import com.codecool.ecosampler.controller.dto.login.LoginRequest;
+import com.codecool.ecosampler.controller.dto.login.LoginCredentials;
 import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.repository.UserRepository;
 import com.codecool.ecosampler.utilities.Mapper;
@@ -14,13 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class LoginService {
 
-    private UserRepository userRepository;
-    public ResponseUser verifyUser(RequestUser requestUser) {
+    private final UserRepository userRepository;
+    public LoginCredentials verifyUser(LoginRequest requestUser) {
        return Mapper.mapToResponseUser(getUserByLogin(requestUser));
     }
 
-    private User getUserByLogin(RequestUser requestUser) {
-        return userRepository.findByNameAndPassword(requestUser.name(), requestUser.password())
+    private User getUserByLogin(LoginRequest requestUser) {
+        return userRepository.findByEmailAndPassword(requestUser.email(), requestUser.password())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong username or password!"));
     }
 }
