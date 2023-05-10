@@ -2,6 +2,7 @@ import React from "react";
 
 import { Button, Form, Input, Radio } from "antd";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 const onFinish = (values) => {
   console.log('Success:', values);
 };
@@ -9,6 +10,7 @@ const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 export const CreateForm = () => {
+    console.log(useLocation().pathname.split("create-form/")[1]);
   return (
     <Form
       name="basic"
