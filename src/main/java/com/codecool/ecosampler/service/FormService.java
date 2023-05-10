@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -19,19 +20,16 @@ public class FormService {
     private final FormMapper formMapper;
 
     public FormDTO createNewForm(NewForm newForm) {
-        final Form form = formRepository.save(new Form(
-                        UUID.randomUUID(),
-                        newForm.name()
-                )
-        );
+        final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
         return formMapper.toDTO(form);
     }
 
     public Form getFormByPublicId(UUID publicId) {
-        return formRepository.findFormByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
+        return formRepository.findFormByPublicId(publicId).orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
     }
-//    public List<Form> getFormsByProjectID(UUID projectID){
-//        return formRepository.findFormByPublicId(projectID).orElse();
-//    }
+
+    public List<FormDTO> getFormsByProjectID(UUID projectID) {
+        return formRepository.findFormsByProjectID(projectID).stream().map(formMapper::toDTO).collect(Collectors.toList());
+
+    }
 }

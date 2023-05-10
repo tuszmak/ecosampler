@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/form")
@@ -17,5 +20,9 @@ public class FormController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public FormDTO createNewForm(@RequestBody NewForm form) {
         return formService.createNewForm(form);
+    }
+    @GetMapping("/getForms/{projectID}")
+    public List<FormDTO> getFormsByProjectID(@PathVariable UUID projectID){
+        return formService.getFormsByProjectID(projectID);
     }
 }
