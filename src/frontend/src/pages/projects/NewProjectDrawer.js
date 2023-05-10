@@ -43,6 +43,7 @@ const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
       const result = await fetch("/api/v1/project", option);
 
       if (!result.ok) {
+        cancelLoadingMessage();
         const error = await result.json();
         if (result.status === 400) {
           form.setFields([
@@ -57,8 +58,6 @@ const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
           errorMessage(error.message);
           return;
         }
-        errorMessage("Problem with the Server");
-        return;
       }
       const newProject = await result.json();
       successMessage();
