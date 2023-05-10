@@ -1,51 +1,55 @@
-import {Button, Checkbox, Form, Input, message} from 'antd';
-import { useNavigate} from "react-router-dom";
-import {useLocation} from 'react-router-dom';
+import { Button, Checkbox, Form, Input, message } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hook/useAuth';
-import {useRef} from 'react';
 
 const LOGIN_API_URL = "/api/v1/login";
 const HOME_URL = "/";
 const ERROR_MSG_DURATION = 3;
 
 const Login = () => {
-    const {setAuth} = useAuth();
-    const formRef = useRef(null);
+    const { setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || HOME_URL;
+    const [form] = Form.useForm();
 
     const onFinish = async (values) => {
-        const name = values.name;
-        const password = values.password;
 
-        const response = await fetch(
-            LOGIN_API_URL,
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({name, password})
+        try {
+            const response = await fetch(
+                LOGIN_API_URL,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: values.email,
+                        password: values.password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setAuth({ id: data.id, role: data.role });
+                navigate(from, { replace: true });
+            } else {
+                message.error(data.message, ERROR_MSG_DURATION);
             }
-        );
-
-        const data = await response.json();
-        const msg = await data.message;
-
-        if (response.ok) {
-            const role = data.role;
-            setAuth({name, password, role});
-            navigate(from, {replace: true});
-        } else {
-            formRef.current.resetFields();
-            message.error(msg, ERROR_MSG_DURATION);
+        } catch (err) {
+            message.error("Problem with the server", ERROR_MSG_DURATION);
+        } finally {
+            reset();
         }
     };
 
+    const reset = () => {
+        form.resetFields();
+    };
     return (
         <div className='loginForm'>
             <Form
                 name="basic"
-                ref={formRef}
                 labelCol={{
                     span: 8,
                 }}
@@ -62,16 +66,16 @@ const Login = () => {
                 autoComplete="off"
             >
                 <Form.Item
-                    label="Username"
-                    name="name"
+                    label="Email"
+                    name="email"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your username!',
+                            message: 'Please input your email!',
                         },
                     ]}
                 >
-                    <Input/>
+                    <Input type='email' />
                 </Form.Item>
                 <Form.Item
                     label="Password"
@@ -83,7 +87,7 @@ const Login = () => {
                         },
                     ]}
                 >
-                    <Input.Password/>
+                    <Input.Password />
                 </Form.Item>
                 <Form.Item
                     name="remember"
