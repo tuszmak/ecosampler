@@ -11,7 +11,7 @@ const HeaderComponent = () => {
       <Menu
         theme="dark"
         mode="horizontal"
-        defaultSelectedKeys={['2']}
+        defaultSelectedKeys={['home']}
         items={
           [
             {key:"home", label:"Home",onClick:()=>{navigate('/')} },
