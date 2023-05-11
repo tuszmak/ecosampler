@@ -15,6 +15,8 @@ import Projects from "./pages/projects";
 import Project from "./pages/project";
 import AuthLayout from "./layout/AuthLayout";
 import { CreateForm } from "./pages/project/CreateForm";
+import Form from "./pages/form/Form";
+
 
 
 const router = createBrowserRouter(
@@ -27,6 +29,7 @@ const router = createBrowserRouter(
         <Route path="login" element={<Login />} />
         <Route path="projects" element={<Projects />} />
         <Route path="project/:id" element={<Project />} />
+        <Route path="form/:id" element={<Form />} />
         <Route path='create-form/:id' element={<CreateForm />} />
       </Route>
     </Route>
