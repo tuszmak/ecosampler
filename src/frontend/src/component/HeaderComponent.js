@@ -16,7 +16,7 @@ const HeaderComponent = () => {
           [
             {key:"home", label:"Home",onClick:()=>{navigate('/')} },
             {key:"projects", label:"Projects",onClick:()=>{navigate('/projects')} },
-            {key:"login", label:"Register",onClick:()=>{navigate('/register')} },
+            {key:"register", label:"Register",onClick:()=>{navigate('/register')} },
             {key:"login", label:"Login",onClick:()=>{navigate('/login')} }
 
           ]
