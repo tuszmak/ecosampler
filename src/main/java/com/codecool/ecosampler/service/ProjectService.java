@@ -79,8 +79,7 @@ public class ProjectService {
 
     public void addFormToProject(NewForm newForm, UUID projectID) {
         Project project = getProjectByPublicId(projectID);
-        UUID formID = formService.createNewForm(newForm).id();
-        Form form = formService.getFormByPublicId(formID);
+        Form form = formService.createNewForm(newForm);
         project.addFormToProject(form);
         projectRepository.save(project);
 

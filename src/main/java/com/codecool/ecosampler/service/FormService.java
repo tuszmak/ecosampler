@@ -19,9 +19,13 @@ public class FormService {
     private final FormRepository formRepository;
     private final FormMapper formMapper;
 
-    public FormDTO createNewForm(NewForm newForm) {
+    public FormDTO createNewFormGetDTO(NewForm newForm) {
         final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
         return formMapper.toDTO(form);
+    }
+
+    public Form createNewForm(NewForm newForm) {
+        return formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
     }
 
     public Form getFormByPublicId(UUID publicId) {

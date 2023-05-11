@@ -19,7 +19,7 @@ public class FormController {
     @PostMapping("/")
     @ResponseStatus(value = HttpStatus.CREATED)
     public FormDTO createNewForm(@RequestBody NewForm form) {
-        return formService.createNewForm(form);
+        return formService.createNewFormGetDTO(form);
     }
     @GetMapping("/getForms/{projectID}")
     public List<FormDTO> getFormsByProjectID(@PathVariable UUID projectID){
