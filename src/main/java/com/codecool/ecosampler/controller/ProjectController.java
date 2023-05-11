@@ -46,6 +46,7 @@ public class ProjectController {
     }
 
     @PostMapping("/addForm/{projectID}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addFormToProject(@RequestBody NewForm newForm, @PathVariable UUID projectID) {
         projectService.addFormToProject(newForm, projectID);
     }
