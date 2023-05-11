@@ -7,7 +7,7 @@ import RootLayout from './layout/RootLayout';
 import Login from './pages/login';
 import Projects from './pages/projects';
 import Project from './pages/project';
-import { CreateForm } from './component/formComponent/CreateForm';
+import { CreateForm } from './pages/project/CreateForm';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

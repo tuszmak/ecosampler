@@ -10,23 +10,16 @@ const columns = [
     key: "id",
     render: (text) => <a>{text}</a>,
   },
-  
 ];
 
-
 export const FormList = () => {
+  const path = "api/v1/form/getForms/";
   const params = useParams();
-  console.log(params.id);
-  const { data, error, isPending } = useFetch(
-    `api/v1/form/getForms/${params.id}`
-  );
-  
-  console.log(data);
+  const { data, error, isPending } = useFetch(path + params.id);
   if (isPending) return <h1>Loading</h1>;
-
   return (
     <>
-      <Table columns={columns} dataSource={data} rowKey="id"/>
+      <Table columns={columns} dataSource={data} rowKey="id" />
       <Button href={`/create-form/${params.id}`}>Create form</Button>
     </>
   );

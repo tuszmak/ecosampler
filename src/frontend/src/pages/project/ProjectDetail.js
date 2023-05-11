@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { FormList } from "../../component/formComponent/FormList";
+import { FormList } from "./FormList";
 
 const ProjectDetail = () => {
   let { id } = useParams();
