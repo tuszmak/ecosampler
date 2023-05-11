@@ -11,9 +11,9 @@ const columns = [
     render: (text) => <a>{text}</a>,
   },
 ];
+const path = "api/v1/form/getForms/";
 
 export const FormList = () => {
-  const path = "api/v1/form/getForms/";
   const params = useParams();
   const { data, error, isPending } = useFetch(path + params.id);
   if (isPending) return <h1>Loading</h1>;
