@@ -5,11 +5,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const path = "/api/v1/project/addForm";
 export const CreateForm = () => {
-  const [projectID, setProjectID] = useState(useParams());
+  const [params, setparams] = useState(useParams());
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      await fetch(path + projectID.id, {
+      await fetch(path + params.id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const CreateForm = () => {
         body: JSON.stringify(values),
       });
 
-      navigate(`/project/${projectID.id}`);
+      navigate(`/project/${params.id}`);
     } catch (error) {
       message.error("This is a duplicate Form name or something is wrong with server.")
     }
