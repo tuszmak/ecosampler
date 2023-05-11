@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button, Form, Input, Radio, message } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-const path = "/api/v1/project/addForm";
+const path = "/api/v1/project/addForm/";
 export const CreateForm = () => {
   const [params, setparams] = useState(useParams());
   const navigate = useNavigate();
