@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button, Form, Input, Radio, message } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-const path = "/api/v1/project/addForm/";
+const path = "/api/v1/project/addForm";
 export const CreateForm = () => {
   const [params, setparams] = useState(useParams());
   const navigate = useNavigate();
@@ -19,7 +19,9 @@ export const CreateForm = () => {
 
       navigate(`/project/${params.id}`);
     } catch (error) {
-      message.error("This is a duplicate Form name or something is wrong with server.")
+      message.error(
+        "This is a duplicate Form name or something is wrong with server."
+      );
     }
   };
 
