@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 import { Button, Form, Input, Radio } from "antd";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export const CreateForm = () => {
   const [projectID, setProjectID] = useState(useParams());
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     const response = await fetch(`/api/v1/project/addForm/${projectID.id}`, {
       method: "POST",
@@ -13,7 +14,9 @@ export const CreateForm = () => {
       },
       body: JSON.stringify(values),
     });
-    console.log(response.status);
+    if (response.status == 200) {
+      navigate(`/project/${projectID.id}`);
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
