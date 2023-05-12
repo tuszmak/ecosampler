@@ -6,6 +6,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import useFetch from "../../hook/useFetch";
 import NewProjectDrawer from "../projects/NewProjectDrawer";
 import useAuth from "../../hook/useAuth";
+import NewQuestionDrawer from "./NewQuestionDrawer";
 const columns = [
   {
     title: "Name",
@@ -64,10 +65,10 @@ const AddNewProject = ({ addNewProject }) => {
         }}
         icon={<PlusCircleOutlined />}
       />
-      <NewProjectDrawer
+      <NewQuestionDrawer
         onClose={onClose}
         open={open}
-        // addNewProject={addNewProject}
+        addNewProject={addNewProject}
       />
     </>
   );
