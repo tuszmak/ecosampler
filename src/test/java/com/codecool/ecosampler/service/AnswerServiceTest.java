@@ -24,16 +24,9 @@ class AnswerServiceTest {
         this.answerService = new AnswerService(answerRepository, new AnswerMapper(), questionService);
     }
 
-//    @BeforeEach
-//    public void setup() {
-//
-//
-//    }
-
-
     @Test
     void should_get_one_answer() {
-        Answer answer = new Answer(UUID.randomUUID(), "Waaaaa", new Question());
+        Answer answer = new Answer(UUID.randomUUID(), "Test", new Question());
         when(answerRepository.findAll()).thenReturn(List.of(answer));
         int numberOfAnswers = answerService.getAllAnswersDTO().size();
         assertEquals(1, numberOfAnswers);
