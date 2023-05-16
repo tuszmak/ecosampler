@@ -28,8 +28,13 @@ public class DBInitializer implements CommandLineRunner {
         user1.setRole(Role.DIRECTOR);
         User user2 = new User(UUID.randomUUID(), "Kiera Brown", "kierabrown@example.com", "Qwerty7");
         user2.setRole(Role.PROJECT_LEADER);
-        User user3 = new User(UUID.randomUUID(), "Lakatos Pikachu", "alma@sajt.cx", "lovecodecool");
-        user3.setRole(Role.SCIENTIST);
+        User user3 = new User(UUID.randomUUID(), "Gerco Timmerman", "gti@example.com", "Qwerty7");
+        user3.setRole(Role.PROJECT_LEADER);
+        User user4 = new User(UUID.randomUUID(), "Lakatos Pikachu", "alma@sajt.cx", "lovecodecool");
+        user4.setRole(Role.SCIENTIST);
+        User user5 = new User(UUID.randomUUID(), "Lakatos Endre", "korte@sajt.cx", "lovecodecool");
+        user5.setRole(Role.SCIENTIST);
+
         Form form1 = new Form(UUID.randomUUID(), "Appearance");
         Form form2 = new Form(UUID.randomUUID(), "Size");
         Question question1 = new Question(UUID.randomUUID(), "What color is it?", FieldStyle.SHORT_TEXT);
@@ -40,7 +45,7 @@ public class DBInitializer implements CommandLineRunner {
         project1.addFormToProject(form2);
         form1.addQuestion(question1);
         answer.setSampleData(sampleData);
-        userRepository.saveAll(List.of(user1, user2, user3));
+        userRepository.saveAll(List.of(user1, user2, user3, user4, user5));
         questionRepository.save(question1);
         formRepository.saveAll(List.of(form1, form2));
         projectRepository.save(project1);
