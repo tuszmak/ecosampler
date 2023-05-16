@@ -8,7 +8,7 @@ import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.UserRepository;
-import com.codecool.ecosampler.utilities.Mapper;
+import com.codecool.ecosampler.utilities.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +22,15 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserDTO getUserDTOByPublicId(UUID publicId) {
-        return Mapper.mapToDTO(getUserByPublicId(publicId));
+        return UserMapper.mapToDTO(getUserByPublicId(publicId));
     }
 
     public UserDTO registerUser(NewUser newUser) {
         if (userRepository.existsUserByEmail(newUser.email()))
             throw new BadRequestException("User already exists with email: " + newUser.email());
         final User user = userRepository
-                .save(Mapper.mapToNewUser(newUser));
-        return Mapper.mapToDTO(user);
+                .save(UserMapper.mapToNewUser(newUser));
+        return UserMapper.mapToDTO(user);
     }
 
     public void deleteUserByPublicId(UUID publicId) {
@@ -40,7 +40,7 @@ public class UserService {
 
     public List<UserForSelectDTO> getUsersForSelectDTOByRole(Role role) {
         return getAllUserByRole(role).stream()
-                .map(Mapper::toUserForSelectorDTO)
+                .map(UserMapper::toUserForSelectorDTO)
                 .collect(Collectors.toList());
     }
 

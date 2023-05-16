@@ -11,8 +11,8 @@ import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.ProjectRepository;
-import com.codecool.ecosampler.utilities.Mapper;
 import com.codecool.ecosampler.utilities.ProjectMapper;
+import com.codecool.ecosampler.utilities.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +27,9 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final FormService formService;
     private final UserService userService;
-    private final ProjectMapper projectMapper;
 
     public List<ProjectDTO> getAllProjectDTO() {
-        return projectRepository.findAll().stream().map(projectMapper::toDTO).collect(Collectors.toList());
+        return projectRepository.findAll().stream().map(ProjectMapper::toDTO).collect(Collectors.toList());
     }
 
     public ProjectDTO addNewProject(NewProject newProject) {
@@ -42,12 +41,12 @@ public class ProjectService {
             project.addUsersToProject(users);
         }
         project = projectRepository.save(project);
-        return projectMapper.toDTO(project);
+        return ProjectMapper.toDTO(project);
     }
 
     public List<ProjectDTO> getProjectsDTOByUserPublicId(UUID userPublicId) {
         User user = userService.getUserByPublicId(userPublicId);
-        return projectRepository.findAllProjectByUserId(user.getId()).stream().map(projectMapper::toDTO).collect(Collectors.toList());
+        return projectRepository.findAllProjectByUserId(user.getId()).stream().map(ProjectMapper::toDTO).collect(Collectors.toList());
     }
 
     public void deleteProject(UUID publicId) {
@@ -59,7 +58,7 @@ public class ProjectService {
     public ProjectDTO updateProject(UUID publicId, ProjectDTO requestProject) {
         Project project = getProjectByPublicId(publicId);
         Project updatedProject = projectRepository.save(updateProjectWithRequest(requestProject, project));
-        return projectMapper.toDTO(updatedProject);
+        return ProjectMapper.toDTO(updatedProject);
     }
 
     public void modifyUsersOnProject(ModifyUsersOnProject modifyUsersOnProject, UUID projectID) {
@@ -103,7 +102,7 @@ public class ProjectService {
 
     public List<UserForSelectDTO> getUserForSelectDTOForProjectByPublicId(UUID publicProjectId) {
         return getUserForProjectByPublicId(publicProjectId).stream()
-                .map(Mapper::toUserForSelectorDTO)
+                .map(UserMapper::toUserForSelectorDTO)
                 .collect(Collectors.toList());
     }
 

@@ -17,11 +17,10 @@ import java.util.stream.Collectors;
 @Service
 public class FormService {
     private final FormRepository formRepository;
-    private final FormMapper formMapper;
 
     public FormDTO createNewFormGetDTO(NewForm newForm) {
         final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
-        return formMapper.toDTO(form);
+        return FormMapper.toDTO(form);
     }
 
     protected Form createNewForm(NewForm newForm) {
@@ -33,7 +32,7 @@ public class FormService {
     }
 
     public List<FormDTO> getFormsByProjectID(UUID projectID) {
-        return formRepository.findFormsByProjectID(projectID).stream().map(formMapper::toDTO).collect(Collectors.toList());
+        return formRepository.findFormsByProjectID(projectID).stream().map(FormMapper::toDTO).collect(Collectors.toList());
 
     }
 }
