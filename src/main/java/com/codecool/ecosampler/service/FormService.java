@@ -24,11 +24,11 @@ public class FormService {
         return formMapper.toDTO(form);
     }
 
-    public Form createNewForm(NewForm newForm) {
+    protected Form createNewForm(NewForm newForm) {
         return formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
     }
 
-    public Form getFormByPublicId(UUID publicId) {
+    protected Form getFormByPublicId(UUID publicId) {
         return formRepository.findFormByPublicId(publicId).orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
     }
 

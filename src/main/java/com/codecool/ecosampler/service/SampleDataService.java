@@ -53,7 +53,7 @@ public class SampleDataService {
         sampleDataRepository.deleteById(sampleData.getId());
     }
 
-    public SampleData getSampleDataByPublicId(UUID publicId) {
+    protected SampleData getSampleDataByPublicId(UUID publicId) {
         return sampleDataRepository.
                 findSampleDataByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
