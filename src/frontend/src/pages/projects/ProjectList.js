@@ -1,13 +1,27 @@
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { Table, FloatButton } from "antd";
+import { PlusCircleOutlined, UserSwitchOutlined } from "@ant-design/icons";
+import { Table, FloatButton, Button } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import NewProjectDrawer from "./NewProjectDrawer";
 import useAuth from "../../hook/useAuth";
+import ModifyUserAssigns from "./ModifyUserAssigns";
 
 const ProjectList = ({ projects }) => {
   const [projectList, setProjectList] = useState(projects);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [projectId, setProjectId] = useState(null);
+
   const { auth } = useAuth();
+  const showModal = (id) => {
+    setIsModalOpen(true);
+    setProjectId(id);
+  };
+  const handleOk = (addUserIDs, removeUserIDs) => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const addNewProject = (newProject) => {
     setProjectList([newProject, ...projectList]);
@@ -27,14 +41,36 @@ const ProjectList = ({ projects }) => {
       dataIndex: "description",
       key: "description",
     },
+    {
+      title: "Name",
+      key: "name",
+      render: (text, record) => (
+        <Button
+          shape="circle"
+          type="primary"
+          onClick={() => showModal(record.id)}
+          icon={<UserSwitchOutlined />}
+        />
+      ),
+    },
   ];
 
   return (
     <div>
       <h1>Projects</h1>
-      <Table dataSource={projectList} columns={columns} rowKey="id" />;
-      {auth?.role === "DIRECTOR" && (
+      <Table dataSource={projectList} columns={columns} rowKey="id" />
+      {/* {auth?.role === "DIRECTOR" && (
         <AddNewProject addNewProject={addNewProject} />
+      )} */}
+      {/* //TODO add back for activate roles */}
+      <AddNewProject addNewProject={addNewProject} />
+      {isModalOpen && (
+        <ModifyUserAssigns
+          projectId={projectId}
+          isModalOpen={isModalOpen}
+          handleCancel={handleCancel}
+          handleOk={handleOk}
+        />
       )}
     </div>
   );
