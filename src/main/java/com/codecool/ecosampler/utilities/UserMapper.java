@@ -8,7 +8,7 @@ import com.codecool.ecosampler.domain.User;
 
 import java.util.UUID;
 
-public class Mapper {
+public class UserMapper {
 
     public static UserDTO mapToDTO(User user) {
         return new UserDTO(user.getPublicId(), user.getName(), user.getEmail(), user.getRole());
