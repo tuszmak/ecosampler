@@ -2,6 +2,8 @@ package com.codecool.ecosampler.service;
 
 import com.codecool.ecosampler.controller.dto.user.NewUser;
 import com.codecool.ecosampler.controller.dto.user.UserDTO;
+import com.codecool.ecosampler.controller.dto.user.UserForSelectDTO;
+import com.codecool.ecosampler.domain.Role;
 import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
@@ -10,7 +12,9 @@ import com.codecool.ecosampler.utilities.Mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -34,9 +38,23 @@ public class UserService {
         userRepository.deleteById(user.getId());
     }
 
-    public User getUserByPublicId(UUID publicId) {
+    public List<UserForSelectDTO> getUsersForSelectDTOByRole(Role role) {
+        return getAllUserByRole(role).stream()
+                .map(Mapper::toUserForSelectorDTO)
+                .collect(Collectors.toList());
+    }
+
+    protected User getUserByPublicId(UUID publicId) {
         return userRepository
                 .findByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("No user by ID:" + publicId));
+    }
+
+    protected List<User> getAllUserByRole(Role role) {
+        return userRepository.findAllByRole(role);
+    }
+
+    protected List<User> getUsersByPublicId(List<UUID> usersPublicId) {
+        return userRepository.findAllByPublicIdIn(usersPublicId);
     }
 }
