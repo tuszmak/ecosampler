@@ -9,17 +9,19 @@ import com.codecool.ecosampler.exeption.BadRequestException;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.UserRepository;
 import com.codecool.ecosampler.utilities.UserMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     public UserDTO getUserDTOByPublicId(UUID publicId) {
         return UserMapper.mapToDTO(getUserByPublicId(publicId));
@@ -29,7 +31,7 @@ public class UserService {
         if (userRepository.existsUserByEmail(newUser.email()))
             throw new BadRequestException("User already exists with email: " + newUser.email());
         final User user = userRepository
-                .save(UserMapper.mapToNewUser(newUser));
+                .save(UserMapper.mapToNewUser(newUser, passwordEncoder.encode(newUser.password())));
         return UserMapper.mapToDTO(user);
     }
 
@@ -56,5 +58,9 @@ public class UserService {
 
     protected List<User> getUsersByPublicId(List<UUID> usersPublicId) {
         return userRepository.findAllByPublicIdIn(usersPublicId);
+    }
+
+    protected User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("No user fund on email"));
     }
 }
