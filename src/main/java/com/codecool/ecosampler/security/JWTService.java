@@ -16,10 +16,12 @@ import java.util.function.Function;
 
 @Service
 public class JWTService {
+    public static final String SECRET = System.getenv("JWT_SECRET");
+    public static final long JWT_EXPIRATION = 86400000;//24H
 
     public String generateToken(User user) {
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
+        Date expireDate = new Date(currentDate.getTime() + JWT_EXPIRATION);
         String token = Jwts.builder()
                 .setClaims(generateExtraClaims(user))
                 .setSubject(user.getEmail())
@@ -68,7 +70,7 @@ public class JWTService {
     }
 
     private Key getSigInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SecurityConstants.JWT_SECRET);
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
