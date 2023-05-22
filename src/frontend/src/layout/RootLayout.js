@@ -16,13 +16,13 @@ const RootLayout = () => {
           style={{
             padding: "0 50px",
             theme: "dark",
+            margin: "16px bottom",
           }}
         >
           <Breadcrumb
             style={{
               margin: "16px 0",
             }}
-            items={[{ title: "Home" }, { title: "List" }, { title: "App" }]}
           ></Breadcrumb>
           <div
             className="site-layout-content"
