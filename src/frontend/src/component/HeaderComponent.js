@@ -1,21 +1,25 @@
 import { Layout, Menu } from 'antd';
+import Item from 'antd/es/list/Item';
+import { useNavigate } from 'react-router-dom';
 const { Header } = Layout;
 
 const HeaderComponent = () => {
-  return (
+  const navigate = useNavigate();
+  return (  
     <Header>
       <div className="logo" />
       <Menu
         theme="dark"
         mode="horizontal"
-        defaultSelectedKeys={['2']}
-        items={new Array(5).fill(null).map((_, index) => {
-          const key = index + 1;
-          return {
-            key,
-            label: `nav ${key}`,
-          };
-        })}
+        defaultSelectedKeys={['home']}
+        items={
+          [
+            {key:"home", label:"Home",onClick:()=>{navigate('/')} },
+            {key:"projects", label:"Projects",onClick:()=>{navigate('/projects')} },
+            {key:"register", label:"Register",onClick:()=>{navigate('/register')} },
+            {key:"login", label:"Login",onClick:()=>{navigate('/login')} }
+          ]
+        }
       />
     </Header>
   );

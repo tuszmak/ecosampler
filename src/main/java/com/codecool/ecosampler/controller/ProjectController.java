@@ -1,5 +1,6 @@
 package com.codecool.ecosampler.controller;
 
+import com.codecool.ecosampler.controller.dto.form.NewForm;
 import com.codecool.ecosampler.controller.dto.project.NewProject;
 import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
 import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
@@ -42,6 +43,12 @@ public class ProjectController {
     @PutMapping("/addUser")
     public void addUserToProject(@RequestBody ProjectAndUserId projectAndUserId) {
         projectService.addUserToProject(projectAndUserId);
+    }
+
+    @PostMapping("/addForm/{projectID}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addFormToProject(@RequestBody NewForm newForm, @PathVariable UUID projectID) {
+        projectService.addFormToProject(newForm, projectID);
     }
 
     @PutMapping("{publicProjectId}")

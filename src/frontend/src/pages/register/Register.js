@@ -1,4 +1,4 @@
-import {Button, Form, Input, message} from 'antd';
+import { Button, Form, Input, message } from 'antd';
 
 const onSubmitFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -14,85 +14,84 @@ const onSubmit = async (values) => {
     })
     const data = await response.json()
     const msg = await data.message
-
     const ERROR_MSG_DURATION = 3;
-    if (response.status === 200)
+    if (response.ok)
         message.success('Registration successful', ERROR_MSG_DURATION);
-     else
+    else
         message.error(msg, ERROR_MSG_DURATION);
 
 }
 
 const Register = () => (
     <div className='loginForm'>
-    <Form
-        name="basic"
-        labelCol={{
-            span: 8,
-        }}
-        wrapperCol={{
-            span: 16,
-        }}
-        style={{
-            maxWidth: 600,
-        }}
-        initialValues={{
-            remember: true,
-        }}
-        onFinish={onSubmit}
-        onFinishFailed={onSubmitFailed}
-        autoComplete="off"
-    >
-        <Form.Item
-            label="name"
-            name="name"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your username!',
-                },
-            ]}
-        >
-            <Input/>
-        </Form.Item>
-
-        <Form.Item
-            label="email"
-            name="email"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your email!',
-                },
-            ]}
-        >
-            <Input type="email"/>
-        </Form.Item>
-
-        <Form.Item
-            label="password"
-            name="password"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your password!',
-                },
-            ]}
-        >
-            <Input.Password/>
-        </Form.Item>
-
-        <Form.Item
+        <Form
+            name="basic"
+            labelCol={{
+                span: 8,
+            }}
             wrapperCol={{
-                offset: 8,
                 span: 16,
             }}
+            style={{
+                maxWidth: 600,
+            }}
+            initialValues={{
+                remember: true,
+            }}
+            onFinish={onSubmit}
+            onFinishFailed={onSubmitFailed}
+            autoComplete="off"
         >
-            <Button type="primary" htmlType="submit">
-                Submit
-            </Button>
-        </Form.Item>
-    </Form></div>
+            <Form.Item
+                label="name"
+                name="name"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your username!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item
+                label="email"
+                name="email"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your email!',
+                    },
+                ]}
+            >
+                <Input type="email" />
+            </Form.Item>
+
+            <Form.Item
+                label="password"
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your password!',
+                    },
+                ]}
+            >
+                <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+                wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                }}
+            >
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+            </Form.Item>
+        </Form></div>
 )
 
 export default Register;
