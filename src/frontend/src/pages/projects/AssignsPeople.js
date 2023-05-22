@@ -1,10 +1,11 @@
 import { Form, Select } from "antd";
-import useFetch from "../../hook/useFetch";
+import useFetch from "../../hook/useDownFetch";
 import { useEffect, useState } from "react";
+import useDownFetch from "../../hook/useDownFetch";
 
 const AssignsPeople = ({ url, label, name, defaultValue = [] }) => {
   const [options, setOptions] = useState([]);
-  const { data, isPending } = useFetch(url);
+  const { data, isPending } = useDownFetch(url);
   useEffect(() => {
     if (data) {
       setOptions(

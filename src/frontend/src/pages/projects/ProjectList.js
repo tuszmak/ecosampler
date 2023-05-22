@@ -10,8 +10,8 @@ const ProjectList = ({ projects }) => {
   const [projectList, setProjectList] = useState(projects);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectId, setProjectId] = useState(null);
-
   const { auth } = useAuth();
+
   const showModal = (id) => {
     setIsModalOpen(true);
     setProjectId(id);
@@ -59,11 +59,11 @@ const ProjectList = ({ projects }) => {
     <div>
       <h1>Projects</h1>
       <Table dataSource={projectList} columns={columns} rowKey="id" />
-      {/* {auth?.role === "DIRECTOR" && (
+
+      {auth?.role === "DIRECTOR" && (
         <AddNewProject addNewProject={addNewProject} />
-      )} */}
-      {/* //TODO add back for activate roles */}
-      <AddNewProject addNewProject={addNewProject} />
+      )}
+
       {isModalOpen && (
         <ModifyUserAssigns
           projectId={projectId}

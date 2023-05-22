@@ -1,7 +1,7 @@
 import { Button, Drawer, Form, Input, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import useFetch from "../../hook/useFetch";
 import AssignsPeople from "./AssignsPeople";
+import upFetch from "../../api/upFetch";
 
 const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
   const [form] = Form.useForm();
@@ -48,7 +48,7 @@ const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
       body: JSON.stringify(values),
     };
     try {
-      const result = await fetch("/api/v1/project", option);
+      const result = await upFetch("/api/v1/project", option);
 
       if (!result.ok) {
         cancelLoadingMessage();

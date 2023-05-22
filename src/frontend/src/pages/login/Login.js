@@ -1,6 +1,7 @@
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hook/useAuth";
+import upFetch from "../../api/upFetch";
 
 const LOGIN_API_URL = "/api/v1/login";
 const HOME_URL = "/";
@@ -20,7 +21,7 @@ const Login = () => {
     const { email, password } = values;
 
     try {
-      const response = await fetch(LOGIN_API_URL, {
+      const response = await upFetch(LOGIN_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -31,7 +32,8 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setAuth({ id: data.id, role: data.role });
+        setAuth({ ...data });
+        localStorage.setItem("user", JSON.stringify(data));
         navigate(from, { replace: true });
       } else {
         message.error(data.message, ERROR_MSG_DURATION);

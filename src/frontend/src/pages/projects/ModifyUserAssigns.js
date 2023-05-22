@@ -1,7 +1,8 @@
 import { Form, Modal } from "antd";
 import AssignsPeople from "./AssignsPeople";
 import { useEffect, useState } from "react";
-import useFetch from "../../hook/useFetch";
+import useDownFetch from "../../hook/useDownFetch";
+import upFetch from "../../api/upFetch";
 
 const ModifyUserAssigns = ({
   projectId,
@@ -10,7 +11,7 @@ const ModifyUserAssigns = ({
   handleOk,
 }) => {
   const [form] = Form.useForm();
-  const { data: projectUsers, isPending } = useFetch(
+  const { data: projectUsers, isPending } = useDownFetch(
     `api/v1/project/users/${projectId}`
   );
   const [selectProjectLeader, setSelectProjectLeader] = useState({
@@ -40,7 +41,7 @@ const ModifyUserAssigns = ({
       },
       body: JSON.stringify({ addUserIDs, removeUserIDs }),
     };
-    const response = await fetch(url, options);
+    const response = await upFetch(url, options);
     console.log(response.ok);
   };
 
