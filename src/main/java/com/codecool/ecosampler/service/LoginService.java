@@ -1,10 +1,10 @@
 package com.codecool.ecosampler.service;
 
-import com.codecool.ecosampler.controller.dto.TokenDTO;
+import com.codecool.ecosampler.controller.dto.login.LoginCredentials;
 import com.codecool.ecosampler.controller.dto.login.LoginRequest;
 import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.security.JWTService;
-import com.codecool.ecosampler.utilities.TokenMapper;
+import com.codecool.ecosampler.utilities.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,15 +19,16 @@ public class LoginService {
     private final JWTService jwtService;
     private final UserService userService;
 
-    public TokenDTO verifyUser(LoginRequest loginRequest) {
-       return getJWTokenAndAuthenticateUser(loginRequest);
+    public LoginCredentials verifyUser(LoginRequest loginRequest) {
+        Authentication authentication = authenticateUser(loginRequest);
+        String token = jwtService.generateToken(authentication);
+        User user = userService.getUserByEmail(loginRequest.email());
+        return UserMapper.toLoginCredential(user, token);
     }
 
-    private TokenDTO getJWTokenAndAuthenticateUser(LoginRequest loginRequest) {
+    private Authentication  authenticateUser(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        User user = userService.getUserByEmail(loginRequest.email());
-        String token = jwtService.generateToken(user);
-        return TokenMapper.toTokenDTO(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+        return authentication;
     }
 }

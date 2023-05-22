@@ -19,8 +19,8 @@ public class UserMapper {
         return new User(UUID.randomUUID(), newUser.name(), newUser.email(), newUser.role(), encryptedPassword);
     }
 
-    public static LoginCredentials mapToResponseUser(User user) {
-        return new LoginCredentials(user.getPublicId(), user.getRole());
+    public static LoginCredentials toLoginCredential(User user, String token) {
+        return new LoginCredentials(user.getPublicId(), user.getRole(), user.getName(), token);
     }
 
     public static UserForSelectDTO toUserForSelectorDTO(User user) {

@@ -1,7 +1,7 @@
 package com.codecool.ecosampler.controller;
 
 
-import com.codecool.ecosampler.controller.dto.TokenDTO;
+import com.codecool.ecosampler.controller.dto.login.LoginCredentials;
 import com.codecool.ecosampler.controller.dto.login.LoginRequest;
 import com.codecool.ecosampler.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping
-    public TokenDTO verifyUser(@RequestBody LoginRequest loginRequest) {
+    public LoginCredentials verifyUser(@RequestBody LoginRequest loginRequest) {
         return loginService.verifyUser(loginRequest);
     }
 }
