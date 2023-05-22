@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { Button, Form, Input, Radio, Select, Space, message } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { FIELDSTYLES } from "../../constants/const";
 
 const path = "/api/v1/project/addForm/";
 export const CreateForm = () => {
   const [params, setParams] = useState(useParams());
   const [fieldType, setFieldType] = useState("SHORT-TEXT");
   const navigate = useNavigate();
+  const fieldStyles = [...FIELDSTYLES];
   const handleChange = (value) => {
     console.log(`selected ${value}`);
     setFieldType(value);
@@ -84,25 +86,10 @@ export const CreateForm = () => {
                       width: 120,
                     }}
                     onChange={handleChange}
-                    options={[
-                      {
-                        value: "SHORT_TEXT",
-                        label: "Short text",
-                      },
-                      {
-                        value: "lucy",
-                        label: "Lucy",
-                      },
-                      {
-                        value: "Yiminghe",
-                        label: "yiminghe",
-                      },
-                      {
-                        value: "disabled",
-                        label: "Disabled",
-                        disabled: true,
-                      },
-                    ]}
+                    options={fieldStyles.map((value) => ({
+                      value: value,
+                      label: value,
+                    }))}
                   />
                 </Form.Item>
                 <MinusCircleOutlined onClick={() => remove(name)} />
