@@ -28,18 +28,23 @@ public class ProjectService {
     private final ProjectMapper projectMapper;
 
     public List<ProjectDTO> getAllProjectDTO() {
-        return projectRepository.findAll().stream().map(projectMapper::toDTO).collect(Collectors.toList());
+        return projectRepository.findAll().stream()
+                .map(projectMapper::toDTO).collect(Collectors.toList());
     }
 
     public ProjectDTO addNewProject(NewProject newProject) {
         checkIfProjectNameExists(newProject.name());
-        final Project project = projectRepository.save(new Project(UUID.randomUUID(), newProject.name(), newProject.description()));
+        final Project project = projectRepository
+                .save(new Project(UUID.randomUUID(), newProject.name(), newProject.description()));
         return projectMapper.toDTO(project);
     }
 
     public List<ProjectDTO> getProjectsDTOByUserPublicId(UUID userPublicId) {
         User user = userService.getUserByPublicId(userPublicId);
-        return projectRepository.findAllProjectByUserId(user.getId()).stream().map(projectMapper::toDTO).collect(Collectors.toList());
+        return projectRepository
+                .findAllProjectByUserId(user.getId()).stream()
+                .map(projectMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     public void deleteProject(UUID publicId) {

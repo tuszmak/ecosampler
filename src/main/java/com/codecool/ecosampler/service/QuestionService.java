@@ -10,6 +10,7 @@ import com.codecool.ecosampler.utilities.QuestionMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -37,11 +38,26 @@ public class QuestionService {
         return questionMapper.toDTO(question);
     }
 
+    protected List<Question> createMultipleQuestions(List<NewQuestion> newQuestions) {
+        List<Question> questions = new ArrayList<>();
+        for (NewQuestion newQuestion : newQuestions) {
+            isQuestionExistByDescription(newQuestion.description());
+            Question currentlyCreatedQuestion = new Question(
+                    UUID.randomUUID(),
+                    newQuestion.description(),
+                    newQuestion.fieldStyle());
+            final Question question = questionRepository.save(currentlyCreatedQuestion);
+            questions.add(question);
+        }
+        return questions;
+    }
+
     public UUID modifyQuestion(UUID publicId, QuestionDTO requestQuestion) {
         Question question = getQuestionByPublicId(publicId);
-        return questionRepository.save(
+        return questionRepository.
+                save(
                         updateQuestionByRequest(requestQuestion, question)
-                )
+        )
                 .getPublicId();
     }
 
@@ -56,10 +72,8 @@ public class QuestionService {
     }
 
     private Question updateQuestionByRequest(QuestionDTO requestQuestion, Question question) {
-        if (Objects.nonNull(requestQuestion.description()))
-            question.setDescription(requestQuestion.description());
-        if (Objects.nonNull(requestQuestion.fieldStyle()))
-            question.setFieldStyle(requestQuestion.fieldStyle());
+        if (Objects.nonNull(requestQuestion.description())) question.setDescription(requestQuestion.description());
+        if (Objects.nonNull(requestQuestion.fieldStyle())) question.setFieldStyle(requestQuestion.fieldStyle());
         return question;
     }
 

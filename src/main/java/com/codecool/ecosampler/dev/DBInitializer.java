@@ -38,6 +38,7 @@ public class DBInitializer implements CommandLineRunner {
         SampleData sampleData = new SampleData(UUID.randomUUID(), LocalDateTime.now(), user3, form1);
 
         project1.addUserToProject(user2);
+        project1.addFormToProject(form1);
         project1.addFormToProject(form2);
         form1.addQuestion(question1);
         answer.setSampleData(sampleData);

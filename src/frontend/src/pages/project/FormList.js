@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Button, Space, Table, Tag } from "antd";
-import { useLocation, useParams, Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import useFetch from "../../hook/useFetch";
 const columns = [
   {
