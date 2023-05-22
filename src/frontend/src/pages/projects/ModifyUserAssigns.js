@@ -42,7 +42,6 @@ const ModifyUserAssigns = ({
       body: JSON.stringify({ addUserIDs, removeUserIDs }),
     };
     const response = await upFetch(url, options);
-    console.log(response.ok);
   };
 
   useEffect(() => {
