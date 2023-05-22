@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
-import HeaderComponent from '../component/HeaderComponent'
+import HeaderComponent from "../component/HeaderComponent";
 
-import { Breadcrumb, Layout, theme } from 'antd';
+import { Breadcrumb, Layout, theme } from "antd";
 const { Content, Footer } = Layout;
 
 const RootLayout = () => {
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -15,17 +14,16 @@ const RootLayout = () => {
         <HeaderComponent />
         <Content
           style={{
-            padding: '0 50px',
-            theme: 'dark'
+            padding: "0 50px",
+            theme: "dark",
           }}
         >
           <Breadcrumb
             style={{
-              margin: '16px 0',
+              margin: "16px 0",
             }}
-            items={[{ title: 'Home' }, { title: 'List' }, { title: 'App' }]}
-          >
-          </Breadcrumb>
+            items={[{ title: "Home" }, { title: "List" }, { title: "App" }]}
+          ></Breadcrumb>
           <div
             className="site-layout-content"
             style={{
@@ -37,14 +35,16 @@ const RootLayout = () => {
         </Content>
         <Footer
           style={{
-            textAlign: 'center',
+            textAlign: "center",
+            theme: "dark",
           }}
         >
+          <hr style={{ color: "black" }}></hr>
           Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>
     </div>
   );
-}
+};
 
 export default RootLayout;
