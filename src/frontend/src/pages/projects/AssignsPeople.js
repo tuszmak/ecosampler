@@ -1,5 +1,4 @@
 import { Form, Select } from "antd";
-import useFetch from "../../hook/useDownFetch";
 import { useEffect, useState } from "react";
 import useDownFetch from "../../hook/useDownFetch";
 
