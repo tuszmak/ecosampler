@@ -32,6 +32,18 @@ class AnswerServiceTest {
         assertEquals(1, numberOfAnswers);
         verify(answerRepository, times(1)).findAll();
     }
+    @Test
+    void should_get_five_answers() {
+        Answer answer1 = new Answer(UUID.randomUUID(), "Test", new Question());
+        Answer answer2 = new Answer(UUID.randomUUID(), "Test", new Question());
+        Answer answer3 = new Answer(UUID.randomUUID(), "Test", new Question());
+        Answer answer4 = new Answer(UUID.randomUUID(), "Test", new Question());
+        Answer answer5 = new Answer(UUID.randomUUID(), "Test", new Question());
+        when(answerRepository.findAll()).thenReturn(List.of(answer1,answer2,answer3,answer4,answer5));
+        int numberOfAnswers = answerService.getAllAnswersDTO().size();
+        assertEquals(5, numberOfAnswers);
+        verify(answerRepository, times(1)).findAll();
+    }
 
     @Test
     void should_save_one_answer() {
