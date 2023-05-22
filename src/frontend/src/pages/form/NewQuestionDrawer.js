@@ -32,7 +32,6 @@ const NewQuestionDrawer = ({ onClose, open, addNewProject }) => {
       duration: 3,
     });
   };
-
   const onFinish = async (values) => {
     loadingMessage();
     const option = {
@@ -42,7 +41,6 @@ const NewQuestionDrawer = ({ onClose, open, addNewProject }) => {
     };
     try {
       const result = await fetch("/api/v1/project", option);
-
       if (!result.ok) {
         cancelLoadingMessage();
         const error = await result.json();
@@ -69,11 +67,9 @@ const NewQuestionDrawer = ({ onClose, open, addNewProject }) => {
       errorMessage("Problem with the Server");
     }
   };
-
   const onReset = () => {
     form.resetFields();
   };
-
   return (
     <Drawer
       title="Add New Project"
@@ -97,7 +93,7 @@ const NewQuestionDrawer = ({ onClose, open, addNewProject }) => {
             { required: true, message: "Please input Project Description!" },
           ]}
         >
-        <QuestionTypeDDMenu />  
+          <QuestionTypeDDMenu />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">

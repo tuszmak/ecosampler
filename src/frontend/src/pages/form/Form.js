@@ -41,8 +41,8 @@ export const Form = () => {
   );
 };
 const addNewProject = (newProject) => {
-    // setProjectList([newProject, ...projectList]);
-  };
+  // setProjectList([newProject, ...projectList]);
+};
 const AddNewProject = ({ addNewProject }) => {
   const [open, setOpen] = useState(false);
 
@@ -53,7 +53,6 @@ const AddNewProject = ({ addNewProject }) => {
   const onClose = () => {
     setOpen(false);
   };
-
   return (
     <>
       <FloatButton
