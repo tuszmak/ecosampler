@@ -24,14 +24,14 @@ public class JWTService {
                 .setSubject(authentication.getName())
                 .setIssuedAt(currentDate)
                 .setExpiration(expireDate)
-                .signWith(getSigInKey())
+                .signWith(getSignInKey())
                 .compact();
     }
 
     public boolean isTokenValid(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(getSigInKey())
+                    .setSigningKey(getSignInKey())
                     .build()
                     .parseClaimsJws(token);
             return true;
@@ -51,13 +51,13 @@ public class JWTService {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(getSigInKey())
+                .setSigningKey(getSignInKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    private Key getSigInKey() {
+    private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }

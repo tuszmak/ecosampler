@@ -61,6 +61,6 @@ public class UserService {
     }
 
     protected User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("No user fund on email"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("No user found on email"));
     }
 }
