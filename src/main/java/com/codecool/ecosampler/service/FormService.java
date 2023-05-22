@@ -4,6 +4,7 @@ import com.codecool.ecosampler.controller.dto.form.FormDTO;
 import com.codecool.ecosampler.controller.dto.form.NewForm;
 import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
 import com.codecool.ecosampler.domain.Form;
+import com.codecool.ecosampler.domain.Question;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.FormRepository;
 import com.codecool.ecosampler.utilities.FormMapper;
@@ -21,9 +22,11 @@ public class FormService {
     private final FormRepository formRepository;
     private final FormMapper formMapper;
     private final QuestionMapper questionMapper;
+    private final QuestionService questionService;
 
     public FormDTO createNewFormGetDTO(NewForm newForm) {
-        final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
+        List<Question> questions = questionService.createMultipleQuestions(newForm.questions());
+        final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name(),questions));
         return formMapper.toDTO(form);
     }
 
