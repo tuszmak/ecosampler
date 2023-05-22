@@ -1,43 +1,31 @@
 package com.codecool.ecosampler.security;
 
-import com.codecool.ecosampler.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @Service
 public class JWTService {
-    public static final String SECRET = System.getenv("JWT_SECRET");
-    public static final long JWT_EXPIRATION = 86400000;//24H
+    private static final String SECRET = System.getenv("JWT_SECRET");
+    private static final long JWT_EXPIRATION = 86400000;//24H
 
-    public String generateToken(User user) {
+    public String generateToken(Authentication authentication) {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + JWT_EXPIRATION);
-        String token = Jwts.builder()
-                .setClaims(generateExtraClaims(user))
-                .setSubject(user.getEmail())
+        return Jwts.builder()
+                .setSubject(authentication.getName())
                 .setIssuedAt(currentDate)
                 .setExpiration(expireDate)
                 .signWith(getSigInKey())
                 .compact();
-        return token;
-    }
-
-    private Map<String, Object> generateExtraClaims(User user) {
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("userID", user.getPublicId());
-        extraClaims.put("role", user.getRole());
-        extraClaims.put("name", user.getName());
-        return extraClaims;
     }
 
     public boolean isTokenValid(String token) {
