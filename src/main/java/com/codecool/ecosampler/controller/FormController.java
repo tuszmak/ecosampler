@@ -28,8 +28,5 @@ public class FormController {
         return formService.getFormsByProjectID(projectID);
     }
 
-    @GetMapping("/getQuestions/{formID}")
-    List<QuestionDTO> getFormQuestionsByFormID(@PathVariable UUID formID) {
-        return formService.getQuestionDTOsByFormID(formID);
-    }
+
 }
