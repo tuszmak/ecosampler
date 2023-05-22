@@ -30,6 +30,7 @@ public class DBInitializer implements CommandLineRunner {
         user2.setRole(Role.PROJECT_LEADER);
         User user3 = new User(UUID.randomUUID(), "Lakatos Pikachu", "alma@sajt.cx", "lovecodecool");
         user3.setRole(Role.SCIENTIST);
+        User user4 = new User(UUID.randomUUID(), "Mr. Codecool", "director@codecool.com", "director");
         Form form1 = new Form(UUID.randomUUID(), "Appearance");
         Form form2 = new Form(UUID.randomUUID(), "Size");
         Question question1 = new Question(UUID.randomUUID(), "What color is it?", FieldStyle.SHORT_TEXT);
@@ -40,7 +41,7 @@ public class DBInitializer implements CommandLineRunner {
         project1.addFormToProject(form2);
         form1.addQuestion(question1);
         answer.setSampleData(sampleData);
-        userRepository.saveAll(List.of(user1, user2, user3));
+        userRepository.saveAll(List.of(user1, user2, user3, user4));
         questionRepository.save(question1);
         formRepository.saveAll(List.of(form1, form2));
         projectRepository.save(project1);
