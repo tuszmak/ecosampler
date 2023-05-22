@@ -31,7 +31,8 @@ public class FormService {
     }
 
     public Form createNewForm(NewForm newForm) {
-        return formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
+        List<Question> questions = questionService.createMultipleQuestions(newForm.questions());
+        return formRepository.save(new Form(UUID.randomUUID(), newForm.name(), questions));
     }
 
     public Form getFormByPublicId(UUID publicId) {
