@@ -32,11 +32,13 @@ public class FormService {
     }
 
     public Form getFormByPublicId(UUID publicId) {
-        return formRepository.findFormByPublicId(publicId).orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
+        return formRepository.findFormByPublicId(publicId)
+                .orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
     }
 
     public List<FormDTO> getFormsByProjectID(UUID projectID) {
-        return formRepository.findFormsByProjectID(projectID).stream().map(formMapper::toDTO).collect(Collectors.toList());
+        return formRepository.findFormsByProjectID(projectID).stream()
+                .map(formMapper::toDTO).collect(Collectors.toList());
 
     }
 
