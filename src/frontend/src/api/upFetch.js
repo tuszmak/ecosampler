@@ -1,4 +1,13 @@
-const upFetch = async (url, option) => {
+/**
+ * Fetch implementation automatically add Authorization field to header
+ * if you logged in.
+ * Use like fetch.
+ *
+ * @param {String} url
+ * @param {Object} option
+ * @returns Proems
+ */
+const upFetch = (url, option) => {
   const { token } = JSON.parse(localStorage.getItem("user"));
   if (token)
     option.headers = {
