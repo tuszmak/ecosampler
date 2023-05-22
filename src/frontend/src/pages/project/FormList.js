@@ -8,7 +8,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "id",
-    render: (text,record) => <Link to={"/form/" + record.id}>{text}</Link>
+    render: (text, record) => <Link to={"/form/" + record.id}>{text}</Link>,
   },
 ];
 const path = "api/v1/form/getForms/";
