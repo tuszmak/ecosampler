@@ -54,7 +54,11 @@ public class QuestionService {
 
     public UUID modifyQuestion(UUID publicId, QuestionDTO requestQuestion) {
         Question question = getQuestionByPublicId(publicId);
-        return questionRepository.save(updateQuestionByRequest(requestQuestion, question)).getPublicId();
+        return questionRepository.
+                save(
+                        updateQuestionByRequest(requestQuestion, question)
+        )
+                .getPublicId();
     }
 
     public void deleteQuestion(UUID publicId) {
@@ -63,7 +67,8 @@ public class QuestionService {
     }
 
     public Question getQuestionByPublicId(UUID publicId) {
-        return questionRepository.findQuestionByPublicId(publicId).orElseThrow(() -> new NotFoundException("There is no question with id: " + publicId));
+        return questionRepository.findQuestionByPublicId(publicId)
+                .orElseThrow(() -> new NotFoundException("There is no question with id: " + publicId));
     }
 
     private Question updateQuestionByRequest(QuestionDTO requestQuestion, Question question) {
