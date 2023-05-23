@@ -5,7 +5,7 @@
  *
  * @param {String} url
  * @param {Object} option
- * @returns Proems
+ * @returns Promise
  */
 const upFetch = (url, option) => {
   const { token } = JSON.parse(localStorage.getItem("user"));
