@@ -25,24 +25,22 @@ const columns = [
 const path = "api/v1/form/by-form-id/";
 
 export const Form = () => {
-  const params = useParams();
+  const {id} = useParams();
   const { auth } = useAuth();
 
-  const { data, error, isPending } = useDownFetch(path + params.id);
+  const { data, error, isPending } = useDownFetch(path + id);
   if (isPending) return <h1>Loading</h1>;
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="id" />
       {auth?.role === "DIRECTOR" || auth?.role === "PROJECT_LEADER" && (
-        <AddNewForm addNewProject={addNewForm} />
+        <AddNewForm />
       )}
     </>
   );
 };
-const addNewForm = (newForm) => {
-  // setProjectList([newForm, ...projectList]);
-};
-const AddNewForm = ({ addNewForm }) => {
+
+const AddNewForm = () => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
