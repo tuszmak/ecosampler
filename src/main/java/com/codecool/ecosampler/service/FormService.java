@@ -25,8 +25,7 @@ public class FormService {
     private final QuestionService questionService;
 
     public FormDTO createNewFormGetDTO(NewForm newForm) {
-        List<Question> questions = questionService.createMultipleQuestions(newForm.questions());
-        final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name(),questions));
+        Form form = createNewForm(newForm);
         return formMapper.toDTO(form);
     }
 
