@@ -48,6 +48,7 @@ const ProjectList = ({ projects }) => {
         <Button
           shape="circle"
           type="primary"
+          disabled={auth.role === "SCIENTIST"}
           onClick={() => showModal(record.id)}
           icon={<UserSwitchOutlined />}
         />
