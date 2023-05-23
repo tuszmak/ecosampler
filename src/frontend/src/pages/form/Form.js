@@ -23,7 +23,7 @@ const columns = [
     render: (text, record) => <p>{record.fieldStyle}</p>,
   },
 ];
-const path = "api/v1/form/getQuestions/";
+const path = "api/v1/question/getQuestions/";
 
 export const Form = () => {
   const params = useParams();
@@ -34,16 +34,16 @@ export const Form = () => {
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="id" />
-      {auth?.role === "DIRECTOR" && (
-        <AddNewProject addNewProject={addNewProject} />
+      {auth?.role === "DIRECTOR" || auth?.role === "PROJECT_LEADER" && (
+        <AddNewForm addNewProject={addNewForm} />
       )}
     </>
   );
 };
-const addNewProject = (newProject) => {
-  // setProjectList([newProject, ...projectList]);
+const addNewForm = (newForm) => {
+  // setProjectList([newForm, ...projectList]);
 };
-const AddNewProject = ({ addNewProject }) => {
+const AddNewForm = ({ addNewForm }) => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -67,7 +67,7 @@ const AddNewProject = ({ addNewProject }) => {
       <NewQuestionDrawer
         onClose={onClose}
         open={open}
-        addNewProject={addNewProject}
+        addNewForm={addNewForm}
       />
     </>
   );
