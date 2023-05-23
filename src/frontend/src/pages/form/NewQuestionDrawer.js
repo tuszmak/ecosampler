@@ -2,7 +2,7 @@ import { Button, Drawer, Form, Input, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import QuestionTypeDDMenu from "../../component/QuestionTypeSelectMenu";
 
-const NewQuestionDrawer = ({ onClose, open, addNewProject }) => {
+const NewQuestionDrawer = ({ onClose, open, addNewProject: addNewForm }) => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -60,7 +60,7 @@ const NewQuestionDrawer = ({ onClose, open, addNewProject }) => {
       }
       const newProject = await result.json();
       successMessage();
-      addNewProject(newProject);
+      addNewForm(newProject);
       onReset();
       onClose();
     } catch (err) {
