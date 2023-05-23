@@ -1,6 +1,6 @@
 import { Button, Drawer, Form, Input, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import QuestionTypeDDMenu from "../../component/QuestionTypeDDMenu";
+import QuestionTypeDDMenu from "../../component/QuestionTypeSelectMenu";
 
 const NewQuestionDrawer = ({ onClose, open, addNewProject }) => {
   const [form] = Form.useForm();
