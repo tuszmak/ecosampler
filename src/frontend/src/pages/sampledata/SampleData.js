@@ -1,21 +1,26 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../../hook/useFetch";
-import { Form, Button} from "antd";
+import { Form, Button } from "antd";
 import { QuestionItem } from "./QuestionItem";
+import useAuth from "../../hook/useAuth";
 
 
 const path = "api/v1/question/getQuestions/";
 
 const Survey = () => {
 
-  const params = useParams();
-  const { data: questions, error, isPending } = useFetch(path + params.id);
+  const { formID } = useParams();
+  const { auth } = useAuth();
+  const { data: questions, error, isPending } = useFetch(path + formID);
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    const { id } = auth;
+    const valuesArray = Object.entries(values).map(([key, value]) => ({ [key]: value }));
+    console.log('Success:', { valuesArray, id, formID });
   };
 
- 
+
+
   if (isPending) return <h1>Loading</h1>;
   if (error) return <h1>{error}</h1>
   return (
@@ -33,8 +38,8 @@ const Survey = () => {
         {questions.map(question => {
           return (
             <QuestionItem
-            key={question.id}
-            question={question}
+              key={question.id}
+              question={question}
             />
           )
         })}

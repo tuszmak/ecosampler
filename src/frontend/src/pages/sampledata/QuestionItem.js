@@ -2,7 +2,7 @@ import { Form, Input, Checkbox } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
 
-export const QuestionItem = ({ id, description, fieldStyle }) => {
+export const QuestionItem = ({question: {id, description, fieldStyle }}) => {
   switch (fieldStyle) {
     case "SHORT_TEXT": return (
       <Form.Item
