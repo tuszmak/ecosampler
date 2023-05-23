@@ -36,23 +36,21 @@ public class QuestionService {
         return QuestionMapper.toDTO(question);
     }
 
-    protected List<Question> createMultipleQuestions(List<NewQuestion> newQuestions) {
-        List<Question> questions = new ArrayList<>();
+    public void createMultipleQuestionsWhichDoesntExist(List<NewQuestion> newQuestions) {
         for (NewQuestion newQuestion : newQuestions) {
             if(!isQuestionExistByDescription(newQuestion.description())){
-                Question currentlyCreatedQuestion = new Question(
-                        UUID.randomUUID(),
-                        newQuestion.description(),
-                        newQuestion.fieldStyle());
-                final Question question = questionRepository.save(currentlyCreatedQuestion);
-                questions.add(question);
+                createQuestion(newQuestion);
             }
-            else {
-                Optional<Question> question = questionRepository.findQuestionByDescription(newQuestion.description());
-                question.ifPresent(questions::add);
-            }
+
         }
-        return questions;
+    }
+    protected List<Question> searchMultipleQuestions(List<NewQuestion> newQuestions){
+        List<Question> questions = new ArrayList<>();
+        for (NewQuestion question : newQuestions){
+        Optional<Question> searchResult = questionRepository.findQuestionByDescription(question.description());
+        searchResult.ifPresent(questions::add);
+        }
+         return questions;
     }
 
     public UUID modifyQuestion(UUID publicId, QuestionDTO requestQuestion) {
