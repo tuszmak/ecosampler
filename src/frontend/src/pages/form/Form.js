@@ -23,7 +23,7 @@ const columns = [
     render: (text, record) => <p>{record.fieldStyle}</p>,
   },
 ];
-const path = "api/v1/question/getQuestions/";
+const path = "api/v1/form/getQuestions/";
 
 export const Form = () => {
   const params = useParams();
