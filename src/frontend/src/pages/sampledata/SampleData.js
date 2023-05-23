@@ -40,11 +40,12 @@ const SampleData = () => {
     });
   };
   const { formID } = useParams();
+  const { auth: { id } } = useAuth();
   const { data: questions, error, isPending } = useDownFetch(PATH + formID);
 
   const onFinish = async (values) => {
     loadingMessage();
-    const { auth: { id } } = useAuth();
+   
     const valuesArray = Object.entries(values).map(([key, value]) => ({ [key]: value }));
 
     const option = {
@@ -55,6 +56,7 @@ const SampleData = () => {
     try {
       const result = await upFetch(PATH_FOR_SAVE_SAMPLE_DATA, option)
       successMessage();
+      const data = await result.json();
       if (!result.ok) {
         message.error(data.message, ERROR_MSG_DURATION);
       }
