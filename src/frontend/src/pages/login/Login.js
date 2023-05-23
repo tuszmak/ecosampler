@@ -1,7 +1,6 @@
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hook/useAuth";
-import upFetch from "../../api/upFetch";
 
 const LOGIN_API_URL = "/api/v1/login";
 const HOME_URL = "/";

@@ -1,4 +1,8 @@
 package com.codecool.ecosampler.controller.dto.form;
 
-public record NewForm(String name) {
+import com.codecool.ecosampler.controller.dto.question.NewQuestion;
+
+import java.util.List;
+
+public record NewForm(String name, List<NewQuestion> questions) {
 }

@@ -10,9 +10,7 @@ import com.codecool.ecosampler.utilities.QuestionMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -27,7 +25,9 @@ public class QuestionService {
     }
 
     public QuestionDTO createQuestion(NewQuestion newQuestion) {
-        isQuestionExistByDescription(newQuestion.description());
+        if(isQuestionExistByDescription(newQuestion.description())){
+            throw new BadRequestException("This question already exists: " + newQuestion.description());
+        }
         final Question question = questionRepository.save(new Question(UUID.randomUUID(),
                         newQuestion.description(),
                         newQuestion.fieldStyle()
@@ -36,11 +36,29 @@ public class QuestionService {
         return QuestionMapper.toDTO(question);
     }
 
+    public void createMultipleQuestionsWhichDoesntExist(List<NewQuestion> newQuestions) {
+        for (NewQuestion newQuestion : newQuestions) {
+            if(!isQuestionExistByDescription(newQuestion.description())){
+                createQuestion(newQuestion);
+            }
+
+        }
+    }
+    protected List<Question> searchMultipleQuestions(List<NewQuestion> newQuestions){
+        List<Question> questions = new ArrayList<>();
+        for (NewQuestion question : newQuestions){
+        Optional<Question> searchResult = questionRepository.findQuestionByDescription(question.description());
+        searchResult.ifPresent(questions::add);
+        }
+         return questions;
+    }
+
     public UUID modifyQuestion(UUID publicId, QuestionDTO requestQuestion) {
         Question question = getQuestionByPublicId(publicId);
-        return questionRepository.save(
+        return questionRepository.
+                save(
                         updateQuestionByRequest(requestQuestion, question)
-                )
+        )
                 .getPublicId();
     }
 
@@ -55,15 +73,12 @@ public class QuestionService {
     }
 
     private Question updateQuestionByRequest(QuestionDTO requestQuestion, Question question) {
-        if (Objects.nonNull(requestQuestion.description()))
-            question.setDescription(requestQuestion.description());
-        if (Objects.nonNull(requestQuestion.fieldStyle()))
-            question.setFieldStyle(requestQuestion.fieldStyle());
+        if (Objects.nonNull(requestQuestion.description())) question.setDescription(requestQuestion.description());
+        if (Objects.nonNull(requestQuestion.fieldStyle())) question.setFieldStyle(requestQuestion.fieldStyle());
         return question;
     }
 
-    private void isQuestionExistByDescription(String description) {
-        if (questionRepository.existsByDescription(description))
-            throw new BadRequestException("This question already exists: " + description);
+    private boolean isQuestionExistByDescription(String description) {
+        return questionRepository.existsByDescription(description);
     }
 }

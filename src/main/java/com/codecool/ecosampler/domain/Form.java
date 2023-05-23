@@ -45,6 +45,13 @@ public class Form {
         this.name = name;
         this.questions = new ArrayList<>();
     }
+
+    public Form(UUID publicId, String name, List<Question> questions) {
+        this.name = name;
+        this.publicId = publicId;
+        this.questions = questions;
+    }
+
     public boolean addQuestion(Question question){
         return this.questions.add(question);
     }
