@@ -12,4 +12,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     boolean existsByDescription(String description);
 
     Optional<Question> findQuestionByPublicId(UUID publicId);
+    Optional<Question> findQuestionByDescription(String description);
 }
