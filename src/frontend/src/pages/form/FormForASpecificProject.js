@@ -5,7 +5,6 @@ import { Link, useLocation, useParams } from "react-router-dom";
 
 import NewProjectDrawer from "../projects/NewProjectDrawer";
 import useAuth from "../../hook/useAuth";
-import NewQuestionDrawer from "./NewQuestionDrawer";
 import useDownFetch from "../../hook/useDownFetch";
 const columns = [
   {
@@ -64,11 +63,7 @@ const AddNewForm = ({ addNewForm }) => {
         }}
         icon={<PlusCircleOutlined />}
       />
-      <NewQuestionDrawer
-        onClose={onClose}
-        open={open}
-        addNewForm={addNewForm}
-      />
+
     </>
   );
 };

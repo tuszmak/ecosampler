@@ -15,15 +15,15 @@ const columns = [
 const path = "api/v1/form/by-project-id/";
 
 export const FormList = () => {
-  const params = useParams();
+  const {id} = useParams();
   const navigate = useNavigate();
-  const { data, error, isPending } = useDownFetch(path + params.id);
+  const { data, error, isPending } = useDownFetch(path + id);
   if (isPending) return <h1>Loading</h1>;
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="id" />
       <FloatButton
-        onClick={()=>{navigate(`/create-form/${params.id}`)}}
+        onClick={()=>{navigate(`/create-form/${id}`)}}  
         shape="circle"
         type="primary"
         style={{
