@@ -15,13 +15,14 @@ import Projects from "./pages/projects";
 import Project from "./pages/project";
 import AuthLayout from "./layout/AuthLayout";
 import { CreateForm } from "./pages/project/CreateForm";
+import Homepage from "./component/Homepage";
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<AuthLayout />}>
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<Sample />} />
+        <Route index element={<Homepage />} />
         <Route path="sample" element={<Sample />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
