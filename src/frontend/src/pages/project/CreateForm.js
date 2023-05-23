@@ -8,7 +8,7 @@ import upFetch from "../../api/upFetch";
 
 const path = "/api/v1/project/addForm/";
 export const CreateForm = () => {
-  const params = useParams();
+  const {id} = useParams();
   const [fieldType, setFieldType] = useState("SHORT-TEXT");
   const navigate = useNavigate();
   const fieldStyles = [...FIELDSTYLES];
@@ -18,7 +18,7 @@ export const CreateForm = () => {
   };
   const onFinish = async (values) => {
     try {
-      await upFetch(path + params.id, {
+      await upFetch(path + id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const CreateForm = () => {
         body: JSON.stringify(values),
       });
 
-      navigate(`/project/${params.id}`);
+      navigate(`/project/${id}`);
     } catch (error) {
       message.error(
         "This is a duplicate Form name or something is wrong with server."
