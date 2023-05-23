@@ -16,7 +16,6 @@ export const CreateForm = () => {
     setFieldType(value);
   };
   const onFinish = async (values) => {
-    console.log(values);
     try {
       await fetch(path + params.id, {
         method: "POST",
