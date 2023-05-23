@@ -6,10 +6,9 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { FIELDSTYLES } from "../../constants/const";
 import upFetch from "../../api/upFetch";
 
-
 const path = "/api/v1/project/addForm/";
 export const CreateForm = () => {
-  const [params, setParams] = useState(useParams());
+  const params = useParams();
   const [fieldType, setFieldType] = useState("SHORT-TEXT");
   const navigate = useNavigate();
   const fieldStyles = [...FIELDSTYLES];
