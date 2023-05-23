@@ -47,8 +47,7 @@ public class FormService {
     }
 
     public List<QuestionDTO> getQuestionDTOsByFormID(UUID formID) {
-        Form form = formRepository.findFormByPublicId(formID)
-                .orElseThrow(() -> new RuntimeException("No form found"));
+        Form form = getFormByPublicId(formID);
         return form.getQuestions().stream()
                 .map(questionMapper::toDTO)
                 .collect(Collectors.toList());
