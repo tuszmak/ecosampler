@@ -62,7 +62,13 @@ public class Project {
     }
 
     public boolean addUserToProject(User user) {
-       return this.users.add(user);
+        return this.users.add(user);
+    }
+    public boolean addUsersToProject(List<User> users) {
+       return this.users.addAll(users);
+    }
+    public boolean removeUsersFromProject(List<User> users) {
+        return this.users.removeAll(users);
     }
     public boolean addFormToProject(Form form){
         return this.formList.add(form);

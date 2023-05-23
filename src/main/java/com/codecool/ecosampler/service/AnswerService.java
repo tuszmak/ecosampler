@@ -19,12 +19,11 @@ import java.util.stream.Collectors;
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final AnswerMapper answerMapper;
     private final QuestionService questionService;
 
     public List<AnswerDTO> getAllAnswersDTO() {
         return answerRepository.findAll().stream()
-                .map(answerMapper::toDto)
+                .map(AnswerMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +34,7 @@ public class AnswerService {
                         question
                 )
         );
-        return answerMapper.toDto(answer);
+        return AnswerMapper.toDto(answer);
     }
 
     public UUID modifyAnswer(UUID publicId, AnswerDTO requestAnswer) {
@@ -51,7 +50,7 @@ public class AnswerService {
         answerRepository.deleteById(answer.getId());
     }
 
-    public Answer getAnswerByPublicId(UUID publicId) {
+    protected Answer getAnswerByPublicId(UUID publicId) {
         return answerRepository.findAnswerByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("There is no answer with id: " + publicId));
     }
