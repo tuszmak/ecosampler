@@ -1,31 +1,74 @@
 import { useParams } from "react-router-dom";
-import useFetch from "../../hook/useFetch";
-import { Form, Button } from "antd";
+import { Form, Button, message } from "antd";
 import { QuestionItem } from "./QuestionItem";
 import useAuth from "../../hook/useAuth";
+import useDownFetch from "../../hook/useDownFetch";
+import upFetch from "../../api/upFetch";
 
+const PATH = "api/v1/question/getQuestions/";
+const PATH_FOR_SAVE_SAMPLE_DATA = "/api/v1/sampledata"
+const ERROR_MSG_DURATION = 3;
 
-const path = "api/v1/question/getQuestions/";
+const SampleData = () => {
 
-const Survey = () => {
+  const [messageApi, contextHolder] = message.useMessage();
 
-  const { formID } = useParams();
-  const { auth } = useAuth();
-  const { data: questions, error, isPending } = useFetch(path + formID);
-
-  const onFinish = (values) => {
-    const { id } = auth;
-    const valuesArray = Object.entries(values).map(([key, value]) => ({ [key]: value }));
-    console.log('Success:', { valuesArray, id, formID });
+  const cancelLoadingMessage = () => {
+    messageApi.destroy("loading");
   };
+  const errorMessage = (msg) => {
+    cancelLoadingMessage();
+    messageApi.open({
+      type: "error",
+      content: msg,
+    });
+  };
+  const loadingMessage = () => {
+    messageApi.open({
+      type: "loading",
+      content: "Your sample data is on the way...",
+      key: "loading",
+      duration: 0,
+    });
+  };
+  const successMessage = () => {
+    cancelLoadingMessage();
+    messageApi.open({
+      type: "success",
+      content: "Your sample data is saved!",
+      duration: 3,
+    });
+  };
+  const { formID } = useParams();
+  const { data: questions, error, isPending } = useDownFetch(PATH + formID);
 
+  const onFinish = async (values) => {
+    loadingMessage();
+    const { auth: { id } } = useAuth();
+    const valuesArray = Object.entries(values).map(([key, value]) => ({ [key]: value }));
 
+    const option = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(valuesArray, id, formID),
+    };
+    try {
+      const result = await upFetch(PATH_FOR_SAVE_SAMPLE_DATA, option)
+      successMessage();
+      if (!result.ok) {
+        message.error(data.message, ERROR_MSG_DURATION);
+      }
+    } catch (err) {
+      errorMessage("Problem with the Server");
+    }
+  };
 
   if (isPending) return <h1>Loading</h1>;
   if (error) return <h1>{error}</h1>
   return (
     <>
       <h1>Survey</h1>
+      {contextHolder}
       <Form
         name="basic"
         labelCol={{ span: 8 }}
@@ -53,5 +96,5 @@ const Survey = () => {
   );
 };
 
-export default Survey;
+export default SampleData;
 

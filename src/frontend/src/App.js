@@ -14,7 +14,7 @@ import Projects from "./pages/projects";
 import Project from "./pages/project";
 import AuthLayout from "./layout/AuthLayout";
 import { CreateForm } from "./pages/project/CreateForm";
-import Survey from "./pages/sampledata";
+import SampleData from "./pages/sampledata";
 import Homepage from "./component/Homepage";
 
 import { Form } from "./pages/form/Form";
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
         <Route path="project/:id" element={<Project />} />
         <Route path='create-form/:id' element={<CreateForm />} />
         <Route path="form/:id" element={<Form />} />
-        <Route path="survey/:formID" element={<Survey />} />
+        <Route path="survey/:formID" element={<SampleData />} />
       </Route>
     </Route>
   )

@@ -1,5 +1,5 @@
 import { Button, Space, Table, Tag } from "antd";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import useDownFetch from "../../hook/useDownFetch";
 
 const columns = [

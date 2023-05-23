@@ -1,2 +1,2 @@
-import Survey from "./SampleData";
-export default Survey;
+import SampleData from "./SampleData";
+export default SampleData;
