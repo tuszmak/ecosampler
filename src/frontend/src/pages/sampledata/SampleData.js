@@ -5,7 +5,7 @@ import useAuth from "../../hook/useAuth";
 import useDownFetch from "../../hook/useDownFetch";
 import upFetch from "../../api/upFetch";
 
-const PATH = "api/v1/question/getQuestions/";
+const PATH = "/api/v1/question";
 const PATH_FOR_SAVE_SAMPLE_DATA = "/api/v1/sampledata"
 const ERROR_MSG_DURATION = 3;
 
@@ -51,7 +51,7 @@ const SampleData = () => {
     const option = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(valuesArray, id, formID),
+      body: JSON.stringify({valuesArray, id, formID}),
     };
     try {
       const result = await upFetch(PATH_FOR_SAVE_SAMPLE_DATA, option)
