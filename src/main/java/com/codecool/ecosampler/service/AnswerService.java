@@ -28,6 +28,19 @@ public class AnswerService {
                 .collect(Collectors.toList());
     }
 
+    public List<Answer> createListOfAnswers(List<NewAnswer> newAnswers) {
+        return answerRepository.saveAll(
+                newAnswers.stream()
+                        .map(newAnswer -> new Answer(
+                                UUID.randomUUID(),
+                                newAnswer.answer(),
+                                questionService.getQuestionByPublicId(newAnswer.questionID())
+                                )
+                        )
+                        .toList()
+        );
+    }
+
     public AnswerDTO createAnswer(NewAnswer newAnswer) {
         final Question question = questionService.getQuestionByPublicId(newAnswer.questionID());
         final Answer answer = answerRepository.save(new Answer(UUID.randomUUID(),
