@@ -58,10 +58,11 @@ public class User {
     private List<Project> projects;
 
 
-    public User(UUID publicId, String name, String email, String password) {
+    public User(UUID publicId, String name, String email, Role role, String password) {
         this.publicId = publicId;
         this.email = email;
         this.name = name;
+        this.role = role;
         this.password = password;
     }
 }

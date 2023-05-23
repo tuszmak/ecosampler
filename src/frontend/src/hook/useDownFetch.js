@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import useAuth from "./useAuth";
+import upFetch from "../api/upFetch";
 /**
  * Custom hook for Fetch data with error handling, and loading state;
  *
- * usage const {data, isPending, error} = useFetch('url')
+ * usage const {data, isPending, error} = useDownFetch('url')
  *
  * data: the fetched data for rename
  *    use destruction pattern {data: locations, ...}
@@ -12,14 +14,28 @@ import { useState, useEffect } from "react";
  * @param {String} url
  * @returns Object data isPending error
  */
-const useFetch = (url) => {
+const useDownFetch = (url) => {
+  const { auth } = useAuth();
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
+  const getHeaders = () => {
+    let headers = {
+      "Content-Type": "application/json",
+    };
+    if (auth) {
+      headers = { ...headers, Authorization: `Bearer ${auth.token}` };
+    }
+    return headers;
+  };
+
   useEffect(() => {
     const abort = new AbortController();
-    fetch((url[0] !== "/" ? "/" : "") + url, { signal: abort.signal })
+    upFetch((url[0] !== "/" ? "/" : "") + url, {
+      signal: abort.signal,
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => {
         if (!res.ok) throw Error("There must be a problem");
         return res.json();
@@ -41,4 +57,4 @@ const useFetch = (url) => {
   return { data, isPending, error };
 };
 
-export default useFetch;
+export default useDownFetch;
