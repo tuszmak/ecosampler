@@ -4,7 +4,6 @@ import { Button, FloatButton, Space, Table, Tag } from "antd";
 import { Link, useLocation, useParams } from "react-router-dom";
 
 import NewProjectDrawer from "../projects/NewProjectDrawer";
-import useAuth from "../../hook/useAuth";
 import useDownFetch from "../../hook/useDownFetch";
 const columns = [
   {
@@ -26,16 +25,12 @@ const path = "api/v1/form/by-form-id/";
 
 export const Form = () => {
   const {id} = useParams();
-  const { auth } = useAuth();
-
   const { data, error, isPending } = useDownFetch(path + id);
   if (isPending) return <h1>Loading</h1>;
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="id" />
-      {auth?.role === "DIRECTOR" || auth?.role === "PROJECT_LEADER" && (
         <AddNewForm />
-      )}
     </>
   );
 };
@@ -61,7 +56,6 @@ const AddNewForm = () => {
         }}
         icon={<PlusCircleOutlined />}
       />
-
     </>
   );
 };

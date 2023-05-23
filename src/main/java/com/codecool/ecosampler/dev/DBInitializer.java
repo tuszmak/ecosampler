@@ -43,6 +43,7 @@ public class DBInitializer implements CommandLineRunner {
         project1.addUserToProject(user2);
         project1.addFormToProject(form1);
         project1.addFormToProject(form2);
+        project1.addUserToProject(user4);
         form1.addQuestion(question1);
         answer.setSampleData(sampleData);
         userRepository.saveAll(List.of(user1, user2, user3, user4, user5));

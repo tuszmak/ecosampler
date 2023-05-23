@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
 import useDownFetch from "../../hook/useDownFetch";
+import useAuth from "../../hook/useAuth";
 
 const columns = [
   {
@@ -15,6 +16,7 @@ const columns = [
 const path = "api/v1/form/by-project-id/";
 
 export const FormList = () => {
+  const { auth } = useAuth();
   const {id} = useParams();
   const navigate = useNavigate();
   const { data, error, isPending } = useDownFetch(path + id);
@@ -22,6 +24,7 @@ export const FormList = () => {
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="id" />
+      {(auth?.role === "DIRECTOR" || auth?.role === "PROJECT_LEADER") && 
       <FloatButton
         onClick={()=>{navigate(`/create-form/${id}`)}}  
         shape="circle"
@@ -30,7 +33,7 @@ export const FormList = () => {
           right: 94,
         }}
         icon={<PlusCircleOutlined />}
-      />
+      />  }
     </>
   );
 };
