@@ -4,7 +4,6 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import Sample from "./Sample";
 import "antd/dist/reset.css";
 import Register from "./pages/register";
 
