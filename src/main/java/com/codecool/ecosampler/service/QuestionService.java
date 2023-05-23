@@ -17,11 +17,10 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionService {
     private final QuestionRepository questionRepository;
-    private final QuestionMapper questionMapper;
 
     public List<QuestionDTO> getAllQuestionsDTO() {
         return questionRepository.findAll().stream()
-                .map(questionMapper::toDTO)
+                .map(QuestionMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -34,7 +33,7 @@ public class QuestionService {
                         newQuestion.fieldStyle()
                 )
         );
-        return questionMapper.toDTO(question);
+        return QuestionMapper.toDTO(question);
     }
 
     protected List<Question> createMultipleQuestions(List<NewQuestion> newQuestions) {
@@ -70,7 +69,7 @@ public class QuestionService {
         questionRepository.deleteById(question.getId());
     }
 
-    public Question getQuestionByPublicId(UUID publicId) {
+    protected Question getQuestionByPublicId(UUID publicId) {
         return questionRepository.findQuestionByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("There is no question with id: " + publicId));
     }

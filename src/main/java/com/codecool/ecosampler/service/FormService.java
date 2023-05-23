@@ -20,35 +20,29 @@ import java.util.stream.Collectors;
 @Service
 public class FormService {
     private final FormRepository formRepository;
-    private final FormMapper formMapper;
-    private final QuestionMapper questionMapper;
     private final QuestionService questionService;
 
     public FormDTO createNewFormGetDTO(NewForm newForm) {
-        Form form = createNewForm(newForm);
-        return formMapper.toDTO(form);
+        final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
+        return FormMapper.toDTO(form);
     }
 
-    public Form createNewForm(NewForm newForm) {
-        List<Question> questions = questionService.createMultipleQuestions(newForm.questions());
-        return formRepository.save(new Form(UUID.randomUUID(), newForm.name(), questions));
+    protected Form createNewForm(NewForm newForm) {
+        return formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
     }
 
-    public Form getFormByPublicId(UUID publicId) {
-        return formRepository.findFormByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
+    protected Form getFormByPublicId(UUID publicId) {
+        return formRepository.findFormByPublicId(publicId).orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
     }
 
     public List<FormDTO> getFormsByProjectID(UUID projectID) {
-        return formRepository.findFormsByProjectID(projectID).stream()
-                .map(formMapper::toDTO).collect(Collectors.toList());
-
+        return formRepository.findFormsByProjectID(projectID).stream().map(FormMapper::toDTO).collect(Collectors.toList());
     }
 
     public List<QuestionDTO> getQuestionDTOsByFormID(UUID formID) {
         Form form = getFormByPublicId(formID);
         return form.getQuestions().stream()
-                .map(questionMapper::toDTO)
+                .map(QuestionMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }

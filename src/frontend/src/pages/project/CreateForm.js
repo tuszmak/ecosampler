@@ -4,6 +4,8 @@ import { Button, Form, Input, Radio, Select, Space, message } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { FIELDSTYLES } from "../../constants/const";
+import upFetch from "../../api/upFetch";
+
 
 const path = "/api/v1/project/addForm/";
 export const CreateForm = () => {
@@ -17,7 +19,7 @@ export const CreateForm = () => {
   };
   const onFinish = async (values) => {
     try {
-      await fetch(path + params.id, {
+      await upFetch(path + params.id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
