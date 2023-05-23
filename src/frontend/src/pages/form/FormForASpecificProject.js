@@ -3,10 +3,10 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, FloatButton, Space, Table, Tag } from "antd";
 import { Link, useLocation, useParams } from "react-router-dom";
 
-import useFetch from "../../hook/useFetch";
 import NewProjectDrawer from "../projects/NewProjectDrawer";
 import useAuth from "../../hook/useAuth";
 import NewQuestionDrawer from "./NewQuestionDrawer";
+import useDownFetch from "../../hook/useDownFetch";
 const columns = [
   {
     title: "Name",
@@ -29,7 +29,7 @@ export const Form = () => {
   const params = useParams();
   const { auth } = useAuth();
 
-  const { data, error, isPending } = useFetch(path + params.id);
+  const { data, error, isPending } = useDownFetch(path + params.id);
   if (isPending) return <h1>Loading</h1>;
   return (
     <>

@@ -1,5 +1,5 @@
+import useDownFetch from '../../hook/useDownFetch';
 import ProjectList from './ProjectList';
-import useFetch from "../../hook/useFetch";
 
 const Projects = () => {
   const { data, error, isPending } = useDownFetch("/api/v1/project");
