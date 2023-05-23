@@ -21,7 +21,7 @@ const Login = () => {
     const { email, password } = values;
 
     try {
-      const response = await upFetch(LOGIN_API_URL, {
+      const response = await fetch(LOGIN_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -29,7 +29,6 @@ const Login = () => {
           password,
         }),
       });
-
       const data = await response.json();
       if (response.ok) {
         setAuth({ ...data });
