@@ -17,23 +17,22 @@ import java.util.stream.Collectors;
 @Service
 public class FormService {
     private final FormRepository formRepository;
-    private final FormMapper formMapper;
 
     public FormDTO createNewFormGetDTO(NewForm newForm) {
         final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
-        return formMapper.toDTO(form);
+        return FormMapper.toDTO(form);
     }
 
-    public Form createNewForm(NewForm newForm) {
+    protected Form createNewForm(NewForm newForm) {
         return formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
     }
 
-    public Form getFormByPublicId(UUID publicId) {
+    protected Form getFormByPublicId(UUID publicId) {
         return formRepository.findFormByPublicId(publicId).orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
     }
 
     public List<FormDTO> getFormsByProjectID(UUID projectID) {
-        return formRepository.findFormsByProjectID(projectID).stream().map(formMapper::toDTO).collect(Collectors.toList());
+        return formRepository.findFormsByProjectID(projectID).stream().map(FormMapper::toDTO).collect(Collectors.toList());
 
     }
 }

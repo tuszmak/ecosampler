@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { Button, Form, Input, Radio, message } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import upFetch from "../../api/upFetch";
 
 const path = "/api/v1/project/addForm/";
 export const CreateForm = () => {
@@ -9,7 +10,7 @@ export const CreateForm = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      await fetch(path + params.id, {
+      await upFetch(path + params.id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
