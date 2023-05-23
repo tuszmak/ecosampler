@@ -23,9 +23,9 @@ public class FormController {
         return formService.createNewFormGetDTO(form);
     }
 
-    @GetMapping("/getForms/{projectID}")
-    public List<FormDTO> getFormsByProjectID(@PathVariable UUID projectID) {
-        return formService.getFormsByProjectID(projectID);
+    @GetMapping("/by-project-id/{projectId}")
+    public List<FormDTO> getFormsByProjectID(@PathVariable UUID projectId) {
+        return formService.getFormsByProjectID(projectId);
     }
 
 

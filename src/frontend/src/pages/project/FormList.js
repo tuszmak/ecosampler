@@ -11,7 +11,7 @@ const columns = [
     render: (text, record) => <Link to={"/form/" + record.id}>{text}</Link>,
   },
 ];
-const path = "api/v1/form/getForms/";
+const path = "api/v1/form/by-project-id/";
 
 export const FormList = () => {
   const params = useParams();
