@@ -24,9 +24,9 @@ public class QuestionController {
         return questionService.getAllQuestionsDTO();
     }
 
-    @GetMapping("/getQuestions/{formID}")
-    List<QuestionDTO> getFormQuestionsByFormID(@PathVariable UUID formID) {
-        return formService.getQuestionDTOsByFormID(formID);
+    @GetMapping("/by-form-id/{formId}")
+    List<QuestionDTO> getFormQuestionsByFormID(@PathVariable UUID formId) {
+        return formService.getQuestionDTOsByFormID(formId);
     }
 
     @PostMapping
