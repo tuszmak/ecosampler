@@ -5,7 +5,7 @@ import com.codecool.ecosampler.controller.dto.sampledata.SampleDataDTO;
 import com.codecool.ecosampler.domain.Form;
 import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.domain.User;
-import com.codecool.ecosampler.exeption.NotFoundException;
+import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.SampleDataRepository;
 import com.codecool.ecosampler.utilities.SampleDataMapper;
 import lombok.AllArgsConstructor;

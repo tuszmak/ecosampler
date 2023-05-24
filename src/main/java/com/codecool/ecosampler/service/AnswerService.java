@@ -4,7 +4,7 @@ import com.codecool.ecosampler.controller.dto.answer.AnswerDTO;
 import com.codecool.ecosampler.controller.dto.answer.NewAnswer;
 import com.codecool.ecosampler.domain.Answer;
 import com.codecool.ecosampler.domain.SampleData;
-import com.codecool.ecosampler.exeption.NotFoundException;
+import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.AnswerRepository;
 import com.codecool.ecosampler.utilities.AnswerMapper;
 import lombok.AllArgsConstructor;
