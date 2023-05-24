@@ -3,7 +3,7 @@ package com.codecool.ecosampler.service;
 import com.codecool.ecosampler.controller.dto.answer.AnswerDTO;
 import com.codecool.ecosampler.controller.dto.answer.NewAnswer;
 import com.codecool.ecosampler.domain.Answer;
-import com.codecool.ecosampler.domain.Question;
+import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.AnswerRepository;
 import com.codecool.ecosampler.utilities.AnswerMapper;
@@ -19,23 +19,25 @@ import java.util.stream.Collectors;
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final AnswerMapper answerMapper;
     private final QuestionService questionService;
 
     public List<AnswerDTO> getAllAnswersDTO() {
         return answerRepository.findAll().stream()
-                .map(answerMapper::toDto)
+                .map(AnswerMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public AnswerDTO createAnswer(NewAnswer newAnswer) {
-        final Question question = questionService.getQuestionByPublicId(newAnswer.questionID());
-        final Answer answer = answerRepository.save(new Answer(UUID.randomUUID(),
-                        newAnswer.answer(),
-                        question
-                )
+    protected List<Answer> createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
+        return answerRepository.saveAll(
+                newAnswers.stream()
+                        .map(newAnswer -> new Answer(
+                                UUID.randomUUID(),
+                                newAnswer.answer(),
+                                questionService.getQuestionByPublicId(newAnswer.questionID()),sampleData
+                                )
+                        )
+                        .toList()
         );
-        return answerMapper.toDto(answer);
     }
 
     public UUID modifyAnswer(UUID publicId, AnswerDTO requestAnswer) {
@@ -51,7 +53,7 @@ public class AnswerService {
         answerRepository.deleteById(answer.getId());
     }
 
-    public Answer getAnswerByPublicId(UUID publicId) {
+    protected Answer getAnswerByPublicId(UUID publicId) {
         return answerRepository.findAnswerByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("There is no answer with id: " + publicId));
     }

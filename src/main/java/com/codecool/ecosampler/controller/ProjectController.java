@@ -1,10 +1,10 @@
 package com.codecool.ecosampler.controller;
 
 import com.codecool.ecosampler.controller.dto.form.NewForm;
+import com.codecool.ecosampler.controller.dto.project.ModifyUsersOnProject;
 import com.codecool.ecosampler.controller.dto.project.NewProject;
-import com.codecool.ecosampler.controller.dto.project.ProjectAndUserId;
 import com.codecool.ecosampler.controller.dto.project.ProjectDTO;
-import com.codecool.ecosampler.domain.Project;
+import com.codecool.ecosampler.controller.dto.user.UserForSelectDTO;
 import com.codecool.ecosampler.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,9 +40,9 @@ public class ProjectController {
         projectService.deleteProject(publicId);
     }
 
-    @PutMapping("/addUser")
-    public void addUserToProject(@RequestBody ProjectAndUserId projectAndUserId) {
-        projectService.addUserToProject(projectAndUserId);
+    @PutMapping("/modify-users/{projectID}")
+    public void modifyUsersOnProject(@RequestBody ModifyUsersOnProject modifyUsersOnProject, @PathVariable UUID projectID) {
+        projectService.modifyUsersOnProject(modifyUsersOnProject, projectID);
     }
 
     @PostMapping("/addForm/{projectID}")
@@ -52,7 +52,11 @@ public class ProjectController {
     }
 
     @PutMapping("{publicProjectId}")
-    public Project updateProject(@PathVariable UUID publicProjectId, @RequestBody ProjectDTO project) {
+    public ProjectDTO updateProject(@PathVariable UUID publicProjectId, @RequestBody ProjectDTO project) {
         return projectService.updateProject(publicProjectId, project);
+    }
+    @GetMapping("users/{publicProjectId}")
+    public List<UserForSelectDTO> getUsersForProjectByPublicId(@PathVariable UUID publicProjectId) {
+        return projectService.getUserForSelectDTOForProjectByPublicId(publicProjectId);
     }
 }

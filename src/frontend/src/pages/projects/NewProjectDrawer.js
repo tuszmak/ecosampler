@@ -1,9 +1,17 @@
 import { Button, Drawer, Form, Input, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import AssignsPeople from "./AssignsPeople";
+import upFetch from "../../api/upFetch";
 
 const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+
+  const selectForNewProject = {
+    url: "api/v1/user/by-role?role=PROJECT_LEADER",
+    name: "userIDs",
+    label: "Select Project Leader",
+  };
 
   const cancelLoadingMessage = () => {
     messageApi.destroy("loading");
@@ -40,7 +48,7 @@ const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
       body: JSON.stringify(values),
     };
     try {
-      const result = await fetch("/api/v1/project", option);
+      const result = await upFetch("/api/v1/project", option);
 
       if (!result.ok) {
         cancelLoadingMessage();
@@ -98,6 +106,9 @@ const NewProjectDrawer = ({ onClose, open, addNewProject }) => {
         >
           <TextArea rows={4} />
         </Form.Item>
+
+        <AssignsPeople {...selectForNewProject} />
+
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
             Submit

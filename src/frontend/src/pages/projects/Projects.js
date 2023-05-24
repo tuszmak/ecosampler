@@ -1,10 +1,16 @@
+import useAuth from "../../hook/useAuth";
+import useDownFetch from "../../hook/useDownFetch";
 import ProjectList from "./ProjectList";
-import useFetch from '../../hook/useFetch'
 
 const Projects = () => {
-  const { data, error, isPending } = useFetch('/api/v1/project')
-  if (isPending) return (<h1>Loading</h1>);
-  return (<ProjectList projects={data} />);
-}
+  const { auth } = useAuth();
+  const path =
+    auth?.role === "DIRECTOR"
+      ? "/api/v1/project"
+      : `/api/v1/project/by-user/${auth.id}`;
+  const { data, error, isPending } = useDownFetch(path);
+  if (isPending) return <h1>Loading</h1>;
+  return <ProjectList projects={data} />;
+};
 
 export default Projects;

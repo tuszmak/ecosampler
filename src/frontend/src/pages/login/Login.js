@@ -1,5 +1,5 @@
-import { Button, Checkbox, Form, Input, message } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import {Button, Checkbox, Form, Input, message} from "antd";
+import {useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../../hook/useAuth";
 
 const LOGIN_API_URL = "/api/v1/login";
@@ -28,10 +28,10 @@ const Login = () => {
           password,
         }),
       });
-
       const data = await response.json();
       if (response.ok) {
-        setAuth({ id: data.id, role: data.role });
+        setAuth({ ...data });
+        localStorage.setItem("user", JSON.stringify(data));
         navigate(from, { replace: true });
       } else {
         message.error(data.message, ERROR_MSG_DURATION);

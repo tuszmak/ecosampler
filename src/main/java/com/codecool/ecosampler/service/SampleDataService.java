@@ -20,32 +20,36 @@ import java.util.stream.Collectors;
 @Service
 public class SampleDataService {
     private final SampleDataRepository sampleDataRepository;
-    private final SampleDataMapper sampleDataMapper;
     private final UserService userService;
     private final FormService formService;
+    private final AnswerService answerService;
 
 
     public List<SampleDataDTO> getAllSampleDataDTO() {
         return sampleDataRepository.findAll().stream()
-                .map(sampleDataMapper::toDTO)
+                .map(SampleDataMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public SampleDataDTO getSampleDataDTOByPublicId(UUID publicId) {
         SampleData sampleData = getSampleDataByPublicId(publicId);
-        return sampleDataMapper.toDTO(sampleData);
+        return SampleDataMapper.toDTO(sampleData);
     }
 
     public SampleDataDTO createSampleData(NewSampleData newSampleData) {
+
         User user = userService.getUserByPublicId(newSampleData.userID());
         Form form = formService.getFormByPublicId(newSampleData.formID());
-        final SampleData sampleData = sampleDataRepository.save(new SampleData(UUID.randomUUID(),
-                        LocalDateTime.now(),
-                        user,
-                        form
+
+        SampleData sampleData = sampleDataRepository.save(new SampleData(UUID.randomUUID(),
+                LocalDateTime.now(),
+                user,
+                form
                 )
         );
-        return sampleDataMapper.toDTO(sampleData);
+        answerService.createListOfAnswers(newSampleData.newAnswers(), sampleData);
+
+        return SampleDataMapper.toDTO(sampleData);
     }
 
     public void deleteSampleData(UUID publicId) {
@@ -53,7 +57,7 @@ public class SampleDataService {
         sampleDataRepository.deleteById(sampleData.getId());
     }
 
-    public SampleData getSampleDataByPublicId(UUID publicId) {
+    protected SampleData getSampleDataByPublicId(UUID publicId) {
         return sampleDataRepository.
                 findSampleDataByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));

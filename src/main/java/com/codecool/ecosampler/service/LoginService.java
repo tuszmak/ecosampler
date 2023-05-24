@@ -1,26 +1,34 @@
 package com.codecool.ecosampler.service;
 
-import com.codecool.ecosampler.controller.dto.login.LoginRequest;
 import com.codecool.ecosampler.controller.dto.login.LoginCredentials;
+import com.codecool.ecosampler.controller.dto.login.LoginRequest;
 import com.codecool.ecosampler.domain.User;
-import com.codecool.ecosampler.repository.UserRepository;
-import com.codecool.ecosampler.utilities.Mapper;
+import com.codecool.ecosampler.security.JWTService;
+import com.codecool.ecosampler.utilities.UserMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @Service
 public class LoginService {
+    private final AuthenticationManager authenticationManager;
+    private final JWTService jwtService;
+    private final UserService userService;
 
-    private final UserRepository userRepository;
     public LoginCredentials verifyUser(LoginRequest loginRequest) {
-       return Mapper.mapToResponseUser(getUserByLogin(loginRequest));
+        Authentication authentication = authenticateUser(loginRequest);
+        String token = jwtService.generateToken(authentication);
+        User user = userService.getUserByEmail(loginRequest.email());
+        return UserMapper.toLoginCredential(user, token);
     }
 
-    private User getUserByLogin(LoginRequest loginRequest) {
-        return userRepository.findByEmailAndPassword(loginRequest.email(), loginRequest.password())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong email or password!"));
+    private Authentication  authenticateUser(LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+        return authentication;
     }
 }

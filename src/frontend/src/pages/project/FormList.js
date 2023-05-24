@@ -1,26 +1,41 @@
-import React, { useEffect, useState } from "react";
+import {FloatButton, Table} from "antd";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {PlusCircleOutlined} from "@ant-design/icons";
 
-import { Button, Space, Table, Tag } from "antd";
-import { useLocation, useParams } from "react-router-dom";
-import useFetch from "../../hook/useFetch";
+import useDownFetch from "../../hook/useDownFetch";
+import useAuth from "../../hook/useAuth";
+
 const columns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "id",
-    render: (text) => <a>{text}</a>,
+    render: (text, record) => (
+    <Link to={`/survey/${record.id}`}>{text}</Link>
+    ),
   },
 ];
-const path = "api/v1/form/getForms/";
+const path = "api/v1/form/by-project-id/";
 
 export const FormList = () => {
-  const params = useParams();
-  const { data, error, isPending } = useFetch(path + params.id);
+  const { auth } = useAuth();
+  const {id} = useParams();
+  const navigate = useNavigate();
+  const { data, error, isPending } = useDownFetch(path + id);
   if (isPending) return <h1>Loading</h1>;
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="id" />
-      <Button href={`/create-form/${params.id}`}>Create form</Button>
+      {(auth?.role === "DIRECTOR" || auth?.role === "PROJECT_LEADER") &&
+      <FloatButton
+        onClick={()=>{navigate(`/create-form/${id}`)}}
+        shape="circle"
+        type="primary"
+        style={{
+          right: 94,
+        }}
+        icon={<PlusCircleOutlined />}
+      />  }
     </>
   );
 };
