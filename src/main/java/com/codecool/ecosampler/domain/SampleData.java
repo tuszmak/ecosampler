@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,6 +54,5 @@ public class SampleData {
         this.time = time;
         this.user = user;
         this.form = form;
-        this.answers = answers;
     }
 }

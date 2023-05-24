@@ -9,7 +9,7 @@ import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.FormRepository;
 import com.codecool.ecosampler.utilities.FormMapper;
 import com.codecool.ecosampler.utilities.QuestionMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
