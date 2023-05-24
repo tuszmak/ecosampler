@@ -43,9 +43,10 @@ public class Answer {
     @JoinColumn(name = "sample_data_id")
     private SampleData sampleData;
 
-    public Answer(UUID publicId, String answer, Question question) {
+    public Answer(UUID publicId, String answer, Question question, SampleData sampleData) {
         this.publicId = publicId;
         this.answer = answer;
         this.question = question;
+        this.sampleData = sampleData;
     }
 }

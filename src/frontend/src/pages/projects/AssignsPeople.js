@@ -1,5 +1,5 @@
-import { Form, Select } from "antd";
-import { useEffect, useState } from "react";
+import {Form, Select} from "antd";
+import {useEffect, useState} from "react";
 import useDownFetch from "../../hook/useDownFetch";
 
 const AssignsPeople = ({

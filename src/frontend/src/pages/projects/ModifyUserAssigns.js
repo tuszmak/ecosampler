@@ -1,6 +1,6 @@
-import { Form, Modal, message } from "antd";
+import {Form, message, Modal} from "antd";
 import AssignsPeople from "./AssignsPeople";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import useDownFetch from "../../hook/useDownFetch";
 import upFetch from "../../api/upFetch";
 import useAuth from "../../hook/useAuth";

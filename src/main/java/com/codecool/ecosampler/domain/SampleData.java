@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,14 +44,15 @@ public class SampleData {
     @OneToOne(targetEntity = Form.class)
     private Form form;
 
-    @OneToMany(mappedBy = "answer")
-    private List<Answer> answers;
+    @OneToMany(mappedBy = "sampleData",
+    cascade = CascadeType.ALL)
+    private List<Answer> answers = new ArrayList<>();
 
     public SampleData(UUID publicId, LocalDateTime time, User user, Form form) {
         this.publicId = publicId;
         this.time = time;
         this.user = user;
         this.form = form;
-        this.answers = new ArrayList<>();
+        this.answers = answers;
     }
 }

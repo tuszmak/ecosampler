@@ -1,5 +1,6 @@
-import { Layout, Menu } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import {Layout, Menu} from 'antd';
+import {useNavigate} from 'react-router-dom';
+
 const { Header } = Layout;
 
 const HeaderComponent = () => {

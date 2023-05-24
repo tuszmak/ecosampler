@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
-import { Button, Form, Input, Select, Space, message } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { FIELDSTYLES } from "../../constants/const";
+import {Button, Form, Input, message, Select, Space} from "antd";
+import {useNavigate, useParams} from "react-router-dom";
+import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
+import {FIELDSTYLES} from "../../constants/const";
 import upFetch from "../../api/upFetch";
 
 const path = "/api/v1/project/addForm/";
@@ -17,6 +17,7 @@ export const CreateForm = () => {
     setFieldType(value);
   };
   const onFinish = async (values) => {
+    console.log(values);
     try {
       await upFetch(path + id, {
         method: "POST",

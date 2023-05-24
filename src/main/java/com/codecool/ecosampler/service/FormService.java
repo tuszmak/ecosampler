@@ -9,7 +9,7 @@ import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.FormRepository;
 import com.codecool.ecosampler.utilities.FormMapper;
 import com.codecool.ecosampler.utilities.QuestionMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +30,9 @@ public class FormService {
     }
 
     protected Form createNewForm(NewForm newForm) {
-        return formRepository.save(new Form(UUID.randomUUID(), newForm.name()));
+        questionService.createMultipleQuestionsWhichDoesntExist(newForm.questions());
+        List<Question> questionsToDB = questionService.searchMultipleQuestions(newForm.questions());
+        return formRepository.save(new Form(UUID.randomUUID(), newForm.name(),questionsToDB));
     }
 
     protected Form getFormByPublicId(UUID publicId) {

@@ -1,6 +1,6 @@
-import { Button, FloatButton, Space, Table, Tag } from "antd";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import {FloatButton, Table} from "antd";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {PlusCircleOutlined} from "@ant-design/icons";
 
 import useDownFetch from "../../hook/useDownFetch";
 import useAuth from "../../hook/useAuth";
@@ -10,7 +10,9 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "id",
-    render: (text, record) => <Link to={"/form/" + record.id}>{text}</Link>,
+    render: (text, record) => (
+    <Link to={`/survey/${record.id}`}>{text}</Link>
+    ),
   },
 ];
 const path = "api/v1/form/by-project-id/";
@@ -24,9 +26,9 @@ export const FormList = () => {
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="id" />
-      {(auth?.role === "DIRECTOR" || auth?.role === "PROJECT_LEADER") && 
+      {(auth?.role === "DIRECTOR" || auth?.role === "PROJECT_LEADER") &&
       <FloatButton
-        onClick={()=>{navigate(`/create-form/${id}`)}}  
+        onClick={()=>{navigate(`/create-form/${id}`)}}
         shape="circle"
         type="primary"
         style={{

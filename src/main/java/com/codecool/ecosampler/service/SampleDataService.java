@@ -22,6 +22,7 @@ public class SampleDataService {
     private final SampleDataRepository sampleDataRepository;
     private final UserService userService;
     private final FormService formService;
+    private final AnswerService answerService;
 
 
     public List<SampleDataDTO> getAllSampleDataDTO() {
@@ -36,14 +37,18 @@ public class SampleDataService {
     }
 
     public SampleDataDTO createSampleData(NewSampleData newSampleData) {
+
         User user = userService.getUserByPublicId(newSampleData.userID());
         Form form = formService.getFormByPublicId(newSampleData.formID());
-        final SampleData sampleData = sampleDataRepository.save(new SampleData(UUID.randomUUID(),
-                        LocalDateTime.now(),
-                        user,
-                        form
+
+        SampleData sampleData = sampleDataRepository.save(new SampleData(UUID.randomUUID(),
+                LocalDateTime.now(),
+                user,
+                form
                 )
         );
+        answerService.createListOfAnswers(newSampleData.newAnswers(), sampleData);
+
         return SampleDataMapper.toDTO(sampleData);
     }
 

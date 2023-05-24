@@ -27,14 +27,17 @@ public class AnswerService {
                 .collect(Collectors.toList());
     }
 
-    public AnswerDTO createAnswer(NewAnswer newAnswer) {
-        final Question question = questionService.getQuestionByPublicId(newAnswer.questionID());
-        final Answer answer = answerRepository.save(new Answer(UUID.randomUUID(),
-                        newAnswer.answer(),
-                        question
-                )
+    protected List<Answer> createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
+        return answerRepository.saveAll(
+                newAnswers.stream()
+                        .map(newAnswer -> new Answer(
+                                UUID.randomUUID(),
+                                newAnswer.answer(),
+                                questionService.getQuestionByPublicId(newAnswer.questionID())
+                                )
+                        )
+                        .toList()
         );
-        return AnswerMapper.toDto(answer);
     }
 
     public UUID modifyAnswer(UUID publicId, AnswerDTO requestAnswer) {

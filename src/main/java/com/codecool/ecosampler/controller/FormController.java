@@ -2,7 +2,6 @@ package com.codecool.ecosampler.controller;
 
 import com.codecool.ecosampler.controller.dto.form.FormDTO;
 import com.codecool.ecosampler.controller.dto.form.NewForm;
-import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
 import com.codecool.ecosampler.service.FormService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

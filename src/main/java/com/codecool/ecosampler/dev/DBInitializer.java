@@ -14,13 +14,13 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class DBInitializer implements CommandLineRunner {
-    private final AnswerRepository answerRepository;
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
     private final FormRepository formRepository;
     private final QuestionRepository questionRepository;
-    private final SampleDataRepository sampleDataRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SampleDataRepository sampleDataRepository;
+    private final AnswerRepository answerRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -38,7 +38,7 @@ public class DBInitializer implements CommandLineRunner {
 
         Question question1 = new Question(UUID.randomUUID(), "What color is it?", FieldStyle.SHORT_TEXT);
         Answer answer = new Answer(UUID.randomUUID(), "Brown", question1);
-        SampleData sampleData = new SampleData(UUID.randomUUID(), LocalDateTime.now(), user3, form1);
+        SampleData sampleData = new SampleData(UUID.randomUUID(), LocalDateTime.now(), user3, form1, List.of(answer));
 
         project1.addUserToProject(user2);
         project1.addFormToProject(form1);
