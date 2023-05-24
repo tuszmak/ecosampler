@@ -44,10 +44,11 @@ public class SampleData {
     @OneToOne(targetEntity = Form.class)
     private Form form;
 
-    @OneToMany(mappedBy = "answer")
-    private List<Answer> answers;
+    @OneToMany(mappedBy = "sampleData",
+    cascade = CascadeType.ALL)
+    private List<Answer> answers = new ArrayList<>();
 
-    public SampleData(UUID publicId, LocalDateTime time, User user, Form form, List<Answer> answers) {
+    public SampleData(UUID publicId, LocalDateTime time, User user, Form form) {
         this.publicId = publicId;
         this.time = time;
         this.user = user;

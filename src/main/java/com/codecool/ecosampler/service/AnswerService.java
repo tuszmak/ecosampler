@@ -27,7 +27,7 @@ public class AnswerService {
                 .collect(Collectors.toList());
     }
 
-    public List<Answer> createListOfAnswers(List<NewAnswer> newAnswers) {
+    protected List<Answer> createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
         return answerRepository.saveAll(
                 newAnswers.stream()
                         .map(newAnswer -> new Answer(
@@ -38,16 +38,6 @@ public class AnswerService {
                         )
                         .toList()
         );
-    }
-
-    public AnswerDTO createAnswer(NewAnswer newAnswer) {
-        final Question question = questionService.getQuestionByPublicId(newAnswer.questionID());
-        final Answer answer = answerRepository.save(new Answer(UUID.randomUUID(),
-                        newAnswer.answer(),
-                        question
-                )
-        );
-        return AnswerMapper.toDto(answer);
     }
 
     public UUID modifyAnswer(UUID publicId, AnswerDTO requestAnswer) {

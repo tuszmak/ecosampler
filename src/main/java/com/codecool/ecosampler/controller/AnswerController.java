@@ -1,10 +1,8 @@
 package com.codecool.ecosampler.controller;
 
 import com.codecool.ecosampler.controller.dto.answer.AnswerDTO;
-import com.codecool.ecosampler.controller.dto.answer.NewAnswer;
 import com.codecool.ecosampler.service.AnswerService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +19,6 @@ public class AnswerController {
     @GetMapping
     public List<AnswerDTO> getAllAnswers() {
         return answerService.getAllAnswersDTO();
-    }
-
-    @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public AnswerDTO createAnswer(@RequestBody NewAnswer answer) {
-        return answerService.createAnswer(answer);
     }
 
     @PutMapping("/{publicId}")

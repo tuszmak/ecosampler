@@ -14,24 +14,24 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class DBInitializer implements CommandLineRunner {
-    private final AnswerRepository answerRepository;
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
     private final FormRepository formRepository;
     private final QuestionRepository questionRepository;
-    private final SampleDataRepository sampleDataRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SampleDataRepository sampleDataRepository;
+    private final AnswerRepository answerRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
         Project project1 = new Project(UUID.randomUUID(), "Researching of beavers", "We research beavers.");
 
-        User user1 = new User(UUID.randomUUID(), "Mr. Moneybanks", "ilikemoney@dollar.us", Role.DIRECTOR, passwordEncoder.encode("elonmusk69"));
-        User user2 = new User(UUID.randomUUID(), "Kiera Brown", "kierabrown@example.com", Role.PROJECT_LEADER, passwordEncoder.encode("Qwerty7"));
-        User user3 = new User(UUID.randomUUID(), "Gerco Timmerman", "gti@example.com", Role.PROJECT_LEADER, passwordEncoder.encode("Qwerty7"));
-        User user4 = new User(UUID.randomUUID(), "Lakatos Pikachu", "alma@sajt.cx", Role.SCIENTIST, passwordEncoder.encode("lovecodecool"));
-        User user5 = new User(UUID.randomUUID(), "Lakatos Endre", "korte@sajt.cx", Role.SCIENTIST, passwordEncoder.encode("lovecodecool"));
+        User user1 = new User(UUID.randomUUID(), "Mr. Director", "director@codecool.com", Role.DIRECTOR, passwordEncoder.encode("director"));
+        User user2 = new User(UUID.randomUUID(), "Kiera Brown", "kierabrown@codecool.com", Role.PROJECT_LEADER, passwordEncoder.encode("kierabrown"));
+        User user3 = new User(UUID.randomUUID(), "Gerco Timmerman", "gti@codecool.com", Role.PROJECT_LEADER, passwordEncoder.encode("gti"));
+        User user4 = new User(UUID.randomUUID(), "Lakatos Istvan", "lakatosistvan@codecool.com", Role.SCIENTIST, passwordEncoder.encode("lakatosistvan"));
+        User user5 = new User(UUID.randomUUID(), "Lakatos Endre", "lakatosendre@codecool.com", Role.SCIENTIST, passwordEncoder.encode("lakatosendre"));
 
         Form form1 = new Form(UUID.randomUUID(), "Appearance");
         Form form2 = new Form(UUID.randomUUID(), "Size");
@@ -43,6 +43,7 @@ public class DBInitializer implements CommandLineRunner {
         project1.addUserToProject(user2);
         project1.addFormToProject(form1);
         project1.addFormToProject(form2);
+        project1.addUserToProject(user4);
         form1.addQuestion(question1);
         answer.setSampleData(sampleData);
         userRepository.saveAll(List.of(user1, user2, user3, user4, user5));
