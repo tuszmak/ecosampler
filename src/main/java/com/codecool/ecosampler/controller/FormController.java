@@ -2,7 +2,6 @@ package com.codecool.ecosampler.controller;
 
 import com.codecool.ecosampler.controller.dto.form.FormDTO;
 import com.codecool.ecosampler.controller.dto.form.NewForm;
-import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
 import com.codecool.ecosampler.service.FormService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,9 +22,9 @@ public class FormController {
         return formService.createNewFormGetDTO(form);
     }
 
-    @GetMapping("/getForms/{projectID}")
-    public List<FormDTO> getFormsByProjectID(@PathVariable UUID projectID) {
-        return formService.getFormsByProjectID(projectID);
+    @GetMapping("/by-project-id/{projectId}")
+    public List<FormDTO> getFormsByProjectID(@PathVariable UUID projectId) {
+        return formService.getFormsByProjectID(projectId);
     }
 
 

@@ -1,10 +1,4 @@
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
-import Sample from "./Sample";
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} from "react-router-dom";
 import "antd/dist/reset.css";
 import Register from "./pages/register";
 
@@ -13,18 +7,17 @@ import Login from "./pages/login";
 import Projects from "./pages/projects";
 import Project from "./pages/project";
 import AuthLayout from "./layout/AuthLayout";
-import { CreateForm } from "./pages/project/CreateForm";
+import {CreateForm} from "./pages/project/CreateForm";
 import SampleData from "./pages/sampledata";
+import Form from "./pages/form";
 import Homepage from "./component/Homepage";
 
-import { Form } from "./pages/form/Form";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<AuthLayout />}>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Homepage />} />
-        <Route path="sample" element={<Sample />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="projects" element={<Projects />} />

@@ -1,8 +1,14 @@
-import { Form, Select } from "antd";
-import { useEffect, useState } from "react";
+import {Form, Select} from "antd";
+import {useEffect, useState} from "react";
 import useDownFetch from "../../hook/useDownFetch";
 
-const AssignsPeople = ({ url, label, name, defaultValue = [] }) => {
+const AssignsPeople = ({
+  url,
+  label,
+  name,
+  isDisabled = false,
+  defaultValue = [],
+}) => {
   const [options, setOptions] = useState([]);
   const { data, isPending } = useDownFetch(url);
   useEffect(() => {
@@ -33,6 +39,7 @@ const AssignsPeople = ({ url, label, name, defaultValue = [] }) => {
         }}
         placeholder="Please select"
         options={options}
+        disabled={isDisabled}
       />
     </Form.Item>
   );

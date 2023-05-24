@@ -1,8 +1,9 @@
-import { Form, Modal } from "antd";
+import {Form, message, Modal} from "antd";
 import AssignsPeople from "./AssignsPeople";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import useDownFetch from "../../hook/useDownFetch";
 import upFetch from "../../api/upFetch";
+import useAuth from "../../hook/useAuth";
 
 const ModifyUserAssigns = ({
   projectId,
@@ -10,14 +11,19 @@ const ModifyUserAssigns = ({
   handleCancel,
   handleOk,
 }) => {
+  const { auth } = useAuth();
   const [form] = Form.useForm();
   const { data: projectUsers, isPending } = useDownFetch(
     `api/v1/project/users/${projectId}`
   );
+  const disableWhenUserNotDirector = () => {
+    return auth?.role !== "DIRECTOR";
+  };
   const [selectProjectLeader, setSelectProjectLeader] = useState({
     url: "api/v1/user/by-role?role=PROJECT_LEADER",
     name: "projectLeaderIDs",
     label: "Select Project Leader",
+    isDisabled: disableWhenUserNotDirector(),
   });
   const [selectScientists, setSelectScientists] = useState({
     url: "api/v1/user/by-role?role=SCIENTIST",
@@ -42,6 +48,10 @@ const ModifyUserAssigns = ({
       body: JSON.stringify({ addUserIDs, removeUserIDs }),
     };
     const response = await upFetch(url, options);
+    if (!response.ok) {
+      message.error("Can't connect to server");
+      throw Error("Can't connect to server");
+    }
   };
 
   useEffect(() => {
@@ -69,21 +79,21 @@ const ModifyUserAssigns = ({
       <Modal
         title="Assigns People"
         open={isModalOpen}
-        onOk={() => {
-          form
-            .validateFields()
-            .then((values) => {
-              const { addUserIDs, removeUserIDs } =
-                generateUserChangesPayload(values);
-              sendUserChanges(addUserIDs, removeUserIDs);
-              form.resetFields();
-              handleOk();
-            })
-            .catch((info) => {
-              console.log("Validate Failed:", info);
-            });
-        }}
         onCancel={handleCancel}
+        onOk={async () => {
+          try {
+            await form.validateFields();
+            const values = form.getFieldsValue();
+            const { addUserIDs, removeUserIDs } =
+              generateUserChangesPayload(values);
+            await sendUserChanges(addUserIDs, removeUserIDs);
+            form.resetFields();
+            handleOk();
+          } catch (error) {
+            if (error?.errorFields)
+              return console.log("Validate Failed:", error);
+          }
+        }}
       >
         <Form layout={"vertical"} form={form}>
           <AssignsPeople {...selectProjectLeader} />

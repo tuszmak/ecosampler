@@ -1,5 +1,5 @@
-import { Button, Checkbox, Form, Input, message } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import {Button, Checkbox, Form, Input, message} from "antd";
+import {useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../../hook/useAuth";
 
 const LOGIN_API_URL = "/api/v1/login";
@@ -28,7 +28,6 @@ const Login = () => {
           password,
         }),
       });
-
       const data = await response.json();
       if (response.ok) {
         setAuth({ ...data });

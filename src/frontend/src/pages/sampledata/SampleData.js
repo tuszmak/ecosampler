@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
-import { Form, Button, message } from "antd";
-import { QuestionItem } from "./QuestionItem";
+import {useParams} from "react-router-dom";
+import {Button, Form, message} from "antd";
+import {QuestionItem} from "./QuestionItem";
 import useAuth from "../../hook/useAuth";
 import useDownFetch from "../../hook/useDownFetch";
 import upFetch from "../../api/upFetch";
 
-const PATH = "/api/v1/question";
+const PATH = "/api/v1/question/by-form-id/";
 const PATH_FOR_SAVE_SAMPLE_DATA = "/api/v1/sampledata"
 const ERROR_MSG_DURATION = 3;
 
@@ -40,26 +40,27 @@ const SampleData = () => {
     });
   };
   const { formID } = useParams();
-  const { auth: { id } } = useAuth();
+  const { auth: { id: userID } } = useAuth();
   const { data: questions, error, isPending } = useDownFetch(PATH + formID);
 
   const onFinish = async (values) => {
     loadingMessage();
-   
-    const valuesArray = Object.entries(values).map(([key, value]) => ({ [key]: value }));
+
+    console.log(values);
+    const newAnswers = Object.entries(values).map(([key, value]) => ({ questionID: key, answer: value }));
 
     const option = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({valuesArray, id, formID}),
+      body: JSON.stringify({ newAnswers, userID, formID }),
     };
     try {
       const result = await upFetch(PATH_FOR_SAVE_SAMPLE_DATA, option)
-      successMessage();
+
       const data = await result.json();
-      if (!result.ok) {
-        message.error(data.message, ERROR_MSG_DURATION);
-      }
+      if (!result.ok) message.error(data.message, ERROR_MSG_DURATION);
+      else successMessage();
+
     } catch (err) {
       errorMessage("Problem with the Server");
     }
