@@ -3,7 +3,7 @@ package com.codecool.ecosampler.service;
 import com.codecool.ecosampler.controller.dto.answer.AnswerDTO;
 import com.codecool.ecosampler.controller.dto.answer.NewAnswer;
 import com.codecool.ecosampler.domain.Answer;
-import com.codecool.ecosampler.domain.Question;
+import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.AnswerRepository;
 import com.codecool.ecosampler.utilities.AnswerMapper;
@@ -33,7 +33,7 @@ public class AnswerService {
                         .map(newAnswer -> new Answer(
                                 UUID.randomUUID(),
                                 newAnswer.answer(),
-                                questionService.getQuestionByPublicId(newAnswer.questionID())
+                                questionService.getQuestionByPublicId(newAnswer.questionID()),sampleData
                                 )
                         )
                         .toList()

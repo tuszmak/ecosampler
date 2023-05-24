@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,21 +36,21 @@ public class DBInitializer implements CommandLineRunner {
         Form form2 = new Form(UUID.randomUUID(), "Size");
 
         Question question1 = new Question(UUID.randomUUID(), "What color is it?", FieldStyle.SHORT_TEXT);
-        Answer answer = new Answer(UUID.randomUUID(), "Brown", question1);
-        SampleData sampleData = new SampleData(UUID.randomUUID(), LocalDateTime.now(), user3, form1, List.of(answer));
+//        Answer answer = new Answer(UUID.randomUUID(), "Brown", question1);
+//        SampleData sampleData = new SampleData(UUID.randomUUID(), LocalDateTime.now(), user3, form1, List.of(answer));
 
         project1.addUserToProject(user2);
         project1.addFormToProject(form1);
         project1.addFormToProject(form2);
         project1.addUserToProject(user4);
         form1.addQuestion(question1);
-        answer.setSampleData(sampleData);
+//        answer.setSampleData(sampleData);
         userRepository.saveAll(List.of(user1, user2, user3, user4, user5));
         questionRepository.save(question1);
         formRepository.saveAll(List.of(form1, form2));
         projectRepository.save(project1);
-        sampleDataRepository.save(sampleData);
-        answerRepository.save(answer);
+//        sampleDataRepository.save(sampleData);
+//        answerRepository.save(answer);
 
     }
 }
