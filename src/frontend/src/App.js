@@ -11,6 +11,7 @@ import {CreateForm} from "./pages/project/CreateForm";
 import SampleData from "./pages/sampledata";
 import Form from "./pages/form";
 import Homepage from "./component/Homepage";
+import NotFound from "./pages/error/NotFound";
 
 
 const router = createBrowserRouter(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
     <Route element={<AuthLayout />}>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Homepage />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="projects" element={<Projects />} />
