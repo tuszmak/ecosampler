@@ -27,13 +27,14 @@ public class AnswerService {
                 .collect(Collectors.toList());
     }
 
-    protected List<Answer> createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
-        return answerRepository.saveAll(
+    protected void createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
+        answerRepository.saveAll(
                 newAnswers.stream()
                         .map(newAnswer -> new Answer(
-                                UUID.randomUUID(),
-                                newAnswer.answer(),
-                                questionService.getQuestionByPublicId(newAnswer.questionID())
+                                        UUID.randomUUID(),
+                                        newAnswer.answer(),
+                                        questionService.getQuestionByPublicId(newAnswer.questionID()),
+                                        sampleData
                                 )
                         )
                         .toList()
