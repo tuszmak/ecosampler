@@ -46,6 +46,7 @@ class UserServiceTest {
                 .thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, ()-> userService.getUserByPublicId(uuid));
     }
+
     @Test
     void should_get_user_by_email() {
         User user = new User();
@@ -87,6 +88,20 @@ class UserServiceTest {
 //        verify((userRepository).findAllByRole(any(Role.class)));
     }
     @Test
+    void should_return_users_with_UUIDs(){
+        UUID uuid = UUID.randomUUID();
+        User user1 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        User user2 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        User user3 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        List<User> users = List.of(user1,user2,user3);
+        when(userRepository.
+                findAllByPublicIdIn(any()))
+                .thenReturn(users);
+        List<User> returnUsers = userService.getUsersByPublicId(List.of(uuid));
+        assertEquals(users,returnUsers);
+
+    }
+    @Test
     void should_get_multiple_users_with_role(){
         Role role = Role.DIRECTOR;
         User user1 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
@@ -103,7 +118,7 @@ class UserServiceTest {
         assertEquals(users, returnUsers);
         assertEquals(returnUsers.get(index).getRole(), Role.DIRECTOR);
     }
-
+//TODO do I need a test that check if we send in a wrong role?
     @Test
     void registerUser() {
     }
