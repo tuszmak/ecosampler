@@ -6,11 +6,11 @@ import com.codecool.ecosampler.domain.Answer;
 import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.AnswerRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -52,8 +52,8 @@ public class AnswerService {
     }
 
     private Answer updateAnswerByRequest(AnswerDTO requestAnswer, Answer answer) {
-        @NonNull String answerText = requestAnswer.answer();
-        answer.setAnswer(answerText);
+        if (Objects.nonNull(requestAnswer.answer()))
+            answer.setAnswer(requestAnswer.answer());
         return answer;
     }
 }

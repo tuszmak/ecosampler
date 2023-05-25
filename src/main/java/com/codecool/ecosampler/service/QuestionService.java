@@ -2,17 +2,16 @@ package com.codecool.ecosampler.service;
 
 import com.codecool.ecosampler.controller.dto.question.NewQuestion;
 import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
-import com.codecool.ecosampler.domain.FieldStyle;
 import com.codecool.ecosampler.domain.Question;
 import com.codecool.ecosampler.exception.BadRequestException;
 import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.QuestionRepository;
 import com.codecool.ecosampler.utilities.QuestionMapper;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +22,7 @@ public class QuestionService {
 
     public QuestionDTO createQuestion(NewQuestion newQuestion) {
         if (isQuestionExistByDescription(newQuestion.description())) {
-            throw new BadRequestException(" Question already exists by description: " + newQuestion.description());
+            throw new BadRequestException("Question already exists by description: " + newQuestion.description());
         }
         final Question question = questionRepository.save(
                 new Question(UUID.randomUUID(),
@@ -66,10 +65,8 @@ public class QuestionService {
     }
 
     private Question updateQuestionByRequest(QuestionDTO requestQuestion, Question question) {
-        @NonNull String description = requestQuestion.description();
-        question.setDescription(description);
-        @NonNull FieldStyle fieldStyle = requestQuestion.fieldStyle();
-        question.setFieldStyle(fieldStyle);
+        if (Objects.nonNull(requestQuestion.description())) question.setDescription(requestQuestion.description());
+        if (Objects.nonNull(requestQuestion.fieldStyle())) question.setFieldStyle(requestQuestion.fieldStyle());
         return question;
     }
 
