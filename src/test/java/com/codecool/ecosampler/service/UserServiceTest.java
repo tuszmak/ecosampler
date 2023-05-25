@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
@@ -27,10 +28,12 @@ class UserServiceTest {
     @Test
     void should_return_one_user_with_UUID() {
         User user = new User();
+        UUID uuid = UUID.randomUUID();
         when(userRepository.
                 findByPublicId(any(UUID.class)))
                 .thenReturn(Optional.of(user));
-        assertEquals(User.class, userService.getUserByPublicId(UUID.randomUUID()).getClass());
+        User returnUser = userService.getUserByPublicId(uuid);
+        assertEquals(user, returnUser);
     }
     @Test
     void should_throw_error_when_finding_user(){
@@ -41,19 +44,29 @@ class UserServiceTest {
         assertThrows(NotFoundException.class, ()-> userService.getUserByPublicId(uuid));
     }
     @Test
-    void getUserDTOByPublicId() {
-    }
+    void should_get_user_by_email() {
+        User user = new User();
+        when(userRepository.
+                findByEmail(any(String.class)))
+                .thenReturn(Optional.of(user));
+        User returnUser = userService.getUserByEmail("a@a.cx");
+        assertEquals(user,returnUser);
 
+    }
+    @Test
+    void should_throw_error_when_finding_with_email() {
+        when(userRepository.
+                findByEmail(any(String.class)))
+                .thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, ()-> userService.getUserByEmail("a@a.cx"));
+
+    }
     @Test
     void registerUser() {
     }
 
     @Test
     void deleteUserByPublicId() {
-    }
-
-    @Test
-    void getUserByPublicId() {
     }
 
     @Test
