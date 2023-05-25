@@ -1,11 +1,13 @@
-import { Image } from 'antd'
+import { Button, Image, Result } from 'antd'
 import React from 'react'
 
 export default function NotFound() {
   return (
-    <div className='error'>
-    <div style={{marginBottom: "30px"}}>Uh oh, this page doesn't exist</div>
-    <img src='https://i.imgur.com/HKygOj7.jpg' className='cat' />
-    </div>
+    <Result
+    status="404"
+    title="404"
+    subTitle="Sorry, the page you visited does not exist."
+    extra={<Button type="primary">Back Home</Button>}
+  />
   )
 }
