@@ -59,13 +59,8 @@ article {
   align-items: center;
   font-size: 60px;
 }
-.cat{
-  max-width: 75%;
-}
+
 @media screen and (max-width: 400px){
-  .cat{
-    max-width: 250px;
-  }
   footer {
     position: fixed;
     left: 0;
