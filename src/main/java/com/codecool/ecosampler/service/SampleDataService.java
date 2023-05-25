@@ -8,7 +8,7 @@ import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.SampleDataRepository;
 import com.codecool.ecosampler.utilities.SampleDataMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,14 +16,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class SampleDataService {
     private final SampleDataRepository sampleDataRepository;
     private final UserService userService;
     private final FormService formService;
     private final AnswerService answerService;
-
 
     public List<SampleDataDTO> getAllSampleDataDTO() {
         return sampleDataRepository.findAll().stream()
