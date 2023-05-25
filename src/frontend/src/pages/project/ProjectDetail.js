@@ -5,7 +5,7 @@ const ProjectDetail = () => {
   let { id } = useParams();
   return (
     <>
-      <h1>Project Page {id}</h1>
+      <h1>Available Forms</h1>
       <FormList />
     </>
   );
