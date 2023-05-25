@@ -70,7 +70,7 @@ class UserServiceTest {
         when(userRepository.
                 findAllByRole(any(Role.class)))
                 .thenReturn(List.of());
-        assertEquals(0, userRepository.findAllByRole(role).size());
+        assertEquals(List.of(), userRepository.findAllByRole(role));
 //        verify((userRepository).findAllByRole(any(Role.class)));
     }
     @Test
@@ -92,14 +92,15 @@ class UserServiceTest {
         User user1 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
         User user2 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
         User user3 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        List<User> users = List.of(user1,user2,user3);
         //  We chose a random user from the repository. All should have the same role
         Random random = new Random();
         int index = random.nextInt(3);
         when(userRepository.
                 findAllByRole(any(Role.class)))
-                .thenReturn(List.of(user1,user2,user3));
+                .thenReturn(users);
         List<User> returnUsers = userRepository.findAllByRole(role);
-        assertEquals(3, returnUsers.size());
+        assertEquals(users, returnUsers);
         assertEquals(returnUsers.get(index).getRole(), Role.DIRECTOR);
     }
 
