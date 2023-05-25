@@ -1,5 +1,6 @@
 package com.codecool.ecosampler.service;
 
+import com.codecool.ecosampler.domain.Role;
 import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.UserRepository;
@@ -9,7 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,6 +64,45 @@ class UserServiceTest {
         assertThrows(NotFoundException.class, ()-> userService.getUserByEmail("a@a.cx"));
 
     }
+    @Test
+    void should_get_no_user_with_role() {
+        Role role = Role.DIRECTOR;
+        when(userRepository.
+                findAllByRole(any(Role.class)))
+                .thenReturn(List.of());
+        assertEquals(0, userRepository.findAllByRole(role).size());
+//        verify((userRepository).findAllByRole(any(Role.class)));
+    }
+    @Test
+    void should_get_one_user_with_role() {
+        Role role = Role.DIRECTOR;
+        User user = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        when(userRepository.
+                findAllByRole(any(Role.class)))
+                .thenReturn(List.of(user));
+        List<User> returnUsers = userRepository.findAllByRole(role);
+        assertEquals(1, returnUsers.size());
+        assertEquals(user, returnUsers.get(0));
+        assertEquals(user.getRole(), Role.DIRECTOR);
+//        verify((userRepository).findAllByRole(any(Role.class)));
+    }
+    @Test
+    void should_get_multiple_users_with_role(){
+        Role role = Role.DIRECTOR;
+        User user1 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        User user2 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        User user3 = new User(UUID.randomUUID(),"","",Role.DIRECTOR,"");
+        //  We chose a random user from the repository. All should have the same role
+        Random random = new Random();
+        int index = random.nextInt(3);
+        when(userRepository.
+                findAllByRole(any(Role.class)))
+                .thenReturn(List.of(user1,user2,user3));
+        List<User> returnUsers = userRepository.findAllByRole(role);
+        assertEquals(3, returnUsers.size());
+        assertEquals(returnUsers.get(index).getRole(), Role.DIRECTOR);
+    }
+
     @Test
     void registerUser() {
     }
