@@ -55,10 +55,10 @@ const HeaderComponent = () => {
     },
   ];
   const menuItems = () => {
-    if (!auth) return [...publicItems, ...showOnlyWhenNoAuth];
     if (auth?.role === "DIRECTOR")
       return [...publicItems, ...onlyDirector, ...authNeed];
     if (auth) return [...publicItems, ...authNeed];
+    return [...publicItems, ...showOnlyWhenNoAuth];
   };
 
   return (

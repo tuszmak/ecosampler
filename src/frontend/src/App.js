@@ -27,14 +27,12 @@ const router = createBrowserRouter(
         <Route index element={<Homepage />} />
         <Route path="login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
-
         <Route element={<PrivateRoutes />}>
           <Route path="projects" element={<Projects />} />
           <Route path="project/:id" element={<Project />} />
           <Route path="create-form/:id" element={<CreateForm />} />
           <Route path="form/:id" element={<Form />} />
           <Route path="survey/:formID" element={<SampleData />} />
-
           <Route element={<DirectorOnly />}>
             <Route path="register" element={<Register />} />
           </Route>
