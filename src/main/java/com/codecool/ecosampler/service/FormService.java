@@ -5,7 +5,7 @@ import com.codecool.ecosampler.controller.dto.form.NewForm;
 import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
 import com.codecool.ecosampler.domain.Form;
 import com.codecool.ecosampler.domain.Question;
-import com.codecool.ecosampler.exeption.NotFoundException;
+import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.FormRepository;
 import com.codecool.ecosampler.utilities.FormMapper;
 import com.codecool.ecosampler.utilities.QuestionMapper;
