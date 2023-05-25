@@ -36,19 +36,27 @@ public class SecurityConfig {
                         SecuritySessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/login")
-                        .permitAll()
-
-                        .requestMatchers(POST, "/api/v1/project").hasRole(DIRECTOR.name())
-                        .requestMatchers(POST, "/api/v1/project/addForm/{projectID}").hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
-                        .requestMatchers(DELETE, "/api/v1/project/{publicProjectId}").hasRole(DIRECTOR.name())
-                        .requestMatchers(PUT, "/api/v1/project/modify-users/{projectID}").hasAnyRole(DIRECTOR.name())
-                        .requestMatchers(PUT, "/api/v1/question/{publicId}").hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
-                        .requestMatchers(DELETE, "/api/v1/question/{publicId}").hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
-                        .requestMatchers(POST, "/api/v1/form/**").hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
-                        .requestMatchers(POST, "/api/v1/user").hasRole(DIRECTOR.name())
-                        .requestMatchers(POST, "/api/v1/user/{publicId}").hasRole(DIRECTOR.name())
-
+                        .requestMatchers(
+                                "/api/v1/login"
+                        ).permitAll()
+                        .requestMatchers(POST,
+                                "/api/v1/project",
+                                "/api/v1/user/**"
+                        ).hasRole(DIRECTOR.name())
+                        .requestMatchers(DELETE,
+                                "/api/v1/project/{publicProjectId}"
+                        ).hasRole(DIRECTOR.name())
+                        .requestMatchers(POST,
+                                "/api/v1/project/addForm/{projectID}",
+                                "/api/v1/form/**"
+                        ).hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
+                        .requestMatchers(PUT,
+                                "/api/v1/question/{publicId}",
+                                "/api/v1/project/modify-users/{projectID}"
+                        ).hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
+                        .requestMatchers(DELETE,
+                                "/api/v1/question/{publicId}"
+                        ).hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
                         .anyRequest().authenticated()
                 );
         return http.build();
