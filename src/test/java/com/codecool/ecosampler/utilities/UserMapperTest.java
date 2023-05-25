@@ -33,7 +33,7 @@ void setup(){
 
     @Test
     void should_create_new_user() {
-        UUID uuid = UUID.randomUUID();
+
         NewUser newUser = new NewUser(uuid,
                 "foo",
                 "bar@foo.cx",
@@ -42,11 +42,13 @@ void setup(){
         String securePassword = "IAmSoSecure";
         User expected = user;
         User actual = UserMapper.mapToNewUser(newUser,securePassword);
+        /*The reason there are 5 equals here, instead of equals override,
+         is because Petya said not to change the class for tests*/
         assertEquals(expected.getPublicId(),actual.getPublicId());
         assertEquals(expected.getName(),actual.getName());
         assertEquals(expected.getEmail(),actual.getEmail());
         assertEquals(expected.getRole(),actual.getRole());
-        assertEquals(expected.getPassword(),actual.getPassword());
+        assertEquals(securePassword,actual.getPassword());
     }
 
     @Test
