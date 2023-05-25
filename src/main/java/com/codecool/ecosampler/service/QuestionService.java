@@ -10,25 +10,22 @@ import com.codecool.ecosampler.utilities.QuestionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
-    public List<QuestionDTO> getAllQuestionsDTO() {
-        return questionRepository.findAll().stream()
-                .map(QuestionMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
     public QuestionDTO createQuestion(NewQuestion newQuestion) {
-        if(isQuestionExistByDescription(newQuestion.description())){
-            throw new BadRequestException("This question already exists: " + newQuestion.description());
+        if (isQuestionExistByDescription(newQuestion.description())) {
+            throw new BadRequestException("Question already exists by description: " + newQuestion.description());
         }
-        final Question question = questionRepository.save(new Question(UUID.randomUUID(),
+        final Question question = questionRepository.save(
+                new Question(UUID.randomUUID(),
                         newQuestion.description(),
                         newQuestion.fieldStyle()
                 )
@@ -37,28 +34,23 @@ public class QuestionService {
     }
 
     public void createMultipleQuestionsWhichDoesntExist(List<NewQuestion> newQuestions) {
-        for (NewQuestion newQuestion : newQuestions) {
-            if(!isQuestionExistByDescription(newQuestion.description())){
-                createQuestion(newQuestion);
-            }
-
-        }
+        newQuestions.stream()
+                .filter(newQuestion -> !isQuestionExistByDescription(newQuestion.description()))
+                .forEach(this::createQuestion);
     }
-    protected List<Question> searchMultipleQuestions(List<NewQuestion> newQuestions){
-        List<Question> questions = new ArrayList<>();
-        for (NewQuestion question : newQuestions){
-        Optional<Question> searchResult = questionRepository.findQuestionByDescription(question.description());
-        searchResult.ifPresent(questions::add);
-        }
-         return questions;
+
+    protected List<Question> searchMultipleQuestions(List<NewQuestion> newQuestions) {
+        return newQuestions.stream()
+                .map(newQuestion -> questionRepository.findQuestionByDescription(newQuestion.description()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
     }
 
     public UUID modifyQuestion(UUID publicId, QuestionDTO requestQuestion) {
         Question question = getQuestionByPublicId(publicId);
         return questionRepository.
-                save(
-                        updateQuestionByRequest(requestQuestion, question)
-        )
+                save(updateQuestionByRequest(requestQuestion, question))
                 .getPublicId();
     }
 
@@ -69,7 +61,7 @@ public class QuestionService {
 
     protected Question getQuestionByPublicId(UUID publicId) {
         return questionRepository.findQuestionByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("There is no question with id: " + publicId));
+                .orElseThrow(() -> new NotFoundException("Question doesn't exist with Id: " + publicId));
     }
 
     private Question updateQuestionByRequest(QuestionDTO requestQuestion, Question question) {

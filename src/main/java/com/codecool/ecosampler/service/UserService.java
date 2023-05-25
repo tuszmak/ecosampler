@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -43,13 +42,13 @@ public class UserService {
     public List<UserForSelectDTO> getUsersForSelectDTOByRole(Role role) {
         return getAllUserByRole(role).stream()
                 .map(UserMapper::toUserForSelectorDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     protected User getUserByPublicId(UUID publicId) {
         return userRepository
                 .findByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("No user by ID:" + publicId));
+                .orElseThrow(() -> new NotFoundException("User doesn't exist with Id:" + publicId));
     }
 
     protected List<User> getAllUserByRole(Role role) {
@@ -61,6 +60,7 @@ public class UserService {
     }
 
     protected User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("No user found on email"));
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User doesn't exist with email: " + email));
     }
 }
