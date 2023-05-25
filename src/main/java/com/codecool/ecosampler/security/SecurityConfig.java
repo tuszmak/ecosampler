@@ -28,9 +28,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-//                .exceptionHandling(ExceptionHandling -> // will intercept all un authorised request to the entrypoint and from here we take control
-//                        ExceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-//                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(SecuritySessionManagement ->
                         SecuritySessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -42,21 +39,21 @@ public class SecurityConfig {
                         .requestMatchers(POST,
                                 "/api/v1/project",
                                 "/api/v1/user/**"
-                        ).hasRole(DIRECTOR.name())
+                        ).hasAuthority(DIRECTOR.name())
                         .requestMatchers(DELETE,
                                 "/api/v1/project/{publicProjectId}"
-                        ).hasRole(DIRECTOR.name())
+                        ).hasAuthority(DIRECTOR.name())
                         .requestMatchers(POST,
                                 "/api/v1/project/addForm/{projectID}",
                                 "/api/v1/form/**"
-                        ).hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
+                        ).hasAnyAuthority(DIRECTOR.name(), PROJECT_LEADER.name())
                         .requestMatchers(PUT,
                                 "/api/v1/question/{publicId}",
                                 "/api/v1/project/modify-users/{projectID}"
-                        ).hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
+                        ).hasAnyAuthority(DIRECTOR.name(), PROJECT_LEADER.name())
                         .requestMatchers(DELETE,
                                 "/api/v1/question/{publicId}"
-                        ).hasAnyRole(DIRECTOR.name(), PROJECT_LEADER.name())
+                        ).hasAnyAuthority(DIRECTOR.name(), PROJECT_LEADER.name())
                         .anyRequest().authenticated()
                 );
         return http.build();
