@@ -18,8 +18,4 @@ public class AnswerController {
         return answerService.modifyAnswer(publicId, requestAnswer);
     }
 
-    @DeleteMapping("/{publicId}")
-    public void modifyAnswer(@PathVariable UUID publicId) {
-        answerService.deleteAnswer(publicId);
-    }
 }

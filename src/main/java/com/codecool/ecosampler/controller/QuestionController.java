@@ -1,11 +1,9 @@
 package com.codecool.ecosampler.controller;
 
-import com.codecool.ecosampler.controller.dto.question.NewQuestion;
 import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
 import com.codecool.ecosampler.service.FormService;
 import com.codecool.ecosampler.service.QuestionService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +19,6 @@ public class QuestionController {
     @GetMapping("/by-form-id/{formId}")
     List<QuestionDTO> getFormQuestionsByFormID(@PathVariable UUID formId) {
         return formService.getQuestionDTOsByFormID(formId);
-    }
-
-    @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public QuestionDTO createQuestion(@RequestBody NewQuestion question) {
-        return questionService.createQuestion(question);
     }
 
     @PutMapping("/{publicId}")

@@ -41,11 +41,6 @@ public class AnswerService {
                 .getPublicId();
     }
 
-    public void deleteAnswer(UUID publicId) {
-        final Answer answer = getAnswerByPublicId(publicId);
-        answerRepository.deleteById(answer.getId());
-    }
-
     protected Answer getAnswerByPublicId(UUID publicId) {
         return answerRepository.findAnswerByPublicId(publicId)
                 .orElseThrow(() -> new NotFoundException("Answer doesn't exist with Id: " + publicId));
