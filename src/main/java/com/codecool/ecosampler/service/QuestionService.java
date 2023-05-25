@@ -7,13 +7,13 @@ import com.codecool.ecosampler.exception.BadRequestException;
 import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.QuestionRepository;
 import com.codecool.ecosampler.utilities.QuestionMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class QuestionService {
     private final QuestionRepository questionRepository;

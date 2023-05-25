@@ -9,14 +9,14 @@ import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.FormRepository;
 import com.codecool.ecosampler.utilities.FormMapper;
 import com.codecool.ecosampler.utilities.QuestionMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class FormService {
     private final FormRepository formRepository;
