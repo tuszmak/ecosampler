@@ -13,7 +13,7 @@ import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.ProjectRepository;
 import com.codecool.ecosampler.utilities.ProjectMapper;
 import com.codecool.ecosampler.utilities.UserMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class ProjectService {
     private final ProjectRepository projectRepository;

@@ -3,11 +3,11 @@ package com.codecool.ecosampler.service;
 import com.codecool.ecosampler.controller.dto.answer.AnswerDTO;
 import com.codecool.ecosampler.controller.dto.answer.NewAnswer;
 import com.codecool.ecosampler.domain.Answer;
-import com.codecool.ecosampler.domain.Question;
+import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.exeption.NotFoundException;
 import com.codecool.ecosampler.repository.AnswerRepository;
 import com.codecool.ecosampler.utilities.AnswerMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
@@ -27,13 +27,14 @@ public class AnswerService {
                 .collect(Collectors.toList());
     }
 
-    protected List<Answer> createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
-        return answerRepository.saveAll(
+    protected void createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
+        answerRepository.saveAll(
                 newAnswers.stream()
                         .map(newAnswer -> new Answer(
-                                UUID.randomUUID(),
-                                newAnswer.answer(),
-                                questionService.getQuestionByPublicId(newAnswer.questionID())
+                                        UUID.randomUUID(),
+                                        newAnswer.answer(),
+                                        questionService.getQuestionByPublicId(newAnswer.questionID()),
+                                        sampleData
                                 )
                         )
                         .toList()
