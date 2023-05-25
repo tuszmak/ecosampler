@@ -13,13 +13,12 @@ import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.ProjectRepository;
 import com.codecool.ecosampler.utilities.ProjectMapper;
 import com.codecool.ecosampler.utilities.UserMapper;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,30 +28,40 @@ public class ProjectService {
     private final UserService userService;
 
     public List<ProjectDTO> getAllProjectDTO() {
-        return projectRepository.findAll().stream().map(ProjectMapper::toDTO).collect(Collectors.toList());
+        return projectRepository.findAll()
+                .stream()
+                .map(ProjectMapper::toDTO)
+                .toList();
     }
 
     public ProjectDTO addNewProject(NewProject newProject) {
         checkIfProjectNameExists(newProject.name());
-        Project project = new Project(UUID.randomUUID(), newProject.name(), newProject.description());
-        if (Objects.nonNull(newProject.userIDs())) {
-            System.out.println("addusers");
-            List<User> users = userService.getUsersByPublicId(newProject.userIDs());
-            project.addUsersToProject(users);
-        }
+        Project project = new Project(
+                UUID.randomUUID(),
+                newProject.name(),
+                newProject.description()
+        );
+        @NonNull List<UUID> userIDs = newProject.userIDs();
+        List<User> users = userService.getUsersByPublicId(userIDs);
+        project.addUsersToProject(users);
+
         project = projectRepository.save(project);
         return ProjectMapper.toDTO(project);
     }
 
     public List<ProjectDTO> getProjectsDTOByUserPublicId(UUID userPublicId) {
         User user = userService.getUserByPublicId(userPublicId);
-        return projectRepository.findAllProjectByUserId(user.getId()).stream().map(ProjectMapper::toDTO).collect(Collectors.toList());
+        return projectRepository.findAllProjectByUserId(user.getId())
+                .stream()
+                .map(ProjectMapper::toDTO)
+                .toList();
     }
 
     public void deleteProject(UUID publicId) {
-        projectRepository.findProjectByPublicId(publicId).ifPresentOrElse(project -> projectRepository.deleteById(project.getId()), () -> {
-            throw new NotFoundException("Project not exist with Id: " + publicId);
-        });
+        projectRepository.findProjectByPublicId(publicId)
+                .ifPresentOrElse(project -> projectRepository.deleteById(project.getId()), () -> {
+                    throw new NotFoundException("Project doesn't exist with Id: " + publicId);
+                });
     }
 
     public ProjectDTO updateProject(UUID publicId, ProjectDTO requestProject) {
@@ -63,33 +72,35 @@ public class ProjectService {
 
     public void modifyUsersOnProject(ModifyUsersOnProject modifyUsersOnProject, UUID projectID) {
         Project project = getProjectByPublicId(projectID);
-        if (Objects.nonNull(modifyUsersOnProject.addUserIDs())) {
-            List<User> addUsers = userService.getUsersByPublicId(modifyUsersOnProject.addUserIDs());
-            project.addUsersToProject(addUsers);
-        }
-        if (Objects.nonNull(modifyUsersOnProject.removeUserIDs())) {
-            List<User> removeUsers = userService.getUsersByPublicId(modifyUsersOnProject.removeUserIDs());
-            project.removeUsersFromProject(removeUsers);
-        }
+        @NonNull List<UUID> addedUserIDs = modifyUsersOnProject.addUserIDs();
+        List<User> addUsers = userService.getUsersByPublicId(addedUserIDs);
+        project.addUsersToProject(addUsers);
+
+        @NonNull List<UUID> removedUserIDs = modifyUsersOnProject.removeUserIDs();
+        List<User> removeUsers = userService.getUsersByPublicId(removedUserIDs);
+        project.removeUsersFromProject(removeUsers);
+
         projectRepository.save(project);
     }
 
     protected Project getProjectByPublicId(UUID publicId) {
         return projectRepository.findProjectByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("Project not exist with Id: " + publicId));
+                .orElseThrow(() -> new NotFoundException("Project doesn't exist with Id: " + publicId));
     }
 
     protected Project updateProjectWithRequest(ProjectDTO requestProject, Project project) {
-        if (Objects.nonNull(requestProject.name())) project.setName(requestProject.name());
+        @NonNull String projectName = requestProject.name();
+        project.setName(projectName);
 
-        if (Objects.nonNull(requestProject.description())) project.setDescription(requestProject.description());
+        @NonNull String projectDescription = requestProject.description();
+        project.setDescription(projectDescription);
         // TODO The rest
         return project;
     }
 
     private void checkIfProjectNameExists(String name) {
         if (projectRepository.existsByName(name))
-            throw new BadRequestException("Project is already exist with name: " + name);
+            throw new BadRequestException("Project already exists by name: " + name);
     }
 
     public void addFormToProject(NewForm newForm, UUID projectID) {
@@ -103,7 +114,7 @@ public class ProjectService {
     public List<UserForSelectDTO> getUserForSelectDTOForProjectByPublicId(UUID publicProjectId) {
         return getUserForProjectByPublicId(publicProjectId).stream()
                 .map(UserMapper::toUserForSelectorDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     protected List<User> getUserForProjectByPublicId(UUID publicProjectId) {

@@ -26,6 +26,4 @@ public class FormController {
     public List<FormDTO> getFormsByProjectID(@PathVariable UUID projectId) {
         return formService.getFormsByProjectID(projectId);
     }
-
-
 }

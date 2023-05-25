@@ -5,21 +5,13 @@ import com.codecool.ecosampler.service.AnswerService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/answer")
 public class AnswerController {
-
     private AnswerService answerService;
-
-
-    @GetMapping
-    public List<AnswerDTO> getAllAnswers() {
-        return answerService.getAllAnswersDTO();
-    }
 
     @PutMapping("/{publicId}")
     public UUID modifyAnswer(@PathVariable UUID publicId, @RequestBody AnswerDTO requestAnswer) {

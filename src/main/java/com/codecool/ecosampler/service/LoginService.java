@@ -27,7 +27,11 @@ public class LoginService {
     }
 
     private Authentication  authenticateUser(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginRequest.email(),
+                        loginRequest.password()
+                ));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
         return authentication;
     }

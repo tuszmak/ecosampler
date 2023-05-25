@@ -15,14 +15,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/question")
 public class QuestionController {
-
     private QuestionService questionService;
     private FormService formService;
-
-    @GetMapping
-    public List<QuestionDTO> getAllQuestionsDTO() {
-        return questionService.getAllQuestionsDTO();
-    }
 
     @GetMapping("/by-form-id/{formId}")
     List<QuestionDTO> getFormQuestionsByFormID(@PathVariable UUID formId) {

@@ -55,6 +55,7 @@ public class ProjectController {
     public ProjectDTO updateProject(@PathVariable UUID publicProjectId, @RequestBody ProjectDTO project) {
         return projectService.updateProject(publicProjectId, project);
     }
+
     @GetMapping("users/{publicProjectId}")
     public List<UserForSelectDTO> getUsersForProjectByPublicId(@PathVariable UUID publicProjectId) {
         return projectService.getUserForSelectDTOForProjectByPublicId(publicProjectId);

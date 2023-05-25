@@ -6,26 +6,18 @@ import com.codecool.ecosampler.domain.Answer;
 import com.codecool.ecosampler.domain.SampleData;
 import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.AnswerRepository;
-import com.codecool.ecosampler.utilities.AnswerMapper;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
-
-    public List<AnswerDTO> getAllAnswersDTO() {
-        return answerRepository.findAll().stream()
-                .map(AnswerMapper::toDto)
-                .collect(Collectors.toList());
-    }
 
     protected void createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
         answerRepository.saveAll(
@@ -56,12 +48,12 @@ public class AnswerService {
 
     protected Answer getAnswerByPublicId(UUID publicId) {
         return answerRepository.findAnswerByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("There is no answer with id: " + publicId));
+                .orElseThrow(() -> new NotFoundException("Answer doesn't exist with Id: " + publicId));
     }
 
     private Answer updateAnswerByRequest(AnswerDTO requestAnswer, Answer answer) {
-        if (Objects.nonNull(requestAnswer.answer()))
-            answer.setAnswer(requestAnswer.answer());
+        @NonNull String answerText = requestAnswer.answer();
+        answer.setAnswer(answerText);
         return answer;
     }
 }
