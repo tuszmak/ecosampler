@@ -20,7 +20,7 @@ import static org.springframework.http.HttpMethod.*;
 
 @RequiredArgsConstructor
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
@@ -34,7 +34,12 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/v1/login"
+                                "/api/v1/login",
+                                "/",
+                                "/index.html",
+                                "static/**",
+                                "/favicon.ico",
+                                "manifest.json"
                         ).permitAll()
                         .requestMatchers(POST,
                                 "/api/v1/project",
