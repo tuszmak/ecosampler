@@ -1,0 +1,33 @@
+# Production Configuration
+# To start the application you need to provide the environment variables.
+# Don't forget the JWT secret is 512-bit Hex should be,
+# and you need to initialise Postgres with /init-tables.sql.
+# Run this configuration: "docker-compose -f docker-compose-production.yml --project-name eco-sampler-production up -d"
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker, prod
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET} # 512-bit Hex
+      POSTGRES_HOST: postgres
+    ports:
+      - "8080:8080"
+  postgres:
+    image: postgres:alpine3.17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ecosampler
+    ports:
+      - 5432:5432
