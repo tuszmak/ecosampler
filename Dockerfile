@@ -14,7 +14,7 @@ COPY pom.xml ./pom.xml
 COPY src/main/ ./src/main
 COPY --from=frontend /app/build /app/src/main/resources/static
 RUN mvn clean
-RUN mvn install
+RUN mvn package
 
 # Copy jar to java rununng enviroment
 FROM eclipse-temurin:17-jre-alpine as app
