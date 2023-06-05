@@ -5,8 +5,8 @@ import com.codecool.ecosampler.controller.dto.user.UserDTO;
 import com.codecool.ecosampler.controller.dto.user.UserForSelectDTO;
 import com.codecool.ecosampler.domain.Role;
 import com.codecool.ecosampler.domain.User;
-import com.codecool.ecosampler.exeption.BadRequestException;
-import com.codecool.ecosampler.exeption.NotFoundException;
+import com.codecool.ecosampler.exception.BadRequestException;
+import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -134,6 +134,7 @@ class UserServiceTest {
         assertEquals(user.getRole(), Role.DIRECTOR);
         verify(userRepository).findAllByRole(any(Role.class));
     }
+
     //getUsersForSelectDTOByRole tests
     @Test
     void should_return_nothing_with_role_director() {
@@ -175,6 +176,7 @@ class UserServiceTest {
         assertEquals(expected, actual);
         verify(userRepository).findAllByRole(any(Role.class));
     }
+
     //deleteUserByPublicId
     @Test
     void should_delete_nothing() {
@@ -182,6 +184,7 @@ class UserServiceTest {
         assertThrows(NotFoundException.class, () -> userService.deleteUserByPublicId(uuid));
         verify(userRepository).findByPublicId(any());
     }
+
     @Test
     void should_delete_a_user() {
         Role role = Role.DIRECTOR;
