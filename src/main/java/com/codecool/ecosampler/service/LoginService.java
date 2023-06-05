@@ -5,14 +5,14 @@ import com.codecool.ecosampler.controller.dto.login.LoginRequest;
 import com.codecool.ecosampler.domain.User;
 import com.codecool.ecosampler.security.JWTService;
 import com.codecool.ecosampler.utilities.UserMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class LoginService {
     private final AuthenticationManager authenticationManager;
@@ -27,7 +27,11 @@ public class LoginService {
     }
 
     private Authentication  authenticateUser(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()));
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginRequest.email(),
+                        loginRequest.password()
+                ));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
         return authentication;
     }

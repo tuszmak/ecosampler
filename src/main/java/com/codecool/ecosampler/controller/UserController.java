@@ -38,5 +38,4 @@ public class UserController {
     public void deleteUser(@PathVariable UUID publicId){
         userService.deleteUserByPublicId(publicId);
     }
-
 }

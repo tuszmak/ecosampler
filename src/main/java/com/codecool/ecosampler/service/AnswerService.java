@@ -4,36 +4,29 @@ import com.codecool.ecosampler.controller.dto.answer.AnswerDTO;
 import com.codecool.ecosampler.controller.dto.answer.NewAnswer;
 import com.codecool.ecosampler.domain.Answer;
 import com.codecool.ecosampler.domain.SampleData;
-import com.codecool.ecosampler.exeption.NotFoundException;
+import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.AnswerRepository;
-import com.codecool.ecosampler.utilities.AnswerMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
 
-    public List<AnswerDTO> getAllAnswersDTO() {
-        return answerRepository.findAll().stream()
-                .map(AnswerMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
-    protected List<Answer> createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
-        return answerRepository.saveAll(
+    protected void createListOfAnswers(List<NewAnswer> newAnswers, SampleData sampleData) {
+        answerRepository.saveAll(
                 newAnswers.stream()
                         .map(newAnswer -> new Answer(
-                                UUID.randomUUID(),
-                                newAnswer.answer(),
-                                questionService.getQuestionByPublicId(newAnswer.questionID()),sampleData
+                                        UUID.randomUUID(),
+                                        newAnswer.answer(),
+                                        questionService.getQuestionByPublicId(newAnswer.questionID()),
+                                        sampleData
                                 )
                         )
                         .toList()
@@ -48,14 +41,9 @@ public class AnswerService {
                 .getPublicId();
     }
 
-    public void deleteAnswer(UUID publicId) {
-        final Answer answer = getAnswerByPublicId(publicId);
-        answerRepository.deleteById(answer.getId());
-    }
-
     protected Answer getAnswerByPublicId(UUID publicId) {
         return answerRepository.findAnswerByPublicId(publicId)
-                .orElseThrow(() -> new NotFoundException("There is no answer with id: " + publicId));
+                .orElseThrow(() -> new NotFoundException("Answer doesn't exist with Id: " + publicId));
     }
 
     private Answer updateAnswerByRequest(AnswerDTO requestAnswer, Answer answer) {

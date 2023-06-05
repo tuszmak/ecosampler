@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -15,11 +14,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/sampledata")
 public class SampleDataController {
     SampleDataService sampleDataService;
-
-    @GetMapping
-    public List<SampleDataDTO> getAllSampleDataDTO() {
-        return sampleDataService.getAllSampleDataDTO();
-    }
+    //TODO: create get sampleData by user and get sampleData by project endpoints
 
     @GetMapping("/{publicId}")
     public SampleDataDTO getSampleDataByPublicId(@PathVariable UUID publicId) {
@@ -36,5 +31,4 @@ public class SampleDataController {
     public void deleteSampleData(@PathVariable UUID publicId) {
         sampleDataService.deleteSampleData(publicId);
     }
-
 }

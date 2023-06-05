@@ -5,18 +5,18 @@ import com.codecool.ecosampler.controller.dto.form.NewForm;
 import com.codecool.ecosampler.controller.dto.question.QuestionDTO;
 import com.codecool.ecosampler.domain.Form;
 import com.codecool.ecosampler.domain.Question;
-import com.codecool.ecosampler.exeption.NotFoundException;
+import com.codecool.ecosampler.exception.NotFoundException;
 import com.codecool.ecosampler.repository.FormRepository;
 import com.codecool.ecosampler.utilities.FormMapper;
 import com.codecool.ecosampler.utilities.QuestionMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class FormService {
     private final FormRepository formRepository;
@@ -36,11 +36,15 @@ public class FormService {
     }
 
     protected Form getFormByPublicId(UUID publicId) {
-        return formRepository.findFormByPublicId(publicId).orElseThrow(() -> new NotFoundException("Can't find data with this id: " + publicId));
+        return formRepository.findFormByPublicId(publicId)
+                .orElseThrow(() -> new NotFoundException("Form doesn't exist with Id: " + publicId));
     }
 
     public List<FormDTO> getFormsByProjectID(UUID projectID) {
-        return formRepository.findFormsByProjectID(projectID).stream().map(FormMapper::toDTO).collect(Collectors.toList());
+        return formRepository.findFormsByProjectID(projectID)
+                .stream()
+                .map(FormMapper::toDTO)
+                .toList();
     }
 
     public List<QuestionDTO> getQuestionDTOsByFormID(UUID formID) {

@@ -14,24 +14,46 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.codecool.ecosampler.domain.Role.DIRECTOR;
+import static com.codecool.ecosampler.domain.Role.PROJECT_LEADER;
+import static org.springframework.http.HttpMethod.*;
+
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-//                .exceptionHandling(ExceptionHandling -> // will intercept all un authorised request to the entrypoint and from here we take control
-//                        ExceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-//                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(SecuritySessionManagement ->
                         SecuritySessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/login").permitAll()
+                        .requestMatchers(
+                                "/api/v1/login"
+                        ).permitAll()
+                        .requestMatchers(POST,
+                                "/api/v1/project",
+                                "/api/v1/user/**"
+                        ).hasAuthority(DIRECTOR.name())
+                        .requestMatchers(DELETE,
+                                "/api/v1/project/{publicProjectId}"
+                        ).hasAuthority(DIRECTOR.name())
+                        .requestMatchers(POST,
+                                "/api/v1/project/addForm/{projectID}",
+                                "/api/v1/form/**"
+                        ).hasAnyAuthority(DIRECTOR.name(), PROJECT_LEADER.name())
+                        .requestMatchers(PUT,
+                                "/api/v1/question/{publicId}",
+                                "/api/v1/project/modify-users/{projectID}"
+                        ).hasAnyAuthority(DIRECTOR.name(), PROJECT_LEADER.name())
+                        .requestMatchers(DELETE,
+                                "/api/v1/question/{publicId}"
+                        ).hasAnyAuthority(DIRECTOR.name(), PROJECT_LEADER.name())
                         .anyRequest().authenticated()
                 );
         return http.build();
