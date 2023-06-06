@@ -16,9 +16,9 @@ services:
       - postgres
     environment:
       SPRING_PROFILES_ACTIVE: docker, prod
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET} # 512-bit Hex
+      DB_USER: ${DB_USER} #Username for database user
+      DB_PASSWORD: ${DB_PASSWORD} #Password for database user
+      JWT_SECRET: ${JWT_SECRET} #512-bit token coded as hexadecimal
       POSTGRES_HOST: postgres
     ports:
       - "8080:8080"
@@ -30,4 +30,4 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ecosampler
     ports:
-      - 5432:5432
+      - "5432:5432"

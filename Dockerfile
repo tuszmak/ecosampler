@@ -16,7 +16,7 @@ COPY --from=frontend /app/build /app/src/main/resources/static
 RUN mvn clean
 RUN mvn package
 
-# Copy jar to java rununng enviroment
+# Copy jar to java runtime environment
 FROM eclipse-temurin:17-jre-alpine as app
 WORKDIR /app
 RUN addgroup -S javauser && adduser -S javauser -G javauser && \
