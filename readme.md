@@ -42,6 +42,7 @@ The general user can fill out the forms and gather information in a database.
 >      - 'DB_USER'
 >    - 'SPRING_PROFILES_ACTIVE=idea,dev'
 > 3. Run the application. The starter class is called EcoSamplerApp
+> Optional: If you want to access the default emails, search for the DBInitializer.
 
 
 # Usage
@@ -52,6 +53,9 @@ The general user can fill out the forms and gather information in a database.
 ## Director
 
 > The director is the head of the institute. Has all permissions
+> The credentials for the director are:
+> - Email: director@codecool.com
+> - Password: director
 > 
 > ### How to add a new user?
 > 1. Click on the register button on the hotbar.
