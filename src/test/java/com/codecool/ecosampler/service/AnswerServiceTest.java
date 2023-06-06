@@ -23,22 +23,6 @@ class AnswerServiceTest {
 
     @Test
     void should_save_one_answer() {
-//
-//        NewAnswer answer1 = new NewAnswer("Test", UUID.randomUUID());
-//
-//        when(questionService.getQuestionByPublicId(any(UUID.class))).thenReturn(null);
-//        List<Answer> answers = answerService.createListOfAnswers(List.of(answer1), null);
-//        when(answerRepository.saveAll(anyCollection()))
-//                .thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
-//        assertEquals(1, answers.size());
-//        assertEquals(Answer.class, answers.get(0).getClass());
-    }
 
-    @Test
-    void modifyAnswer() {
-    }
-
-    @Test
-    void getAnswerByPublicId() {
     }
 }
