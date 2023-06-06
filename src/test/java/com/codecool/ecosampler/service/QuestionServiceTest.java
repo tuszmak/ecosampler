@@ -19,6 +19,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class QuestionServiceTest {
     @Mock
@@ -26,43 +27,58 @@ class QuestionServiceTest {
     @InjectMocks
     private QuestionService questionService;
     private UUID uuid;
+
     @BeforeEach
-    public void setup(){
+    public void setup() {
         uuid = UUID.randomUUID();
     }
+
     //createQuestion tests
     @Test
     void should_create_a_question() {
         NewQuestion newQuestion = new NewQuestion("Test", FieldStyle.SHORT_TEXT);
-        Question question = new Question(uuid,newQuestion.description(),newQuestion.fieldStyle());
+        Question question = new Question(uuid, newQuestion.description(), newQuestion.fieldStyle());
         when(questionRepository.save(any(Question.class))).thenReturn(question);
         QuestionDTO expected = new QuestionDTO(uuid, newQuestion.description(), newQuestion.fieldStyle());
         QuestionDTO actual = questionService.createQuestion(newQuestion);
         assertEquals(expected, actual);
     }
+
     @Test
-    void should_throw_when_creating_question(){
+    void should_throw_when_creating_question() {
         when(questionRepository.existsByDescription(any(String.class))).thenReturn(true);
         NewQuestion newQuestion = new NewQuestion("Test", FieldStyle.SHORT_TEXT);
-        assertThrows(BadRequestException.class, ()-> questionService.createQuestion(newQuestion));
+        assertThrows(BadRequestException.class, () -> questionService.createQuestion(newQuestion));
         verify(questionRepository).existsByDescription(any(String.class));
     }
+
     //createMultipleQuestionsWhichDoesntExist tests
     @Test
     void should_create_three_questions() {
         NewQuestion newQuestion1 = new NewQuestion("Test1", FieldStyle.SHORT_TEXT);
         NewQuestion newQuestion2 = new NewQuestion("Test2", FieldStyle.SHORT_TEXT);
         NewQuestion newQuestion3 = new NewQuestion("Test3", FieldStyle.SHORT_TEXT);
-        Question question = new Question(uuid,newQuestion1.description(),newQuestion1.fieldStyle());
-        List<NewQuestion> questionList = List.of(newQuestion1,newQuestion2,newQuestion3);
+        Question question = new Question(uuid, newQuestion1.description(), newQuestion1.fieldStyle());
+        List<NewQuestion> questionList = List.of(newQuestion1, newQuestion2, newQuestion3);
         when(questionRepository.existsByDescription(any(String.class))).thenReturn(false);
         when(questionRepository.save(any(Question.class))).thenReturn(question);
         questionService.createMultipleQuestionsWhichDoesntExist(questionList);
-        verify(questionRepository,times(3)).save(any(Question.class));
+        verify(questionRepository, times(3)).save(any(Question.class));
     }
-    //TODO sad path for this function
+
     @Test
-    void searchMultipleQuestions() {
+    void should_create_two_questions() {
+        NewQuestion newQuestion1 = new NewQuestion("Test1", FieldStyle.SHORT_TEXT);
+        NewQuestion newQuestion2 = new NewQuestion("Test2", FieldStyle.SHORT_TEXT);
+        NewQuestion newQuestion3 = new NewQuestion("Test3", FieldStyle.SHORT_TEXT);
+        Question question = new Question(uuid, newQuestion1.description(), newQuestion1.fieldStyle());
+        List<NewQuestion> questionList = List.of(newQuestion1, newQuestion2, newQuestion3);
+        when(questionRepository.existsByDescription("Test1"))
+                .thenAnswer(argument -> argument.getArgument(0) == "Test1");
+        when(questionRepository.save(any(Question.class))).thenReturn(question);
+        questionService.createMultipleQuestionsWhichDoesntExist(questionList);
+        verify(questionRepository, times(2)).save(any(Question.class));
+
     }
 
     @Test
