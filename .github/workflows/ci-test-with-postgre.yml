@@ -15,7 +15,7 @@ jobs:
   container-job:
     runs-on: ubuntu-latest
       # Service containers to run with `container-job`
-    container: "postgres:latest"
+    container: "3.9.2-eclipse-temurin-11"
     services:
       # Label used to access the service container
       postgres:
