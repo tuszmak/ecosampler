@@ -1,9 +1,9 @@
 package com.codecool.ecosampler.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -29,15 +29,25 @@ public class JWTService {
     }
 
     public boolean isTokenValid(String token) {
+
         try {
             Jwts.parserBuilder()
                     .setSigningKey(getSignInKey())
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
+        } catch (ExpiredJwtException e) {
+            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
+        } catch (UnsupportedJwtException e) {
+            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
+        } catch (MalformedJwtException e) {
+            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
+        } catch (SignatureException e) {
+            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
+        } catch (IllegalArgumentException e) {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
+
     }
 
     public String getUsernameFromToken(String token) {
