@@ -21,8 +21,8 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_USER: ${{ env.DB_USER }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: pw
           POSTGRES_DB: ecosampler
         # Set health checks to wait until postgres has started
         options: >-
@@ -42,8 +42,8 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
         env:
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          DB_USER: user
+          DB_PASSWORD: pw
           JWT_SECRET: 2948404D635166546A576E5A7234753778214125432A462D4A614E645267556B58703273357638792F423F4528472B4B6250655368566D597133743677397A24
           SPRING_PROFILES_ACTIVE: docker, dev
           POSTGRES_HOST: postgres
