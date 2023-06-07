@@ -22,17 +22,10 @@ public class FormService {
     private final FormRepository formRepository;
     private final QuestionService questionService;
 
-    public FormDTO createNewFormGetDTO(NewForm newForm) {
-        questionService.createMultipleQuestionsWhichDoesntExist(newForm.questions());
-        List<Question> questionsToDB = questionService.searchMultipleQuestions(newForm.questions());
-        final Form form = formRepository.save(new Form(UUID.randomUUID(), newForm.name(),questionsToDB));
-        return FormMapper.toDTO(form);
-    }
-
     protected Form createNewForm(NewForm newForm) {
         questionService.createMultipleQuestionsWhichDoesntExist(newForm.questions());
         List<Question> questionsToDB = questionService.searchMultipleQuestions(newForm.questions());
-        return formRepository.save(new Form(UUID.randomUUID(), newForm.name(),questionsToDB));
+        return formRepository.save(new Form(UUID.randomUUID(), newForm.name(), questionsToDB));
     }
 
     protected Form getFormByPublicId(UUID publicId) {
