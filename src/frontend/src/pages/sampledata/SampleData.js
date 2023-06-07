@@ -1,6 +1,6 @@
-import {useParams} from "react-router-dom";
-import {Button, Form, message} from "antd";
-import {QuestionItem} from "./QuestionItem";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { Button, Form, message } from "antd";
+import { QuestionItem } from "./QuestionItem";
 import useAuth from "../../hook/useAuth";
 import useDownFetch from "../../hook/useDownFetch";
 import upFetch from "../../api/upFetch";
@@ -10,7 +10,8 @@ const PATH_FOR_SAVE_SAMPLE_DATA = "/api/v1/sampledata"
 const ERROR_MSG_DURATION = 3;
 
 const SampleData = () => {
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
 
   const cancelLoadingMessage = () => {
@@ -46,9 +47,8 @@ const SampleData = () => {
   const onFinish = async (values) => {
     loadingMessage();
 
-    console.log(values);
-    const newAnswers = Object.entries(values).map(([key, value]) => ({ questionID: key, answer: value }));
-
+    const newAnswers = Object.entries(values)
+      .map(([key, value]) => ({ questionID: key, answer: value }));
     const option = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -56,8 +56,12 @@ const SampleData = () => {
     };
     try {
       const result = await upFetch(PATH_FOR_SAVE_SAMPLE_DATA, option)
-
       const data = await result.json();
+
+      const searchParams = new URLSearchParams(location.search);
+      const projectId = searchParams.get("from");
+      navigate(`/project/${projectId}`);
+
       if (!result.ok) message.error(data.message, ERROR_MSG_DURATION);
       else successMessage();
 

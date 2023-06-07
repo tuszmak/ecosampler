@@ -43,7 +43,8 @@ void setup(){
         User expected = user;
         User actual = UserMapper.mapToNewUser(newUser,securePassword);
         /*The reason there are 5 equals here, instead of equals override,
-         is because Petya said not to change the class for tests*/
+         is because Petya said not to change the class for tests.
+         You can equal two classes without an equals implementation*/
         assertEquals(expected.getPublicId(),actual.getPublicId());
         assertEquals(expected.getName(),actual.getName());
         assertEquals(expected.getEmail(),actual.getEmail());

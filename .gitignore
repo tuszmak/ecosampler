@@ -32,3 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 /src/frontend/node_modules
+
+src/main/resources/static

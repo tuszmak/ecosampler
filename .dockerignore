@@ -1,0 +1,6 @@
+src/frontend/node-modules
+src/frontend/build
+src/main/resources/static
+.git
+.idea
+.vscode
