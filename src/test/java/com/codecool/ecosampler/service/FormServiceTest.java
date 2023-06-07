@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -95,11 +96,6 @@ class FormServiceTest {
         final List<QuestionDTO> questionDTOsByFormID = formService.getQuestionDTOsByFormID(uuid);
         assertEquals(1, questionDTOsByFormID.size());
         assertEquals(question.getDescription(), questionDTOsByFormID.get(0).description());
-        verify(formRepository,times(1)).findFormByPublicId(uuid);
-    }
-
-    @Test
-    void shouldFailInCI() {
-        fail();
+        verify(formRepository, times(1)).findFormByPublicId(uuid);
     }
 }
