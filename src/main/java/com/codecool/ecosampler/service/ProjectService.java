@@ -100,6 +100,11 @@ public class ProjectService {
     }
 
     public void addFormToProject(NewForm newForm, UUID projectID) {
+        if (
+                Objects.isNull(newForm) ||
+                Objects.isNull(newForm.questions()) ||
+                newForm.questions().isEmpty()
+        ) throw new BadRequestException("Invalid or not enough data");
         Project project = getProjectByPublicId(projectID);
         Form form = formService.createNewForm(newForm);
         project.addFormToProject(form);
