@@ -44,9 +44,9 @@ class FormServiceTest {
         when(questionService.searchMultipleQuestions(newQuestions)).thenReturn(List.of(question));
         Form savedForm = formService.createNewForm(newForm);
         assertEquals(uuid, savedForm.getPublicId());
-        verify(formRepository, times(1)).save(any(Form.class));
-        verify(questionService, times(1)).searchMultipleQuestions(newQuestions);
-        verify(questionService, times(1)).createMultipleQuestionsWhichDoesntExist(newQuestions);
+        verify(formRepository).save(any(Form.class));
+        verify(questionService).searchMultipleQuestions(newQuestions);
+        verify(questionService).createMultipleQuestionsWhichDoesntExist(newQuestions);
     }
 
     @Test
@@ -56,7 +56,7 @@ class FormServiceTest {
         when(formRepository.findFormByPublicId(uuid)).thenReturn(Optional.of(form));
         Form returnedform = formService.getFormByPublicId(uuid);
         assertEquals(uuid, returnedform.getPublicId());
-        verify(formRepository, times(1)).findFormByPublicId(uuid);
+        verify(formRepository).findFormByPublicId(uuid);
     }
 
     @Test
@@ -64,7 +64,7 @@ class FormServiceTest {
         UUID uuid = UUID.randomUUID();
         when(formRepository.findFormByPublicId(uuid)).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> formService.getFormByPublicId(uuid));
-        verify(formRepository, times(1)).findFormByPublicId(uuid);
+        verify(formRepository).findFormByPublicId(uuid);
     }
 
     @Test
@@ -75,7 +75,7 @@ class FormServiceTest {
         List<FormDTO> formsByProjectID = formService.getFormsByProjectID(uuid);
         assertEquals(formsByProjectID.size(), 1);
         assertEquals(form.getName(), formsByProjectID.get(0).name());
-        verify(formRepository, times(1)).findFormsByProjectID(uuid);
+        verify(formRepository).findFormsByProjectID(uuid);
     }
 
     @Test
@@ -84,7 +84,7 @@ class FormServiceTest {
         when(formRepository.findFormsByProjectID(uuid)).thenReturn(List.of());
         List<FormDTO> formsByProjectID = formService.getFormsByProjectID(uuid);
         assertEquals(0, formsByProjectID.size());
-        verify(formRepository, times(1)).findFormsByProjectID(uuid);
+        verify(formRepository).findFormsByProjectID(uuid);
     }
 
     @Test
@@ -96,6 +96,6 @@ class FormServiceTest {
         final List<QuestionDTO> questionDTOsByFormID = formService.getQuestionDTOsByFormID(uuid);
         assertEquals(1, questionDTOsByFormID.size());
         assertEquals(question.getDescription(), questionDTOsByFormID.get(0).description());
-        verify(formRepository, times(1)).findFormByPublicId(uuid);
+        verify(formRepository).findFormByPublicId(uuid);
     }
 }
