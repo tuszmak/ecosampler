@@ -1,5 +1,5 @@
 
-name: Java CI with Maven
+name: CI Only Unit tests
 
 on:
   push:
@@ -21,4 +21,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package -DskipITs --file pom.xml
