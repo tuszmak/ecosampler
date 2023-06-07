@@ -10,7 +10,6 @@ const path = "api/v1/form/by-project-id/";
 
 export const FormList = () => {
   const { id } = useParams();
-
   const columns = [
     {
       title: "Name",

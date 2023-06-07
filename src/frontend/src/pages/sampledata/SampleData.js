@@ -47,8 +47,8 @@ const SampleData = () => {
   const onFinish = async (values) => {
     loadingMessage();
 
-    const newAnswers = Object.entries(values).map(([key, value]) => ({ questionID: key, answer: value }));
-
+    const newAnswers = Object.entries(values)
+      .map(([key, value]) => ({ questionID: key, answer: value }));
     const option = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
