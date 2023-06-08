@@ -2,7 +2,7 @@ env:
   DB_USER: user
   DB_PASSWORD: pw
 
-name: CI/CD Unit and Integration Test 
+name: CI Unit and Integration Test 
 
 on:
   pull_request:
