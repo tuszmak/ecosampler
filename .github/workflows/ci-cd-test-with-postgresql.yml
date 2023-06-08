@@ -2,13 +2,11 @@ env:
   DB_USER: user
   DB_PASSWORD: pw
 
-name: Java CI with Maven
+name: CI/CD Unit and Integration Test 
 
 on:
-  push:
-    branches: [ "development" ]
   pull_request:
-    branches: [ "development" ]
+    branches: [ "release" ]
   workflow_dispatch:
 
 jobs:
