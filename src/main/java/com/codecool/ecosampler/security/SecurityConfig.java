@@ -23,11 +23,12 @@ import static org.springframework.http.HttpMethod.*;
 @EnableWebSecurity(debug = true)
 public class SecurityConfig {
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
-
+    private final StaticPathForwarder staticPathForwarder;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .addFilterBefore(staticPathForwarder, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(SecuritySessionManagement ->
                         SecuritySessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -37,9 +38,9 @@ public class SecurityConfig {
                                 "/api/v1/login",
                                 "/",
                                 "/index.html",
-                                "static/**",
+                                "/static/**",
                                 "/favicon.ico",
-                                "manifest.json"
+                                "/manifest.json"
                         ).permitAll()
                         .requestMatchers(POST,
                                 "/api/v1/project",
