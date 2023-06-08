@@ -1,0 +1,33 @@
+# ONLY FOR TEST PURPOSE
+# Easy startup for our service with some initial data.configs:
+# You can log in with full access with email: TODO and password: TODO
+# Run this configuration: "docker-compose --project-name eco-sampler-test up"
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker, dev
+      DB_USER: user #Username for database user
+      DB_PASSWORD: pw #Password for database user
+      JWT_SECRET: 2948404D635166546A576E5A7234753778214125432A462D4A614E645267556B58703273357638792F423F4528472B4B6250655368566D597133743677397A24
+      #JWT_Secret is a 512-bit token as hexadecimal
+      POSTGRES_HOST: postgres
+    ports:
+      - "8080:8080"
+  postgres:
+    image: postgres:alpine3.17 #The OS we use
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pw
+      POSTGRES_DB: ecosampler
+    ports:
+      - "5432:5432"
