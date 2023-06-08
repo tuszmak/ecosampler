@@ -58,13 +58,13 @@ class SampleDataServiceTest {
     @Test
     void should_return_a_sampledata_dto() {
         SampleData sampleData = new SampleData(uuid, localDateTime, user, new Form());
-        when(sampleDataRepository.findSampleDataByPublicId(any(UUID.class))).thenReturn(Optional.of(sampleData));
+        when(sampleDataRepository.findSampleDataByPublicId(uuid)).thenReturn(Optional.of(sampleData));
         SampleDataDTO expected = new SampleDataDTO(uuid, localDateTime, uuid, null);
         SampleDataDTO actual = sampleDataService.getSampleDataDTOByPublicId(uuid);
         assertEquals(expected, actual);
         verify(sampleDataRepository).findSampleDataByPublicId(any());
     }
-
+    //createSampleData test
     @Test
     void should_create_new_sampledata() {
         NewSampleData newSampleData = new NewSampleData(uuid, uuid, new ArrayList<>());
@@ -72,7 +72,6 @@ class SampleDataServiceTest {
         when(userService.getUserByPublicId(any(UUID.class))).thenReturn(user);
         when(formService.getFormByPublicId(any(UUID.class))).thenReturn(null);
         when(sampleDataRepository.save(any(SampleData.class))).thenReturn(sampleData);
-//        doNothing().when(answerService).createListOfAnswers(anyList(), any(SampleData.class));
         SampleDataDTO expected = new SampleDataDTO(uuid, localDateTime, user.getPublicId(), null);
         SampleDataDTO actual = sampleDataService.createSampleData(newSampleData);
         assertEquals(expected, actual);
@@ -80,6 +79,7 @@ class SampleDataServiceTest {
         verify(formService).getFormByPublicId(any(UUID.class));
         verify(answerService).createListOfAnswers(anyList(),any());
     }
+    //DeleteSampleData test
     @Test
     void should_delete_sampledata(){
         SampleData sampleData = new SampleData(2L,uuid,
