@@ -72,9 +72,21 @@ class SampleDataServiceTest {
         when(userService.getUserByPublicId(any(UUID.class))).thenReturn(user);
         when(formService.getFormByPublicId(any(UUID.class))).thenReturn(null);
         when(sampleDataRepository.save(any(SampleData.class))).thenReturn(sampleData);
-        doNothing().when(answerService).createListOfAnswers(anyList(), any());
+//        doNothing().when(answerService).createListOfAnswers(anyList(), any(SampleData.class));
         SampleDataDTO expected = new SampleDataDTO(uuid, localDateTime, user.getPublicId(), null);
         SampleDataDTO actual = sampleDataService.createSampleData(newSampleData);
         assertEquals(expected, actual);
+        verify(userService).getUserByPublicId(any(UUID.class));
+        verify(formService).getFormByPublicId(any(UUID.class));
+        verify(answerService).createListOfAnswers(anyList(),any());
+    }
+    @Test
+    void should_delete_sampledata(){
+        SampleData sampleData = new SampleData(2L,uuid,
+                localDateTime, user, new Form(),new ArrayList<>());
+        when(sampleDataRepository
+                .findSampleDataByPublicId(any(UUID.class))).thenReturn(Optional.of(sampleData));
+        sampleDataService.deleteSampleData(uuid);
+        verify(sampleDataRepository).deleteById(anyLong());
     }
 }
