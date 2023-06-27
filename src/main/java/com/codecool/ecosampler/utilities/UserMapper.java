@@ -7,6 +7,8 @@ import com.codecool.ecosampler.controller.dto.user.UserForSelectDTO;
 import com.codecool.ecosampler.domain.AuthUser;
 import com.codecool.ecosampler.domain.User;
 
+import java.util.UUID;
+
 public class UserMapper {
 
     public static UserDTO mapToDTO(User user) {
@@ -14,7 +16,7 @@ public class UserMapper {
     }
 
     public static User mapToNewUser(NewUser newUser, String encryptedPassword) {
-        return new User(newUser.public_id(), newUser.name(), newUser.email(), newUser.role(), encryptedPassword);
+        return new User(UUID.randomUUID(), newUser.name(), newUser.email(), newUser.role(), encryptedPassword);
     }
 
     public static LoginCredentials toLoginCredential(User user, String token) {
