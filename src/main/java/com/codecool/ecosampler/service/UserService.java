@@ -30,7 +30,7 @@ public class UserService {
         if (userRepository.existsUserByEmail(newUser.email()))
             throw new BadRequestException("User already exists with email: " + newUser.email());
         final User user = userRepository
-                .save(UserMapper.mapToNewUser(newUser, passwordEncoder.encode(newUser.password())));
+                .save(UserMapper.mapToUser(newUser, passwordEncoder.encode(newUser.password())));
         return UserMapper.mapToDTO(user);
     }
 

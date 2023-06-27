@@ -197,21 +197,20 @@ class UserServiceTest {
     //registerUser tests
     @Test
     void should_throw_error_on_register() {
-        NewUser newUser = new NewUser(uuid, "", "", Role.DIRECTOR, "");
+        NewUser newUser = new NewUser("", "", Role.DIRECTOR, "");
         when(userRepository.existsUserByEmail(any(String.class))).thenReturn(true);
         assertThrows(BadRequestException.class, () -> userService.registerUser(newUser));
     }
 
     @Test
     void should_register_a_user() {
-        NewUser newUser = new NewUser(uuid, "", "", Role.DIRECTOR, "");
+        NewUser newUser = new NewUser("", "", Role.DIRECTOR, "");
         User user = new User(uuid, "", "", Role.DIRECTOR, "");
         when(userRepository.save(any(User.class))).thenReturn(user);
         when(passwordEncoder.encode(any(String.class))).thenReturn("");
 
         UserDTO expected = new UserDTO(uuid, "", "", Role.DIRECTOR);
         UserDTO actual = userService.registerUser(newUser);
-
         assertEquals(expected, actual);
         verify(userRepository).save(any());
         verify(passwordEncoder).encode(any());

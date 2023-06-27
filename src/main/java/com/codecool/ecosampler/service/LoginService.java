@@ -21,12 +21,12 @@ public class LoginService {
 
     public LoginCredentials verifyUser(LoginRequest loginRequest) {
         Authentication authentication = authenticateUser(loginRequest);
-        String token = jwtService.generateToken(authentication);
         User user = userService.getUserByEmail(loginRequest.email());
+        String token = jwtService.generateToken(authentication);
         return UserMapper.toLoginCredential(user, token);
     }
 
-    private Authentication  authenticateUser(LoginRequest loginRequest) {
+    private Authentication authenticateUser(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         loginRequest.email(),
