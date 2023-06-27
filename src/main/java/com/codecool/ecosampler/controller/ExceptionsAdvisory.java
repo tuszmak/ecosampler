@@ -18,7 +18,8 @@ public class ExceptionsAdvisory extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     protected ResponseEntity<Object> handleBadRequestException(BadRequestException ex, WebRequest request) {
         String errorMessage = "Bad Request: " + ex.getMessage();
-        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        ApiError apiError = new ApiError(errorMessage);
+        return handleExceptionInternal(ex, apiError, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(NotFoundException.class)
@@ -30,7 +31,8 @@ public class ExceptionsAdvisory extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     protected ResponseEntity<Object> handleExceptionInternal(UsernameNotFoundException ex, WebRequest request) {
         String errorMessage = "Not Found: " + ex.getMessage();
-        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        ApiError apiError = new ApiError(errorMessage);
+        return handleExceptionInternal(ex, apiError, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(AuthenticationException.class)
