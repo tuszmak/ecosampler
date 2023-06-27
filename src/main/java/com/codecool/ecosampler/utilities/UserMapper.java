@@ -15,7 +15,7 @@ public class UserMapper {
         return new UserDTO(user.getPublicId(), user.getName(), user.getEmail(), user.getRole());
     }
 
-    public static User mapToNewUser(NewUser newUser, String encryptedPassword) {
+    public static User mapToUser(NewUser newUser, String encryptedPassword) {
         return new User(UUID.randomUUID(), newUser.name(), newUser.email(), newUser.role(), encryptedPassword);
     }
 
