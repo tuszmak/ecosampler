@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserMapperTest {
 private UUID uuid;
@@ -34,18 +35,18 @@ void setup(){
     @Test
     void should_create_new_user() {
 
-        NewUser newUser = new NewUser(uuid,
+        NewUser newUser = new NewUser(
                 "foo",
                 "bar@foo.cx",
                 Role.SCIENTIST,
                 "test");
         String securePassword = "IAmSoSecure";
         User expected = user;
-        User actual = UserMapper.mapToNewUser(newUser,securePassword);
+        User actual = UserMapper.mapToUser(newUser,securePassword);
         /*The reason there are 5 equals here, instead of equals override,
          is because Petya said not to change the class for tests.
          You can equal two classes without an equals implementation*/
-        assertEquals(expected.getPublicId(),actual.getPublicId());
+        assertTrue(actual.getPublicId() instanceof UUID);
         assertEquals(expected.getName(),actual.getName());
         assertEquals(expected.getEmail(),actual.getEmail());
         assertEquals(expected.getRole(),actual.getRole());
