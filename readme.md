@@ -6,12 +6,12 @@ The general user can fill out the forms and gather information in a database.
 
 # Technologies used
 
-> - **React-js** for frontend: It provides a responsive option, that is very popular nowadays
-> - **AntDesign**: A React framework with bulit-in components. 
+> - **React-js 18.2.0** for frontend: It provides a responsive option, that is very popular nowadays
+> - **AntDesign 5.4.6**: A React framework with bulit-in components. 
 > It has components that the team really likes and suits the theme of the program
-> - **Java Spring** for backend: A popular choice among developers in both commercial and personal use.
+> - **Java Spring 3.1.0** for backend: A popular choice among developers in both commercial and personal use.
 > It also has a lot of history, so there are already answered questions for it.
-> - **PostgreSQL** for the database: Our dataflow revolves around connections so a relational database seems to fit the case.
+> - **PostgreSQL 15.2** for the database: Our dataflow revolves around connections so a relational database seems to fit the case.
 > We also have the most experience with PostgreSQL, and Java Spring has an adapter for it as well.
 
 # Install
